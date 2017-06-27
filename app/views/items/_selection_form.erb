@@ -1,0 +1,7 @@
+<%= form_for :items, url: {action: "select"} do |f|%>
+  <div class="form-group">
+    <%= f.select :group,@choices, class: "form-control",
+                                  :include_blank => false, :required => true %>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :items
+  get '/select', to: 'items#select'
+  post '/select', to: 'items#select'
 end
