@@ -4,22 +4,34 @@ class ItemsController < ApplicationController
   end
 
   def select
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     @curr_class = curr_selection
-    @choices = @curr_class.subclasses.map {|i| i.name.split("_").join(" ")}
-    logger.debug "#{@curr_class} -- #{@choices}"
+    @choices = get_choices(@curr_class)
+    logger.tagged("Select") {logger.info "#{@curr_class} -- #{@choices}"}
 
     if @choices.empty?
-      render 'new'
+       redirect_to "/items/new/#{@curr_class.name}"
     end
-
   end
 
 
   def new
-    @item = @curr_class.new()
+    @item = get_class_name(params[:class]).new()
+    @item_details = get_features(@item)
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    get_feature_type(@item).each do |i,j|
+      logger.tagged("Feature - Type") {logger.info "#{i} -- #{j}"}
+    end
   end
 
   def create
+    @item = get_item
+    @item_details = get_features(@item)
+    if @item.save
+      redirect_to new_item_path
+    else
+      render 'new'
+    end
   end
 
   def edit
@@ -32,13 +44,45 @@ class ItemsController < ApplicationController
   end
 
   private
+    def change_delimiter(str,d1 = "_", d2= " ")
+      str.split(d1).join(d2)
+    end
+
+    def get_class_name(str)
+      Object.const_defined?(str) ? str.constantize : Item
+    end
+
     def curr_selection
       param_val = params[:items]
       if (param_val == nil)
         return Item
-      else
-        selection = eval(params[:items][:group].split(" ").join("_"))
-        return selection
       end
+      selection = get_class_name(change_delimiter(params[:items][:group]," ", "_"))
+    end
+
+    def get_choices(class_name)
+      class_name.subclasses.map {|i| i.name.titleize}
+    end
+
+    def get_features(class_name)
+      class_name.fields.keys.select{|field| field[0] != "_"}
+    end
+
+    def get_feature_type(class_name)
+      class_features = get_features(class_name)
+      all_fields = class_name.fields
+      final_map = {}
+      class_features.each {|i| final_map[i] = all_fields[i].options[:type]}
+      return final_map
+    end
+
+    def valid_features(class_name)
+      permited_features = get_features(class_name)
+      params.require(:items).permit(permited_features)
+    end
+
+    def get_item
+      class_name = get_class_name(params[:class])
+      class_name.new(valid_features(class_name))
     end
 end
