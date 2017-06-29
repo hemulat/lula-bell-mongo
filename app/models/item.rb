@@ -5,6 +5,10 @@ class Item
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
   validates_presence_of :name
+
+  def options
+    {}
+  end
 end
 
 class Kitchen < Item
@@ -16,25 +20,40 @@ class Clothing < Item
   field :fit, type: String
   field :size, type: String
   validates_presence_of :type, :fit
+
+  def options
+    {type: ['Winter', "Formal", "Professional", "Shoes","Other"],
+     fit: %w"M W Jr Uni BT Plus"}
+  end
 end
 
-class School_Supply < Item
+class SchoolSupply < Item
 end
 
-class Free_Store < Item
+class FreeStore < Item
 end
 
-class Cooking_Equipment < Kitchen
+class CookingEquipment < Kitchen
   field :type, type: String
   field :size, type: String
   validates_presence_of :type
+
+  def options
+    {type: ["Pot", "Pan", "Utensil", "Other"]}
+  end
+
 end
 
 class Food < Kitchen
   field :type, type: String
   field :expiration, type: Time
-  field :restriction, type: String
+  field :restriction, type: Array
   validates_presence_of :type
+
+  def options
+    {type: ["Fruit", "Vegetables", "Meat", "Dairy", "Other"],
+     restriction: ['Vegan','Vegetarian','Gluten Free','Kosher']}
+  end
 end
 
 class Hygiene < Kitchen
@@ -44,19 +63,23 @@ class Cleaning < Kitchen
 end
 
 
-class Book < School_Supply
+class Book < SchoolSupply
   field :type, type: String
   field :author, type: String
   field :ISBN, type: String
   validates_presence_of :type, :author
+
+  def options
+    {type: ["Textbook", "General Reading", "Test Prep.", "Other"]}
+  end
 end
 
 
-class Technology < School_Supply
+class Technology < SchoolSupply
 end
 
-class Furniture < Free_Store
+class Furniture < FreeStore
 end
 
-class Appliance < Free_Store
+class Appliance < FreeStore
 end

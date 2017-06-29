@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   def index
-    @items = Item.find()
+    @items = Item.where({})
   end
 
   def select
@@ -44,20 +44,24 @@ class ItemsController < ApplicationController
   end
 
   private
-    def change_delimiter(str,d1 = "_", d2= " ")
+    def change_delimiter(str,d1 = " ", d2= "")
       str.split(d1).join(d2)
     end
 
     def get_class_name(str)
-      Object.const_defined?(str) ? str.constantize : Item
+      begin
+        return Object.const_defined?(str) ? str.constantize : Item
+      rescue
+        return Item
+      end
     end
 
     def curr_selection
-      param_val = params[:items]
+      param_val = params[:item]
       if (param_val == nil)
         return Item
       end
-      selection = get_class_name(change_delimiter(params[:items][:group]," ", "_"))
+      selection = get_class_name(change_delimiter(params[:item][:group]))
     end
 
     def get_choices(class_name)
@@ -78,7 +82,7 @@ class ItemsController < ApplicationController
 
     def valid_features(class_name)
       permited_features = get_features(class_name)
-      params.require(:items).permit(permited_features)
+      params.require(:item).permit(permited_features)
     end
 
     def get_item

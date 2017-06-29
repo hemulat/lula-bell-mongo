@@ -1,11 +1,8 @@
-<%= form_for :items, url: {action: :create} do |f| %>
+<%= simple_form_for :item, url: {action: :create} do |f| %>
   <% @item_details.each do |feature| %>
-    <div class="form-group">
-      <%= f.label  feature %>
-      <%= f.text_field feature, class: "form-control" %>
-    </div>
-    <!-- Hidden Tag is not associated with any item class-->
-    <%= hidden_field_tag :class, "#{@item.class.name}"%>
+      <%= f.input feature, required: false%>
   <% end %>
+  <!-- Hidden Tag is not associated with any item class-->
+  <%= hidden_field_tag :class, "#{@item.class.name}"%>
   <%= f.submit "Save #{@item.class.name.titleize}", class: "btn btn-success" %>
 <% end %>
