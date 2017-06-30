@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = get_class_name(params[:class]).new()
-    @item_details = get_features(@item)
+    @item_details = get_feature_type(@item)
     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     get_feature_type(@item).each do |i,j|
       logger.tagged("Feature - Type") {logger.info "#{i} -- #{j}"}

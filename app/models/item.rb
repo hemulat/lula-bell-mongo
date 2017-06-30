@@ -9,6 +9,12 @@ class Item
   def options
     {}
   end
+
+  def self.required_fields
+    validators.select do |v|
+      v.is_a?(Mongoid::Validatable::PresenceValidator)
+    end.map(&:attributes).flatten.map { |a_field| a_field.to_s }
+  end
 end
 
 class Kitchen < Item
