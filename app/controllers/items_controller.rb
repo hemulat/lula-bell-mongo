@@ -83,15 +83,21 @@ class ItemsController < ApplicationController
     def valid_features(class_name)
       logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
       permited_features = get_features(class_name)
-      permited_features.each {|i| logger.tagged("Only permit") {logger.info "#{i}"}}
-      a = params.require(:item).permit(permited_features)
-      a.each {|i,j| logger.tagged("Valid features") {logger.info "#{i} -- #{j}"}}
+      a = params.require(:item).permit(*permited_features)
+      a.each {|i,j| logger.tagged("Valid Features") {logger.info "#{i} -- #{j}"}}
       return a
     end
 
-    def get_item
+    def get_array(field_name)
+      restriction_param = params.require(:item).permit(field_name => [])
+      restriction_param[field_name]
+    end
 
+    def get_item
       class_name = get_class_name(params[:class])
-      return class_name.new()
+      item = class_name.new(valid_features(class_name))
+      features = get_feature_type(class_name)
+      features.each {|i,j| j.name == "Array" && item[i] = get_array(i.to_sym)}
+      return item
     end
 end

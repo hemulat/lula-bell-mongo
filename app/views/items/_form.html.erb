@@ -15,12 +15,12 @@
           <br>
         <%else%>
           <%= form.input feature, label: capitalize(feature),
-                  collection: details[0],required: details[1],
+                  collection: details[0],required: details[1], html5: true,
                   input_html: { :class => 'dropdown' }%>
         <% end %>
       <% else %>
       <%= form.input feature, label: capitalize(feature),
-                required: details[1], as: details[2]%>
+                required: details[1], as: details[2], html5: true %>
       <% end%>
   <% end %>
   <!-- Hidden Tag is not associated with any item class-->

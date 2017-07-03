@@ -18,7 +18,7 @@ module ItemsHelper
 
     feature_type.each do |f_name,f_type|
       key = f_name
-      value = [options[f_name.to_sym],false] #req_fields.include?(f_name.to_s)
+      value = [options[f_name.to_sym],req_fields.include?(f_name.to_s)]
       field_type = (f_name.downcase == "description" ? "text" : type_map[f_type.name])
       value.push(field_type)
       final[key] = value
