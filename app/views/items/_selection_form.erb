@@ -1,0 +1,5 @@
+<%= simple_form_for :item, url: {action: "select"} do |f|%>
+  <%= f.input :group, label: "Select Grouping", collection: @choices,
+      input_html: { :class => 'dropdown' }%>
+  <%= f.button :submit, "Submit", class: "btn btn-primary"%>
+<% end %>

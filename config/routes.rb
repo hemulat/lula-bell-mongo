@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
   resources :blogs
+  get '/items/new', to: 'items#select', as: :new_item
+  post '/items/new', to: 'items#select'
+  get '/items/new/:class', to: 'items#new'
+
+  resources :items,  except:[:new]
+
 end
