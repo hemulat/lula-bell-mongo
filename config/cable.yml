@@ -7,4 +7,8 @@ test:
 production:
   adapter: redis
   url: redis://localhost:6379/1
+<<<<<<< HEAD
   channel_prefix: lula-bell-mongo_production
+=======
+  channel_prefix: mongo-devise_production
+>>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d

@@ -1,0 +1,16 @@
+<h1>Index</h1>
+<% if admin_signed_in? %>
+  <p><%= link_to "Logout(#{current_admin.email})", destroy_admin_session_path, method: :delete %></p>
+<% else %>
+  <p><%= link_to "Login", new_admin_session_path %></p>
+<% end %>
+<% if admin_signed_in? %>
+  <div class="admin-links", style="background-color:#f0f0f0; padding:5px; border: 1px solid black">
+    <% if current_admin.superadmin %>
+      <p style="display: inline"><%= link_to "Add Admin", new_admin_registration_path %></p> |
+    <% end %>
+    <p style="display: inline"><%= link_to "View Admins", admins_path %></p>
+  </div>
+<% end %>
+<%= link_to "All Items", items_path %>
+<%= link_to "Add Item", new_item_path %>

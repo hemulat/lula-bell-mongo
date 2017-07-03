@@ -59,7 +59,11 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
+<<<<<<< HEAD
   # config.active_job.queue_name_prefix = "lula-bell-mongo_#{Rails.env}"
+=======
+  # config.active_job.queue_name_prefix = "mongo-devise_#{Rails.env}"
+>>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.

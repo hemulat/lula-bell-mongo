@@ -5,7 +5,11 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
+<<<<<<< HEAD
       database: lula_bell_mongo_development
+=======
+      database: mongo_devise_development
+>>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
@@ -112,7 +116,11 @@ development:
 
     # Preload all models in development, needed when models use
     # inheritance. (default: false)
+<<<<<<< HEAD
     # preload_models: false
+=======
+    preload_models: true
+>>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d
 
     # Raise an error when performing a #find and the document is not found.
     # (default: true)
@@ -148,7 +156,11 @@ development:
 test:
   clients:
     default:
+<<<<<<< HEAD
       database: lula_bell_mongo_test
+=======
+      database: mongo_devise_test
+>>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d
       hosts:
         - localhost:27017
       options:
