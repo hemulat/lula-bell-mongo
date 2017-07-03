@@ -12,6 +12,10 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  logger = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
+
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
@@ -48,11 +52,7 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-<<<<<<< HEAD
-=======
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  Paperclip.options[:command_path] = "/Users/anroybhattacharya/homebrew/bin/convert"
->>>>>>> 2a7cdb391d6a128c8808401d752d9ec35126310d
 end

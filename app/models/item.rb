@@ -5,15 +5,24 @@ class Item
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
+
   has_mongoid_attached_file :image,
     styles: { :thumb => "150x150#", :medium => "400>" }
 
   validates_presence_of :name
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
+
   def options
     {}
   end
+
+  def self.required_fields
+    validators.select do |v|
+      v.is_a?(Mongoid::Validatable::PresenceValidator)
+    end.map(&:attributes).flatten.map { |a_field| a_field.to_s }
+  end
+  
 end
 
 class Kitchen < Item
