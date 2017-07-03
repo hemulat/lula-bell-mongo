@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = get_item
-    @item_details = get_features(@item)
+    @item_details = get_feature_type(@item)
     if @item.save
       redirect_to new_item_path
     else
@@ -81,12 +81,17 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
+      logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
       permited_features = get_features(class_name)
-      params.require(:item).permit(permited_features)
+      permited_features.each {|i| logger.tagged("Only permit") {logger.info "#{i}"}}
+      a = params.require(:item).permit(permited_features)
+      a.each {|i,j| logger.tagged("Valid features") {logger.info "#{i} -- #{j}"}}
+      return a
     end
 
     def get_item
+
       class_name = get_class_name(params[:class])
-      class_name.new(valid_features(class_name))
+      return class_name.new()
     end
 end
