@@ -1,10 +1,15 @@
 class Item
   include Mongoid::Document
+  include Mongoid::Paperclip
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
   validates_presence_of :name
+
+  has_mongoid_attached_file :image,
+    styles: { :thumb => "150x150#", :medium => "400>" }
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   def options
     {}

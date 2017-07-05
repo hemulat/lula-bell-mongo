@@ -3,6 +3,16 @@ def flip_a_coin
   rand(2) == 0 ? false : true
 end
 
+def attach_images()
+  file = File.open("app/assets/images/apple.jpg")
+  @items = Item.all
+  @items.each do |item|
+    item.image = file
+    item.save
+  end
+  file.close
+end
+
 def  g_items(n=5)
   (1..n).each do |i|
     na = "Item #{rand(3*n)}"
