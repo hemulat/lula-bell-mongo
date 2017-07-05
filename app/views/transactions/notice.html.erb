@@ -1,2 +1,24 @@
-<h1>Transactions#notice</h1>
-<p>Find me in app/views/transactions/notice.html.erb</p>
+<div class="transactions notice">
+  <h2>Check In Items</h2>
+
+  <table class="listing"  >
+    <tr class="header">
+      <th>Student ID</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    <% @transactions.each do |transaction| %>
+    <tr>
+      <td><%= transaction.student_id %></td>
+      <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
+      <td><%= transaction.end_date.strftime("%B %d, %Y") %></td>
+      <td><%= transaction.status %></td>
+      <td class="actions">
+        <%= link_to("Check In", {:action => 'check_in', :id => transaction.id}, :class => 'action notice')%>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
