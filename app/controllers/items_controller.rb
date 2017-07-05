@@ -68,7 +68,10 @@ class ItemsController < ApplicationController
     end
 
     def get_features(class_name)
-      class_name.fields.keys.select{|field| field[0] != "_"}
+      # ignore internal fields kept by mongoid and fields kept by paperclip
+      class_name.fields.keys.select do |field|
+        field[0] != "_" && field.split("_")[0] != "image"
+      end
     end
 
     def get_feature_type(class_name)
@@ -80,8 +83,8 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
-      permited_features = get_features(class_name)
-      a = params.require(:item).permit(*permited_features)
+      permitted_features = get_features(class_name).push(:image)
+      a = params.require(:item).permit(*permitted_features)
       return a
     end
 

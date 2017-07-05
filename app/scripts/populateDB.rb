@@ -89,7 +89,7 @@ def g_clothing(n=5)
   (1..n).each do |i|
     typ = ['Winter', "Formal", "Professional", "Shoes", ""].sample
     colo = ["Black", "White", "Red", "Blue", "Green", "Yellow"].sample
-    na = "#{typ} Clothe #{rand(3*n)}"
+    na = "#{typ} #{rand(3*n)}"
     rent = flip_a_coin
     fit = "M/W/Jr/Uni/BT/Plus".split('/').sample
     reserve = rent ? flip_a_coin : false
@@ -135,4 +135,8 @@ def g_all(num = 5)
   g_clothing(num)
   g_school_supplies(num)
   g_books(num)
+end
+
+def remove_all
+  Item.destroy_all
 end
