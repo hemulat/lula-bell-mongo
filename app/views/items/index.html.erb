@@ -1,2 +1,21 @@
-<h1>Items#index</h1>
-<p>Find me in app/views/items/index.html.erb</p>
+<div class="container" style="margin:10px">
+  <h1>Items</h1>
+  <%= link_to("Add Item", new_item_path, class: "btn btn-large btn-primary") %>
+  <% if admin_signed_in? %>
+    <%= link_to "Logout (#{current_admin.email})", destroy_admin_session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Login", new_admin_session_path %>
+  <% end %>
+  <p>
+    <% @items.each do |item| %>
+      <%= link_to item.name, item_path(item) %>
+      <br>
+    <% end %>
+  </p>
+  <% if admin_signed_in? %>
+    <div class="admin-links", style="background-color:#f0f0f0; padding:5px; border: 1px solid black">
+      <%= link_to "View Admins", admins_path %> |
+      <%= link_to "Add Admin", new_admin_registration_path %>
+    </div>
+  <% end %>
+</div>

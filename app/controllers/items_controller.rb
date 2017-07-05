@@ -17,6 +17,9 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
 
   def new
     @item = get_class_name(params[:class]).new()
