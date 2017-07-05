@@ -1,2 +1,24 @@
-<h1>Transactions#display</h1>
-<p>Find me in app/views/transactions/display.html.erb</p>
+<%= link_to("<<Back to Inventory",'#', :class => 'back-link')%>
+
+<div class="transactions display">
+  <h2>Check Out Items</h2>
+
+  <table class="listing"  >
+    <tr class="header">
+      <th>Item</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    <% @items.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%#= item.type %></td>
+      <td><%= item.description %></td>
+      <td class="actions">
+        <%= link_to("Check Out", {:action => 'check_out', :id => item.id}, :class => 'action show')%>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

@@ -1,2 +1,17 @@
-<h1>Transactions#check_out</h1>
-<p>Find me in app/views/transactions/check_out.html.erb</p>
+<%= link_to("<<Back to Check Out",{:controller => 'transaction', :action => 'display'}, :class => 'back-link')%>
+
+<div class="transactions display">
+  <h2>Create An Item</h2>
+
+  <%= form_for(@item, :url => items_path, :method => 'post') do |f| %>
+  <!-- can use this too because of resourcful routes and post method-->
+<!--   <%#= form_for(@item) do |f| %>  -->
+
+    <%= render(:partial => 'form', :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= f.submit("Add Item") %>
+    </div>
+
+  <% end %>
+</div>
