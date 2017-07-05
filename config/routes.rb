@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'transactions/display'
-  get 'transactions/notice'
-  get 'transactions/check_in'
-  get 'transactions/check_out'
+  match ':controller(/:action(/:id))', :via => [:get,:post]
 
   resources :blogs
 

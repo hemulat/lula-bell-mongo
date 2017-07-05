@@ -1,7 +1,7 @@
-<%= link_to("<<Back to Check Out",{:controller => 'transaction', :action => 'display'}, :class => 'back-link')%>
+<%= link_to("<<Back to Check Out",{:controller => 'transactions', :action => 'display'}, :class => 'back-link')%>
 
 <div class="transactions display">
-  <h2>Create An Item</h2>
+  <h2>Check Out!</h2>
 
   <%= render(:partial => 'info') %>
 
@@ -9,7 +9,7 @@
     <table>
       <tr>
         <th>Student ID</th>
-        <td><%= f.text_field(:name) %></td>
+        <td><%= f.text_field(:student_id) %></td>
       </tr>
       <tr>
         <th>Start Date</th>

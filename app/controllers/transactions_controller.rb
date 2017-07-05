@@ -4,12 +4,11 @@ class TransactionsController < ApplicationController
   end
 
   def notice
-
+    @transactions = Transaction.all()
   end
 
   def check_in
-    @item = Item.find(params[:id])
-    @transaction = Transaction.new()
+
   end
 
   def create
@@ -26,7 +25,8 @@ class TransactionsController < ApplicationController
   end
 
   def check_out
-
+    @item = Item.find(params[:id])
+    @transaction = Transaction.new()
   end
 
   private
