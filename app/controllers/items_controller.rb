@@ -1,13 +1,16 @@
 class ItemsController < ApplicationController
+
+  # To log to the console/log file use
+  #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  #     logger.tagged("A Tag") {logger.info "the info to output"}
+
   def index
     @items = Item.where({})
   end
 
   def select
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
-    logger.tagged("Select") {logger.info "#{@curr_class} -- #{@choices}"}
 
     if @choices.empty?
        redirect_to "/items/new/#{@curr_class.name}"
@@ -18,10 +21,6 @@ class ItemsController < ApplicationController
   def new
     @item = get_class_name(params[:class]).new()
     @item_details = get_feature_type(@item)
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    get_feature_type(@item).each do |i,j|
-      logger.tagged("Feature - Type") {logger.info "#{i} -- #{j}"}
-    end
   end
 
   def create
@@ -81,10 +80,8 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
-      logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
       permited_features = get_features(class_name)
       a = params.require(:item).permit(*permited_features)
-      a.each {|i,j| logger.tagged("Valid Features") {logger.info "#{i} -- #{j}"}}
       return a
     end
 

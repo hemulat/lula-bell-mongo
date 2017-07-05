@@ -8,7 +8,6 @@ module ItemsHelper
   def process_types(feature_type,item)
     # final will be key-value. key is field name and value is
     # [options(Array),required(boolean),Type]
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     type_map = {"String" => "string", "Mongoid::Boolean"=>"boolean",
                   "Time" => "date", "Array" => "check_boxes"}
     final = {}
