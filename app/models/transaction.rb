@@ -6,4 +6,7 @@ class Transaction
   field :start_date, type: Date
   field :end_date, type: Date
   field :status, type: String
+
+  validates_presence_of :student_id
+  validates_confirmation_of :student_id
 end
