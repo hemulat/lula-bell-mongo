@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
                       controllers: { registrations: "registrations" }
@@ -20,6 +19,12 @@ Rails.application.routes.draw do
 
   resources :items,  except:[:new]
 
-  root to: 'home#index'
+  root 'static#home'
+
+  # get 'static/item_requests'
+
+  get 'static/admin_home'
+
+  resources :item_requests
 
 end

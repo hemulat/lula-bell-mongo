@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <div class="row"  style="overflow-y:auto;">
+      <h1> Items Request List</h1>
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Student ID Number</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Delete Item</th>
+        </tr>
+          <% @item_requests.reverse.each do |request|%>
+        <tr>
+          <td><%= request.created_at.to_time.strftime('%B %e %Y at %l:%M %p') %></td>
+          <td><%= request.studentID%></td>
+          <td><%=request.title %></td>
+          <td><%=request.description %></td>
+          <td><%=link_to 'Delete', item_requests_path(request) , method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <%end%>
+      </table>
+    </div>
+  </body>
+
+</html>

@@ -28,6 +28,6 @@ class ItemRequestsController < ApplicationController
       @item_request = ItemRequest.find(params[:id])
       @item_request.destroy
       redirect_to items_path
-
+    end
 
 end
