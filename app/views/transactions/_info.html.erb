@@ -11,6 +11,12 @@
         <td><%= @item.type %><td>
       </tr>
     <% end %>
+    <% if defined? @item.expiration %>
+      <tr>
+        <th>Expiration Date</th>
+        <td><%= @item.expiration.strftime("%B %d, %Y") %><td>
+      </tr>
+    <% end %>
     <tr>
       <th>Item Description</th>
       <td><%= @item.description %><td>

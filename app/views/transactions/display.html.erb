@@ -8,6 +8,7 @@
       <th>Item</th>
       <th>Category</th>
       <th>Type</th>
+      <th>Rentable?</th>
       <th>Description</th>
       <th>Actions</th>
     </tr>
@@ -20,6 +21,7 @@
       <% else %>
         <td>&nbsp&nbsp</td>
       <% end %>
+      <td><%= item.rentable ? 'Yes' : 'No' %></td>
       <td><%= item.description %></td>
       <td class="actions">
         <%= link_to("Check Out", {:action => 'check_out', :id => item.id}, :class => 'action display')%>

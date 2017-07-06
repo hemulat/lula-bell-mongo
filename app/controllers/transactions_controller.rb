@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
       redirect_to(:action => 'display')
     else
       #If save fails, redisplay the form so user can fix problems
-      render('new') # this renews the form template
+      render('new')
     end
   end
 
@@ -54,9 +54,8 @@ class TransactionsController < ApplicationController
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
   end
-
   private
   def transaction_params
-    params.require(:transaction).permit(:student_id, :start_date, :end_date, :status)
+    params.require(:transaction).permit(:student_id, :email, :start_date, :end_date, :status)
   end
 end

@@ -12,6 +12,14 @@
         <td><%= f.text_field(:student_id) %></td>
       </tr>
       <tr>
+        <th>Email Address</th>
+        <% if @item.rentable %>
+          <td><%= f.text_field(:email) %></td>
+        <% else %>
+          <td><%= f.text_field(:email, :value => 'None', :readonly => true) %></td>
+        <% end %>
+      </tr>
+      <tr>
         <th>Start Date</th>
         <td><%= f.date_field(:start_date, :order => [:month, :day, :year]) %></td>
       </tr>
