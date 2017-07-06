@@ -6,10 +6,11 @@
       <div class="col-sm-6 col-md-2">
         <div class="thumbnail">
           <a href= <%= item_path(item)%> >
-          <%= image_tag(item.image.url(:medium), alt: item.name)%>
-          <div class="caption">
-            <%= item.name %><br>
-          </div>
+            <%= image_tag(item.image.url(:medium), alt: item.name)%>
+            <div class="caption">
+              <%= item.name %><br>
+            </div>
+          </a>
         </div>
       </div>
       <% end %>
