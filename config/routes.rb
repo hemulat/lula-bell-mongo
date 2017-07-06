@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
+  get '/items/see/:class', to: 'items#category', as: :category
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin

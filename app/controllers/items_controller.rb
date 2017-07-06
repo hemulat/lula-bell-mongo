@@ -1,12 +1,13 @@
 class ItemsController < ApplicationController
 
-  before_action :authorize_admin, except: [:index, :show]
+  before_action :authorize_admin, except: [:index, :show, :category]
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.where({})
+    @items = Item.all
+    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
   end
 
   def select
@@ -20,6 +21,11 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+  end
+
+  def category
+    @items = get_class_name(params[:class]).all
+    @categories = Item.subclasses.map{|i| i.name}
   end
 
   def new
@@ -47,6 +53,20 @@ class ItemsController < ApplicationController
   end
 
   private
+    def get_sub(class_name)
+      '''
+      Recursively get a dictionary of the complete class hierarchy
+      '''
+      sub_classes = class_name.subclasses
+      if sub_classes == []
+        return {}
+      end
+
+      sub_class_hierarchy = {}
+      sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
+      return sub_class_hierarchy
+    end
+
     def change_delimiter(str,d1 = " ", d2= "")
       str.split(d1).join(d2)
     end
