@@ -38,6 +38,10 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def delete
+    @transaction = Transaction.find(params[:id])
+  end
+
   def destroy
     @transaction = Transaction.find(params[:id])
     @transaction.destroy

@@ -17,9 +17,7 @@
       <td><%= transaction.status %></td>
       <td class="actions">
         <%= link_to("Check In", {:action => 'check_in', :id => transaction.id}, :class => 'action notice')%>
-      </td>
-      <td class="actions">
-        <%= button_to "Delete", {:action => 'destroy', :id => transaction.id}, method: :delete, data: {confirm: "Are you sure you wish to delete this transaction?"}%>
+        <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
       </td>
     </tr>
     <% end %>
