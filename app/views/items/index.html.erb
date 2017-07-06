@@ -1,5 +1,5 @@
 <div class = "all-category-content"> <!-- need this class to add top margin -->
-  <%= render 'sidebar'%> 
+  <%= render 'sidebar'%>
   <div class = 'category-content'> <!-- need this class to add left margin -->
     <div class="row">
       <%@items.each do |item| %>
@@ -9,7 +9,7 @@
         </div>
         <div class="caption">
           <%= item.name %><br>
-          <%= item._type %>
+          <%= item._type.titleize %>
         </div>
       </div>
       <% end %>
