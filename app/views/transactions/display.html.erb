@@ -6,6 +6,7 @@
   <table class="listing"  >
     <tr class="header">
       <th>Item</th>
+      <th>Category</th>
       <th>Type</th>
       <th>Description</th>
       <th>Actions</th>
@@ -13,10 +14,11 @@
     <% @items.each do |item| %>
     <tr>
       <td><%= item.name %></td>
+      <td><%= item.class.name %></td>
       <% if defined? item.type %>
         <td><%= item.type %></td>
       <% else %>
-          <td>&nbsp&nbsp</td>
+        <td>&nbsp&nbsp</td>
       <% end %>
       <td><%= item.description %></td>
       <td class="actions">
