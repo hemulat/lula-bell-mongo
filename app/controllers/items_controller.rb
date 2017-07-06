@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
 
+  before_action :authorize_admin, except: [:index, :show]
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}

@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="links">
-    <%= link_to "Back", items_path %> |
+    <%= link_to "Back", :back %> |
     <% if admin_signed_in? %>
       <%= link_to "Delete", item_path(@item),
                             method: :delete,

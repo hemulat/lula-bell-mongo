@@ -1,11 +1,6 @@
 <div class="container" style="margin:10px">
   <h1>Items</h1>
   <%= link_to("Add Item", new_item_path, class: "btn btn-large btn-primary") %>
-  <% if admin_signed_in? %>
-    <%= link_to "Logout (#{current_admin.email})", destroy_admin_session_path, method: :delete %>
-  <% else %>
-    <%= link_to "Login", new_admin_session_path %>
-  <% end %>
   <p>
     <% @items.each do |item| %>
       <%= link_to item.name, item_path(item) %>
@@ -18,4 +13,5 @@
       <%= link_to "Add Admin", new_admin_registration_path %>
     </div>
   <% end %>
+  <%= link_to "Back", :back %>
 </div>

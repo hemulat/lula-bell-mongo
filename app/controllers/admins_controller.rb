@@ -14,9 +14,4 @@ class AdminsController < ApplicationController
       redirect_to admins_path, alert: 'The account could not be deleted.'
     end
   end
-
-  private
-    def authorize_admin
-      redirect_to root_path, alert: 'Admins only!' unless admin_signed_in?
-    end
 end
