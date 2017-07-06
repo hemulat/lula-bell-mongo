@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
                       controllers: { registrations: "registrations" }
@@ -13,12 +12,19 @@ Rails.application.routes.draw do
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
+  get '/items/see/:class', to: 'items#category', as: :category
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin
 
   resources :items,  except:[:new]
 
-  root to: 'home#index'
+  root 'static#home'
+
+  # get 'static/item_requests'
+
+  get 'static/admin_home'
+
+  resources :item_requests
 
 end

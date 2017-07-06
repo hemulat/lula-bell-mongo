@@ -93,7 +93,7 @@ def g_clothing(n=5)
     rent = flip_a_coin
     fit = "M/W/Jr/Uni/BT/Plus".split('/').sample
     reserve = rent ? flip_a_coin : false
-    descr = "#{colo} #{typ} Clothe - put it on if it fits you"
+    descr = "#{colo} #{typ} - put it on if it fits you"
     Clothing.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, color: colo, type:typ,
                 fit: fit, size:rand(42)})
