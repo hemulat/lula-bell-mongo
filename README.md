@@ -1,24 +1,21 @@
-# README
+# Lula Bell's Resource Center
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails app for Lula Bell's Resource Center
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+To get started with the app, clone the repo and then install the needed gems:
+'''
+$ bundle update && bundle install
+'''
 
-* System dependencies
+This app uses MongoDB so install MongoDB
+'''
+https://docs.mongodb.com/manual/installation/
+'''
 
-* Configuration
+Finally start app in the local server
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+'''
+$ rails s
+'''
