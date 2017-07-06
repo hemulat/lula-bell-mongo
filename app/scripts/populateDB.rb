@@ -3,6 +3,16 @@ def flip_a_coin
   rand(2) == 0 ? false : true
 end
 
+def attach_images()
+  file = File.open("app/assets/images/apple.jpg")
+  @items = Item.all
+  @items.each do |item|
+    item.image = file
+    item.save
+  end
+  file.close
+end
+
 def  g_items(n=5)
   (1..n).each do |i|
     na = "Item #{rand(3*n)}"
@@ -78,12 +88,12 @@ end
 def g_clothing(n=5)
   (1..n).each do |i|
     typ = ['Winter', "Formal", "Professional", "Shoes", ""].sample
-    colo = ["Black", "White", "Red", "Blue", "Green", "Yellow"]
-    na = "#{typ} Clothe #{rand(3*n)}"
+    colo = ["Black", "White", "Red", "Blue", "Green", "Yellow"].sample
+    na = "#{typ} #{rand(3*n)}"
     rent = flip_a_coin
     fit = "M/W/Jr/Uni/BT/Plus".split('/').sample
     reserve = rent ? flip_a_coin : false
-    descr = "#{colo} #{typ} Clothe - put it on if it fits you"
+    descr = "#{colo} #{typ} - put it on if it fits you"
     Clothing.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, color: colo, type:typ,
                 fit: fit, size:rand(42)})
@@ -125,4 +135,8 @@ def g_all(num = 5)
   g_clothing(num)
   g_school_supplies(num)
   g_books(num)
+end
+
+def remove_all
+  Item.destroy_all
 end

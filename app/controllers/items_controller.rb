@@ -1,27 +1,36 @@
 class ItemsController < ApplicationController
+
+  before_action :authorize_admin, except: [:index, :show, :category]
+  # To log to the console/log file use
+  #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  #     logger.tagged("A Tag") {logger.info "the info to output"}
+
   def index
-    @items = Item.where({})
+    @items = Item.all
+    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
   end
 
   def select
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
-    logger.tagged("Select") {logger.info "#{@curr_class} -- #{@choices}"}
 
     if @choices.empty?
        redirect_to "/items/new/#{@curr_class.name}"
     end
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
+
+  def category
+    @items = get_class_name(params[:class]).all
+    @categories = Item.subclasses.map{|i| i.name}
+  end
 
   def new
     @item = get_class_name(params[:class]).new()
     @item_details = get_feature_type(@item)
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    get_feature_type(@item).each do |i,j|
-      logger.tagged("Feature - Type") {logger.info "#{i} -- #{j}"}
-    end
   end
 
   def create
@@ -44,6 +53,20 @@ class ItemsController < ApplicationController
   end
 
   private
+    def get_sub(class_name)
+      '''
+      Recursively get a dictionary of the complete class hierarchy
+      '''
+      sub_classes = class_name.subclasses
+      if sub_classes == []
+        return {}
+      end
+
+      sub_class_hierarchy = {}
+      sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
+      return sub_class_hierarchy
+    end
+
     def change_delimiter(str,d1 = " ", d2= "")
       str.split(d1).join(d2)
     end
@@ -69,7 +92,10 @@ class ItemsController < ApplicationController
     end
 
     def get_features(class_name)
-      class_name.fields.keys.select{|field| field[0] != "_"}
+      # ignore internal fields kept by mongoid and fields kept by paperclip
+      class_name.fields.keys.select do |field|
+        field[0] != "_" && field.split("_")[0] != "image"
+      end
     end
 
     def get_feature_type(class_name)
@@ -81,10 +107,8 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
-      logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-      permited_features = get_features(class_name)
-      a = params.require(:item).permit(*permited_features)
-      a.each {|i,j| logger.tagged("Valid Features") {logger.info "#{i} -- #{j}"}}
+      permitted_features = get_features(class_name).push(:image)
+      a = params.require(:item).permit(*permitted_features)
       return a
     end
 
