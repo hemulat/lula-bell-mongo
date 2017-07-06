@@ -5,10 +5,12 @@
       <th>Name</th>
       <td><%= @item.name %></td>
     </tr>
-    <tr>
-      <th>Item Type</th>
-      <td><%#= @item.type %><td>
-    </tr>
+    <% if defined? @item.type %>
+      <tr>
+        <th>Item Type</th>
+        <td><%= @item.type %><td>
+      </tr>
+    <% end %>
     <tr>
       <th>Item Description</th>
       <td><%= @item.description %><td>
