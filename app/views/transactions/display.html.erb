@@ -13,7 +13,7 @@
     <% @items.each do |item| %>
     <tr>
       <td><%= item.name %></td>
-      <td><%#= item.type %></td>
+      <td><%= item.type %></td>
       <td><%= item.description %></td>
       <td class="actions">
         <%= link_to("Check Out", {:action => 'check_out', :id => item.id}, :class => 'action display')%>
