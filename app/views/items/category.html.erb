@@ -5,11 +5,11 @@
       <%@items.each do |item| %>
       <div class="col-sm-6 col-md-2">
         <div class="thumbnail">
+          <a href= <%= item_path(item)%> >
           <%= image_tag(item.image.url(:medium), alt: item.name)%>
-        </div>
-        <div class="caption">
-          <%= item.name %><br>
-          <%= item._type.titleize %>
+          <div class="caption">
+            <%= item.name %><br>
+          </div>
         </div>
       </div>
       <% end %>
