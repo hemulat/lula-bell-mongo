@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Lula Bell Resource Center</title>
+
+  </head>
+  <body>
+  <div class= "my-fluid-container">
+    <div class="row" id="carousel">
+        <div class="jumbotron" id="slideJumbotron">
+      <div id="carouselSlides" class= "carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselSlides" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselSlides" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+            <%= image_tag("suit.jpg", class: 'picSlide1')%>
+            <div class="slide1"></div>
+              <div class="carousel-caption">
+                <h1>Welcome to Lula Bell</h1>
+                <p> Rent Suits, Checkout Textbooks, and more</p>
+                <a href="#" class = "btn btn-default btn-lg" role="button">View Items</a>
+              </div>
+          </div>
+          <div class="item">
+            <div class="slide2" ></div>
+
+              <%= image_tag("desk.jpg", class: 'picSlide2') %>
+
+              <div class="carousel-caption">
+                <h1>Community</h1>
+                <p> Cooking Lessons, Financial Literacy classes</p>
+                <a href="#" class = "btn btn-default btn-lg" role="button">See Recent Activity</a>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control left" href="#carouselSlides" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"> </span>
+          </a>
+          <a class="right carousel-control" href="#carouselSlides" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="my-fluid-container">
+  <%= image_tag("cart.png", id: 'cart')%>
+
+  <div  id="cart-container">
+    <script>
+    $(window).scroll(function(){
+      var st = $(this).scrollTop(),
+        winH = $(this).height(),
+        add=100,
+        posCart= $('#cart-container').position().top;
+        if(st + winH >= posCart + add){
+          $('#cart-container').stop().animate({opacity:1, marginTop:10},3500);
+          $( "#cart" ).animate({ left: 2000},{duration: 3000,
+        step: function( now, fx ){
+              $( "#cart" ).css( "left", now );
+            }
+          })
+        }else{
+            $('#cart-container').css({opacity:0, marginTop:0},'slow');
+        }
+  });
+
+    </script>
+  <div class="row" id="mission-community">
+      <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
+      <h4><a href="#col1Content" data-toggle="collapse">Mission Statement</a></h4>
+        <div id="col1Content" class="collapse in"> Lorem ipsum dolor sit amet,
+          consectetur adipiscing elit. Aenean fringilla at libero at finibus a
+          pretium justo nulla sit amet nunc. Vestibulum finibus, lacus at gravida
+          condimentum, tellus mauris imperdiet orci.</div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <h4><a href="#col2Content" data-toggle="collapse">Community Building</a></h4>
+        <div id="col2Content" class="collapse in">
+            <%= image_tag("community.png", class: 'community')%>
+            <p>
+              Duis autem vel eum iriure dolor in hendrerit in vulputate velit
+              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis
+               at vero eros et accumsan et iusto odio dignissim qui blandit praesent
+                luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+            </p>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+<div class="my-fluid-container">
+  <div class="row" id="textbooks">
+    <div class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="item active">
+          <%= image_tag("books.jpg", class: 'books')%>
+          <div class="carousel-caption">
+            <h3>
+              Lulabell offers a collection of textbooks from all disciplines available to
+              be rented at no cost. Check out what books are available.
+            </h3>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-danger">See Textbook Inventory</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-fluid-container">
+  <div class="row" id="Blogs-PSA">
+    <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
+    <h4><a href="#col3Content" data-toggle="collapse">Recent Blogs</a></h4>
+      <div id="col1Content" class="collapse in">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Aenean fringilla at libero at finibus a
+        pretium justo nulla sit amet nunc. Vestibulum finibus, lacus at gravida
+        condimentum, tellus mauris imperdiet orci.</div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <h4><a href="#col4Content" data-toggle="collapse">Public Service Announcements</a></h4>
+      <div id="col2Content" class="collapse in">Quisque rutrum augue odio,
+        eu placerat diam bibendum id. Donec at fringilla leo, non varius magna.
+        Vestibulum finibus, lacus at gravida condimentum, tellus mauris imperdiet orci,
+         a pretium justo nulla sit amet nunc. Class aptent taciti sociosqu ad litora torquent
+         per conubia.</div>
+    </div>
+  </div>
+</div>
+<script src="home.js"></script>
+  </body>
+</html>

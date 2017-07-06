@@ -1,0 +1,37 @@
+// Place all the styles related to the Items controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.thumbnail{
+  height: 140px;
+}
+
+.sidenav{
+  height: 100%;
+  width: 175px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 100px;
+
+    a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      &:hover, .offcanvas &:focus{
+        color: #f1f1f1;
+      }
+  }
+}
+
+.category-content{
+  margin-left: 200px;
+}
+
+.all-category-content{
+    margin-top: 55px
+}
