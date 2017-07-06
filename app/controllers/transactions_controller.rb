@@ -38,6 +38,14 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def destroy
+    @transaction = Transaction.find(params[:id])
+    @transaction.destroy
+
+    flash[:notice] = "Transaction destroyed successfully."
+    redirect_to(:action => 'notice')
+  end
+
   def check_out
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
