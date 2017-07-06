@@ -6,6 +6,8 @@
   <table class="listing"  >
     <tr class="header">
       <th>Student ID</th>
+      <th>Item List</th>
+      <th>Number of Items</th>
       <th>Pick-up Date</th>
       <th>Return Date</th>
       <th>Status</th>
@@ -14,6 +16,11 @@
     <% @transactions.each do |transaction| %>
     <tr>
       <td><%= transaction.student_id %></td>
+      <td><% transaction.items.each do |i| %>
+            <%= i.name %>
+          <% end %>
+      </td>
+      <td><%= transaction.items.size %></td>
       <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
       <td><%= transaction.end_date.strftime("%B %d, %Y") %></td>
       <td><%= transaction.status %></td>

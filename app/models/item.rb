@@ -4,6 +4,7 @@ class Item
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
+  belongs_to :transaction
   validates_presence_of :name
 
   def options
