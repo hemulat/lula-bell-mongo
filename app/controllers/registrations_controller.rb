@@ -10,9 +10,9 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @admin = Admin.new(sign_up_params)
     if @admin.save
-      redirect_to root_path, notice: 'Account successfully created!'
+      redirect_to static_admin_home_path, notice: 'Account successfully created!'
     else
-      redirect_to root_path, alert: 'An error occurred while creating the account.'
+      redirect_to static_admin_home_path, alert: 'An error occurred while creating the account.'
     end
   end
 
