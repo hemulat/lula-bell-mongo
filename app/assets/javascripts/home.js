@@ -14,9 +14,9 @@ var st = $(this).scrollTop(),
 $('div').each(function(){
     var pos = $(this).position().top;
     if(st + winH >= pos + add){
-        $(this).stop().animate({opacity:1, marginTop:10},'slow');
+        $(this).stop().animate({opacity:1, marginTop:10},'fast');
     }else{
-        $(this).stop().animate({opacity:0, marginTop:0},'slow');
+        $(this).stop().animate({opacity:0, marginTop:0},'fast');
     }
 });
 });

@@ -121,10 +121,14 @@
   <div class="row" id="Blogs-PSA">
     <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
     <h4><a href="#col3Content" data-toggle="collapse">Recent Blogs</a></h4>
-      <div id="col1Content" class="collapse in">Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Aenean fringilla at libero at finibus a
-        pretium justo nulla sit amet nunc. Vestibulum finibus, lacus at gravida
-        condimentum, tellus mauris imperdiet orci.</div>
+      <div id="col1Content" class="collapse in">
+        <p>
+          Check out the latest Blog
+        </p>
+        <%= @blog.image %>
+        <%= @blog.title %>
+        <%= @blog.content%>
+      </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <h4><a href="#col4Content" data-toggle="collapse">Public Service Announcements</a></h4>

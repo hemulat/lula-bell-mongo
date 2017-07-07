@@ -1,7 +1,7 @@
 class StaticController < ApplicationController
   def home
-
-    end
+    @blog=Blog.first
+  end
 
     def admin_home
 
