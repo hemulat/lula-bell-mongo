@@ -1,12 +1,11 @@
 class StaticController < ApplicationController
+
+  before_action :authorize_admin, only: [:admin_home]
+
   def home
+  end
 
-    end
-
-    def admin_home
-
-    end
-
-
+  def admin_home
+  end
 
 end

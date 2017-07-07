@@ -31,13 +31,18 @@
           <li>
             <%= link_to "Request", item_requests_path %>
           </li>
-          <li>
-            <% if admin_signed_in? %>
+          <% if admin_signed_in? %>
+            <li>
               <%= link_to "Logout", destroy_admin_session_path, method: :delete %>
-            <% else %>
+            </li>
+            <li>
+              <%= link_to "Admin Home", static_admin_home_path %>
+            </li>
+          <% else %>
+            <li>
               <%= link_to "Login", new_admin_session_path %>
-            <% end %>
-          </li>
+            </li>
+          <% end %>
           <li>
             <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -59,6 +64,8 @@
   </head>
 
   <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
   <%= debug(params) if Rails.env.development? %>
