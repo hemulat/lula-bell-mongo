@@ -34,7 +34,7 @@ class TransactionsController < ApplicationController
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      render('edit') # this renews the form template
+      render('check_in') # this renews the form template
     end
   end
 
