@@ -125,9 +125,15 @@
         <p>
           Check out the latest Blog
         </p>
-        <%= @blog.image %>
-        <%= @blog.title %>
-        <%= @blog.content%>
+        <% if @blog != nil %>
+        <div>
+          <%= image_tag @blog.image.url(:medium) %>
+        </div>  
+          <%= @blog.title %>
+          <%= @blog.content%>
+        <%else%>
+            <h3> There are currently no blogs </h3>
+        <%end%>
       </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
