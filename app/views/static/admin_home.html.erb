@@ -9,10 +9,18 @@
       <p><%= link_to 'Reserve Request', '' %></p>
 
       <p>
-        <%= link_to 'Item Request', 'item_requests' %>
+        <%= link_to 'Item Request', item_requests_path %>
       </p>
     </div>
     <div tag: Inventory>
       <p><%= link_to 'Inventory', '' %></p>
     </div>
+    <div tag: admins>
+      <p><%= link_to 'View Admins', admins_path %></p>
+
+      <p><%= link_to 'Add Admin', new_admin_registration_path %></p>
+    </div>
+
+    <%= link_to 'New PSA', new_psa_post_path %>
+    <%= link_to 'New Blog', new_blog_path %>
 </div>

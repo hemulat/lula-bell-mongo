@@ -1,11 +1,17 @@
 <div class="all-admins-view">
   <table id="admins-table">
     <tr>
-      <th>Admin</th>
+      <th>Admin Email</th>
+      <th>Superadmin</th>
     </tr>
     <% @admins.each do |admin| %>
       <tr>
         <td><%= admin.email %></td>
+        <% if admin.superadmin %>
+          <td>Yes</td>
+        <% else %>
+          <td>No</td>
+        <% end %>
         <% if current_admin.superadmin %>
           <td><%= link_to "Remove", admin_path(admin),
                   method: :delete,
@@ -14,5 +20,5 @@
       </tr>
     <% end %>
   </table>
-  <%= link_to "Back", :back %>
+  <%= link_to "Back", static_admin_home_path %>
 </div>

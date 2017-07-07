@@ -1,0 +1,17 @@
+<div class="psa-main-page">
+  <div class="psas-wrapper">
+    <% @psa_posts.each do |post| %>
+      <div class="psa">
+        <div class="psa-title">
+          <p><%= post.title %></p>
+        </div>
+        <div class="psa-time">
+          <p><%= time_ago_in_words post.created_at %></p>
+        </div>
+        <div class="psa-text">
+          <p><%= post.text %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -6,7 +6,7 @@
       <div class="col-sm-6 col-md-2">
         <div class="thumbnail">
           <a href= <%= item_path(item)%> >
-            <%= image_tag(item.image.url(:medium), alt: item.name)%>
+            <%= image_tag(item.image.url(:thumb), alt: item.name)%>
             <div class="caption">
               <%= item.name %><br>
             </div>
@@ -15,5 +15,6 @@
       </div>
       <% end %>
     </div>
+  <%= link_to "Back", root_path %>
   </div>
 </div>

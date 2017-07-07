@@ -132,11 +132,7 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <h4><a href="#col4Content" data-toggle="collapse">Public Service Announcements</a></h4>
-      <div id="col2Content" class="collapse in">Quisque rutrum augue odio,
-        eu placerat diam bibendum id. Donec at fringilla leo, non varius magna.
-        Vestibulum finibus, lacus at gravida condimentum, tellus mauris imperdiet orci,
-         a pretium justo nulla sit amet nunc. Class aptent taciti sociosqu ad litora torquent
-         per conubia.</div>
+      <%= render 'psa', locals: { psas: @psa_posts } %>
     </div>
   </div>
 </div>
