@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
 
-  match ':controller(/:action(/:id))', :via => [:get,:post]
+  resources :transactions, except:[:show, :index] do
+    collection do
+      get :display
+      get :notice
+    end
+    member do
+      get :check_in
+      get :check_out
+      get :delete
+    end
+  end
+
+  get 'transactions', to: 'transactions#display'
 
   resources :blogs
 

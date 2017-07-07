@@ -3,7 +3,7 @@
 <div class="transactions notice">
   <h2>Check In!</h2>
 
-  <%= form_for(:transaction, :url => {:action => 'update', :id => @transaction.id}) do |f| %>
+  <%= form_for(@transaction, :url => transaction_path(@transaction), :method => 'patch') do |f| %>
     <table>
       <tr>
         <th>Student ID</th>

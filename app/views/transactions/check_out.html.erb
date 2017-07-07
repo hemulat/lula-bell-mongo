@@ -5,7 +5,7 @@
 
   <%= render(:partial => 'info') %>
 
-  <%= form_for(:transaction, :url => {:action => 'create'}) do |f| %>
+  <%= form_for(@transaction, :url => transactions_path, :method => 'post') do |f| %>
     <table>
       <tr>
         <th>Student ID</th>
