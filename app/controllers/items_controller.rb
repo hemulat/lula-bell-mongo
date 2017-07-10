@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.all
+    @items = Item.available
     @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
   end
 
