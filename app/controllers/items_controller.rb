@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
   end
 
   def category
-    @items = get_class_name(params[:class]).all
+    @items = get_class_name(params[:class]).available
     @categories = Item.subclasses.map{|i| i.name}
   end
 
