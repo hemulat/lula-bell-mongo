@@ -1,7 +1,7 @@
 <%= link_to("<< Back to Transactions", {:action => 'notice'}, :class => 'back-link') %>
 
 <div class="subjects delete">
-  <h2>Delete Transaxtion</h2>
+  <h2>Delete Transaction</h2>
 
   <!-- <%#= form_for(@subject, :method => 'delete') do |f| %> -->
   <%= form_for(@transaction, :url => transaction_path(@transaction), :method => 'delete') do |f| %>

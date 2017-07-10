@@ -18,8 +18,8 @@
         <td><%= f.date_field(:end_date, :order => [:month, :day, :year], :readonly => true) %></td>
       </tr>
       <tr>
-        <th>Status</th>
-        <td><%= f.select(:status, ['In','On the floor']) %></td>
+        <th>Item Returned On</th>
+        <td><%= f.date_field(:return_date, :order => [:month, :day, :year]) %></td>
       </tr>
     </table>
     <div class="form-buttons">
