@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
   get '/items/see/:class', to: 'items#category', as: :category
-  post '/search', to: 'items#search', as: :search_item
+  post '/search', to: 'items#search', as: :search
   get '/search', to: 'static#home'
 
   get '/admins', to: 'admins#index', as: :admins
