@@ -1,8 +1,14 @@
 <div id="category-sidebar" class= "sidenav">
-  <% @categories.each do |category|%>
-    <%=link_to category.titleize, category_path(category)%>
-    <% category.each do |subcategory| unless nil%>
-      <%= link_to subcategory.titleize, category_path(subcategory)%>
-      <%end%>
+  <div class="dropdown">
+    <% @categories.each do |category, dict|%>
+      <%=link_to category, category_path(category)%>
+  <div class="dropdown-content">
+    <%if dict.each !=nil %>
+      <% dict.each do |subcategory,subdict|%>
+        <ul><%= link_to subcategory, category_path(subcategory)%></ul>
+        <%end%>
+    <%end%>
+  </div>
+</div>
   <% end %>
 </div>

@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
-    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
+    @categories = get_sub(Item)
   end
 
   def select
@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
 
   def category
     @items = get_class_name(params[:class]).all
-    @categories = Item.subclasses.map{|i| i.name}
+    @categories = get_sub(Item)
   end
 
   def new
