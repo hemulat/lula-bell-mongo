@@ -19,6 +19,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def search
+    query = get_query
+    @items = get_search_results(query)
+    @categories = Item.subclasses.map{|i| i.name}
+  end
+
   def show
     @item = Item.find(params[:id])
   end
@@ -123,5 +129,18 @@ class ItemsController < ApplicationController
       features = get_feature_type(class_name)
       features.each {|i,j| j.name == "Array" && item[i] = get_array(i.to_sym)}
       return item
+    end
+
+    def get_query
+      params[:query]
+    end
+
+    def get_search_results(query)
+      words = query.strip.split(" ")
+      results = Item.or({name: /#{words[0]}/i}, {description: /#{words[0]}/i})
+      words.drop(1).each do |word|
+        results = results & Item.or({name: /#{word}/i}, {description: /#{word}/i})
+      end
+      return results
     end
 end
