@@ -23,7 +23,7 @@
               <div class="carousel-caption">
                 <h1>Welcome to Lula Bell</h1>
                 <p> Rent Suits, Checkout Textbooks, and more</p>
-                <a href="#" class = "btn btn-default btn-lg" role="button">View Items</a>
+                <a href="items_path" class = "btn btn-default btn-lg" role="button">View Items</a>
               </div>
           </div>
           <div class="item">
@@ -108,7 +108,7 @@
               be rented at no cost. Check out what books are available.
             </h3>
             <div class="input-group-btn">
-              <button type="button" class="btn btn-danger">See Textbook Inventory</button>
+              <button href="/items/textbooks" type="button" class="btn btn-danger">See Textbook Inventory</button>
             </div>
           </div>
         </div>
@@ -120,17 +120,21 @@
 <div class="my-fluid-container">
   <div class="row" id="Blogs-PSA">
     <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
-    <h4><a href="#col3Content" data-toggle="collapse">Recent Blogs</a></h4>
+    <h4><a href="/blogs" data-toggle="collapse">Latest Blog</a></h4>
       <div id="col1Content" class="collapse in">
-        <p>
-          Check out the latest Blog
-        </p>
         <% if @blog != nil %>
         <div>
           <%= image_tag @blog.image.url(:medium) %>
-        </div>  
+        </div>
+        <div>
           <%= @blog.title %>
+        </div>
+        <div>
           <%= @blog.content%>
+        </div>
+        <div>
+          <%=link_to "Continue Reading", @blog.url %>
+        </div>
         <%else%>
             <h3> There are currently no blogs </h3>
         <%end%>
