@@ -1,20 +1,38 @@
 class Item
   include Mongoid::Document
+  include Mongoid::Paperclip
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
+  field :_sku, type: String
   validates_presence_of :name
+
+  has_mongoid_attached_file :image,
+    styles: { :thumb => "150x150#", :medium => "400>" }
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   def options
     {}
   end
 
-  def self.required_fields
-    validators.select do |v|
-      v.is_a?(Mongoid::Validatable::PresenceValidator)
-    end.map(&:attributes).flatten.map { |a_field| a_field.to_s }
-  end
+  protected
+    def self.required_fields
+      validators.select do |v|
+        v.is_a?(Mongoid::Validatable::PresenceValidator)
+      end.map(&:attributes).flatten.map { |a_field| a_field.to_s }
+    end
+
+    def self.next_sku
+      sku_str = ""
+      cur_clas = self
+      while cur_clas != Item do
+        sku_str = cur_clas.name[0] + sku_str
+        cur_clas = cur_clas.superclass
+      end
+      return "#{sku_str}#{Counter.next(self.name)}"
+    end
+
 end
 
 class Kitchen < Item
@@ -62,10 +80,10 @@ class Food < Kitchen
   end
 end
 
-class Hygiene < Kitchen
+class Hygiene < Item
 end
 
-class Cleaning < Kitchen
+class Cleaning < Item
 end
 
 

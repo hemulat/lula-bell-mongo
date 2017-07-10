@@ -23,6 +23,7 @@
                 required: details[1], as: details[2], html5: true %>
       <% end%>
   <% end %>
+  <%= form.input :image, as: :file, required: false%>
   <!-- Hidden Tag is not associated with any item class-->
   <%= hidden_field_tag :class, "#{@item.class.name}"%>
   <%= form.submit "Save #{@item.class.name.titleize}", class: "btn btn-success" %>
