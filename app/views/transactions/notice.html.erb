@@ -7,24 +7,27 @@
     <tr class="header">
       <th>Student ID</th>
       <th>Student Email</th>
-      <!--<th>Item ID</th>-->
+      <th>Item ID</th>
       <th>Pick-up Date</th>
       <th>Return Date</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
-    <% @transactions.each do |transaction| %>
-    <tr>
-      <td><%= transaction.student_id %></td>
-      <td><%= transaction.email %></td>
-      <td><%= transaction.start_date %></td>
-      <td><%= transaction.end_date %></td>
-      <td><%= transaction.status %></td>
-      <td class="actions">
-        <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
-        <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
-      </td>
-    </tr>
+    <% unless @transactions.size == 0 %>
+      <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.student_id %></td>
+        <td><%= transaction.email %></td>
+        <td><%= transaction.item_id %></td>
+        <td><%= transaction.start_date %></td>
+        <td><%= transaction.end_date %></td>
+        <td><%= transaction.status %></td>
+        <td class="actions">
+          <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
+          <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
+        </td>
+      </tr>
+      <% end %>
     <% end %>
   </table>
 </div>

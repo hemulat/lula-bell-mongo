@@ -17,10 +17,11 @@ class TransactionsController < ApplicationController
     if @transaction.save
       #If save succeeds, redirect to the index action
       flash[:notice] = "Transaction created successfully."
-      redirect_to(:action => 'display')
+      redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      render('new')
+      flash[:notice] = "Check out failed."
+      redirect_to(:action => 'display')
     end
   end
 

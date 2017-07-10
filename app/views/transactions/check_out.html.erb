@@ -11,13 +11,17 @@
         <th>Student ID</th>
         <td><%= f.text_field(:student_id) %></td>
       </tr>
+      <% if @item.rentable %>
       <tr>
         <th>Email Address</th>
-        <% if @item.rentable %>
-          <td><%= f.text_field(:email) %></td>
-        <% else %>
-          <td><%= f.text_field(:email, :value => 'None', :readonly => true) %></td>
-        <% end %>
+        <td><%= f.text_field(:email) %></td>
+      </tr>
+      <% else %>
+        <%= f.hidden_field(:email, :value =>'NON-RETURNABLE')%>
+      <% end %>
+      <tr>
+        <th>Object ID</th>
+        <td><%= f.text_field(:item_id, :value => "#{@item.id}", :readonly => true) %></td>
       </tr>
       <tr>
         <th>Start Date</th>
