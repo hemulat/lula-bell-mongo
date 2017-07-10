@@ -6,6 +6,9 @@ class Item
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
   field :_sku, type: String
+
+  has_many :transactions
+  
   validates_presence_of :name
 
   has_mongoid_attached_file :image,

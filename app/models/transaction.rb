@@ -9,6 +9,8 @@ class Transaction
   field :end_date, type: DateTime
   field :return_date, type: DateTime
 
+  belongs_to :item
+
   validates_presence_of :student_id
   validates_confirmation_of :student_id
   validates :email, :presence => true
