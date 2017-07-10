@@ -15,7 +15,7 @@ https://docs.mongodb.com/manual/installation/
 ```
 ### Required
 To get the app running you need to do a few one time operations.
-* Open rails
+* Open rails console
 ```
 rails c
 ```
@@ -24,7 +24,7 @@ rails c
 load 'app/script/seed.rb'
 ```
 
-* Seed Counter - This is needed so that your for generating SKU naming of items
+* Seed Counter - This is needed for generating SKU naming of items
 ```
 seed_counter
 ```
@@ -35,7 +35,7 @@ seed_super_admin
 ```
 ### Optional
 If you want you can create a dummy database for testing.
-* Open rails
+* Open rails console
 ```
 rails c
 ```
