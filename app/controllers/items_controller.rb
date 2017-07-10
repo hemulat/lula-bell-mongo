@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
 
-  before_action :authorize_admin, except: [:index, :show, :category]
+  before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy]
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}
@@ -104,6 +104,8 @@ class ItemsController < ApplicationController
       end
     end
 
+
+
     def get_feature_type(class_name)
       class_features = get_features(class_name)
       all_fields = class_name.fields
@@ -135,12 +137,35 @@ class ItemsController < ApplicationController
       params[:query]
     end
 
-    def get_search_results(query)
-      words = query.strip.split(" ")
-      results = Item.or({name: /#{words[0]}/i}, {description: /#{words[0]}/i})
-      words.drop(1).each do |word|
-        results = results & Item.or({name: /#{word}/i}, {description: /#{word}/i})
+    def get_all_features
+      categories = Item.descendants
+      features = []
+      categories.each do |category|
+        features = features | get_features(category)
+      end
+      #logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+      #logger.tagged("LOG_TAG") {logger.info "#{features}"}
+      return features
+    end
+
+    def query_db(word)
+      features = get_all_features
+      features.delete("rentable")
+      features.delete("reservable")
+      results = Item.where({features[0] => /#{word}/i})
+      features.drop(1).each do |feature|
+        results = results | Item.where({feature => /#{word}/i})
       end
       return results
     end
+
+    def get_search_results(query)
+      words = query.strip.split(" ")
+      results = query_db(words[0])
+      words.drop(1).each do |word|
+        results = results & query_db(word)
+      end
+      return results
+    end
+
 end
