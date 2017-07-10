@@ -1,4 +1,6 @@
 class ItemRequestsController < ApplicationController
+  before_action :authorize_admin, except: [:new]
+
   def index
       @item_requests=ItemRequest.all
     end
