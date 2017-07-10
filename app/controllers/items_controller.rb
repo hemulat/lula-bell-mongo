@@ -36,6 +36,7 @@ class ItemsController < ApplicationController
   def create
     @item = get_item
     @item_details = get_feature_type(@item)
+    @item._sku = @item.class.next_sku
     if @item.save
       redirect_to new_item_path
     else
