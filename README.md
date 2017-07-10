@@ -14,7 +14,7 @@ This app uses MongoDB so install MongoDB
 https://docs.mongodb.com/manual/installation/
 ```
 ### Required
-To the app running you need to do a few one time operations.
+To get the app running you need to do a few one time operations.
 * Open rails
 ```
 rails c
