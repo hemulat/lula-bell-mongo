@@ -14,8 +14,8 @@ class ItemsController < ApplicationController
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
 
-    if @choices.empty?
-       redirect_to "/items/new/#{@curr_class.name}"
+    if @choices.empty? # can add flash messages here
+       redirect_to items_new, class: @curr_class.name
     end
   end
 
@@ -38,16 +38,27 @@ class ItemsController < ApplicationController
     @item_details = get_feature_type(@item)
     @item._sku = @item.class.next_sku
     if @item.save
-      redirect_to new_item_path
+      redirect_to action: 'show', id:  @item._id
     else
-      render 'new'
+      # can add flash messages here if update fails
+      redirect_to items_path
     end
   end
 
   def edit
+    @item = Item.find(params[:id])
+    @item_details = get_feature_type(@item)
   end
 
   def update
+    @item = Item.find(params[:id])
+    if @item.update(valid_features(@item.class))
+      redirect_to action: 'show', id:  @item._id
+    else
+      # can add flash messages here if update fails
+      redirect_to items_path
+    end
+
   end
 
   def destroy
