@@ -5,21 +5,65 @@
       <th>Name</th>
       <td><%= @item.name %></td>
     </tr>
+    <tr>
+      <th>Category</th>
+      <td><%= @item.class.name %></td>
+    </tr>
     <% if defined? @item.type %>
       <tr>
-        <th>Item Type</th>
+        <th>Sub-Category</th>
         <td><%= @item.type %><td>
       </tr>
     <% end %>
-    <% if defined? @item.expiration %>
+    <% case @item.class.name.downcase %>
+    <% when "clothing"%>
+      <tr>
+        <th>Clothing Color</th>
+        <td><%= @item.color %><td>
+      </tr>
+      <tr>
+        <th>Clothing Fit</th>
+        <td><%= @item.fit %><td>
+      </tr>
+      <tr>
+        <th>Clothing size</th>
+        <td><%= @item.size %><td>
+      </tr>
+    <% when "cookingequipment" %>
+      <tr>
+        <th>Cookware Size</th>
+        <td><%= @item.size %><td>
+      </tr>
+    <% when "food" %>
       <tr>
         <th>Expiration Date</th>
         <td><%= @item.expiration.strftime("%B %d, %Y") %><td>
+      </tr>
+      <tr>
+        <th>Restriction</th>
+        <td><%= @item.restriction %><td>
+      </tr>
+    <% when "book" %>
+      <tr>
+        <th>Author</th>
+        <td><%= @item.author %><td>
+      </tr>
+      <tr>
+        <th>ISBN Number</th>
+        <td><%= @item.ISBN %><td>
       </tr>
     <% end %>
     <tr>
       <th>Item Description</th>
       <td><%= @item.description %><td>
+    </tr>
+    <tr>
+      <th>Item SKU Code</th>
+      <td><%= @item._sku %><td>
+    </tr>
+    <tr>
+      <th>Item Status</th>
+      <td><%= @item._status %><td>
     </tr>
   </table>
 
