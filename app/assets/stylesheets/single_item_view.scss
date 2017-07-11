@@ -54,12 +54,16 @@
     padding: 10px;
   }
 
-  .item-name {
+  .item-name, .item-description {
     margin-bottom: 20px;
   }
 
   .item-description {
     font-size: 18px;
+  }
+
+  .item-features {
+    font-size: 16px;
   }
 
   .edit-button {

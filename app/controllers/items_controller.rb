@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
     @choices = get_choices(@curr_class)
 
     if @choices.empty? # can add flash messages here
-       redirect_to items_new, class: @curr_class.name
+       redirect_to "/items/new/#{@curr_class.name}"
     end
   end
 
@@ -31,6 +31,13 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @features = get_features(@item.class)
+    @features.delete("name")
+    @features.delete("description")
+    if !admin_signed_in?
+      @features.delete("rentable")
+      @features.delete("reservable")
+    end
   end
 
   def category
@@ -72,6 +79,13 @@ class ItemsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def get_features(class_name)
+    # ignore internal fields kept by mongoid and fields kept by paperclip
+    class_name.fields.keys.select do |field|
+      field[0] != "_" && field.split("_")[0] != "image"
+    end
   end
 
   private
@@ -120,8 +134,6 @@ class ItemsController < ApplicationController
       end
     end
 
-
-
     def get_feature_type(class_name)
       class_features = get_features(class_name)
       all_fields = class_name.fields
@@ -149,10 +161,12 @@ class ItemsController < ApplicationController
       return item
     end
 
+    # Gets search query
     def get_query
       params[:query]
     end
 
+    # Gets all features from all subclasses of Item
     def get_all_features
       categories = Item.descendants
       features = []
@@ -164,22 +178,24 @@ class ItemsController < ApplicationController
       return features
     end
 
+    # Queries database with single word
     def query_db(word)
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
       results = Item.where({features[0] => /#{word}/i})
       features.drop(1).each do |feature|
-        results = results | Item.where({feature => /#{word}/i})
+        results = Item.or(results.selector, Item.where({feature => /#{word}/i}).selector)
       end
       return results
     end
 
+    # Queries database with multiple words
     def get_search_results(query)
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
-        results = results & query_db(word)
+        results = Item.and(results.selector, query_db(word).selector)
       end
       return results
     end
