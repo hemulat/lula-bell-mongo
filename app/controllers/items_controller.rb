@@ -14,8 +14,8 @@ class ItemsController < ApplicationController
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
 
-    if @choices.empty? # can add flash messages here
-       redirect_to items_new, class: @curr_class.name
+    if @choices.empty?
+       redirect_to "/items/new/#{@curr_class.name}"
     end
   end
 

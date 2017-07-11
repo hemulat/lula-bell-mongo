@@ -57,3 +57,6 @@ Finally start app in the local server
 ```
 $ rails s
 ```
+
+### Notes
+* If you have an already existing database, you might want to query all items and re-save all items.
