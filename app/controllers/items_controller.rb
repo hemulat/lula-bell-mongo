@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.available
-    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
+    @categories = get_sub(Item)
   end
 
   def select
@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       @items = get_search_results(query)
-      @categories = Item.subclasses.map{|i| i.name}
+      @categories = get_sub(Item)
     end
   end
 
@@ -34,13 +34,8 @@ class ItemsController < ApplicationController
   end
 
   def category
-<<<<<<< HEAD
-    @items = get_class_name(params[:class]).all
-    @categories = get_sub(Item)
-=======
     @items = get_class_name(params[:class]).available
-    @categories = Item.subclasses.map{|i| i.name}
->>>>>>> c53c75ec62515d86a65c0dff3c40fe56feda3a18
+    @categories = get_sub(Item)
   end
 
   def new
@@ -79,7 +74,7 @@ class ItemsController < ApplicationController
   def destroy
   end
 
-  private
+
     def get_sub(class_name)
       '''
       Recursively get a dictionary of the complete class hierarchy
@@ -93,7 +88,7 @@ class ItemsController < ApplicationController
       sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
       return sub_class_hierarchy
     end
-
+  private
     def change_delimiter(str,d1 = " ", d2= "")
       str.split(d1).join(d2)
     end
