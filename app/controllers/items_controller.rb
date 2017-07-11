@@ -6,23 +6,27 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.all
-    @categories = get_sub(Item)
+    @items = Item.available
+    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
   end
 
   def select
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
 
-    if @choices.empty?
-       redirect_to "/items/new/#{@curr_class.name}"
+    if @choices.empty? # can add flash messages here
+       redirect_to items_new, class: @curr_class.name
     end
   end
 
   def search
     query = get_query
-    @items = get_search_results(query)
-    @categories = Item.subclasses.map{|i| i.name}
+    if query == nil
+      redirect_to root_path
+    else
+      @items = get_search_results(query)
+      @categories = Item.subclasses.map{|i| i.name}
+    end
   end
 
   def show
@@ -30,8 +34,13 @@ class ItemsController < ApplicationController
   end
 
   def category
+<<<<<<< HEAD
     @items = get_class_name(params[:class]).all
     @categories = get_sub(Item)
+=======
+    @items = get_class_name(params[:class]).available
+    @categories = Item.subclasses.map{|i| i.name}
+>>>>>>> c53c75ec62515d86a65c0dff3c40fe56feda3a18
   end
 
   def new
@@ -44,16 +53,27 @@ class ItemsController < ApplicationController
     @item_details = get_feature_type(@item)
     @item._sku = @item.class.next_sku
     if @item.save
-      redirect_to new_item_path
+      redirect_to action: 'show', id:  @item._id
     else
-      render 'new'
+      # can add flash messages here if update fails
+      redirect_to items_path
     end
   end
 
   def edit
+    @item = Item.find(params[:id])
+    @item_details = get_feature_type(@item)
   end
 
   def update
+    @item = Item.find(params[:id])
+    if @item.update(valid_features(@item.class))
+      redirect_to action: 'show', id:  @item._id
+    else
+      # can add flash messages here if update fails
+      redirect_to items_path
+    end
+
   end
 
   def destroy
