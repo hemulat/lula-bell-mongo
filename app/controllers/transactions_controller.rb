@@ -54,6 +54,10 @@ class TransactionsController < ApplicationController
   def check_out
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
+
+    unless @item.rentable
+      @transaction.skip_end_validation = true
+    end
   end
   private
   def transaction_params

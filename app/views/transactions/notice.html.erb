@@ -31,15 +31,18 @@
           <% else %>
             <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
           <% end %>
+          <td class="actions">
+            <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
+            <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
+          </td>
         <% else %>
-          <td>UNAVIALABLE</td>
+          <td>UNAVAILABLE</td>
           <td>NON-RETURNABLE</td>
+          <td class="actions">
+            Check Out
+            <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
+          </td>
         <% end %>
-
-        <td class="actions">
-          <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
-          <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
-        </td>
       </tr>
       <% end %>
     <% end %>
