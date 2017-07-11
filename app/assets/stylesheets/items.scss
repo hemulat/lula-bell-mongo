@@ -14,6 +14,14 @@
   background-color: #e2e8ee;
   overflow-x: hidden;
   padding-top: 100px;
+    #category{
+      font-size: 18px;
+    }
+
+    #subcategory{
+      padding-left:50px; 
+      font-size: 12px;
+    }
 
     a {
       padding: 8px 8px 8px 32px;
@@ -21,7 +29,7 @@
       font-size: 18px;
       color: #1775d3;
       display: block;
-      transition: 0.3s;
+      transition: 0.5s;
       &:hover, .offcanvas &:focus{
         color: #f1f1f1;
       }
