@@ -1,7 +1,12 @@
+<html>
+
+
 <div class = "all-category-content"> <!-- need this class to add top margin -->
   <%= render 'sidebar'%>
   <div class = 'category-content'> <!-- need this class to add left margin -->
-    <div class="row">
+    <div class="row" id="item-dispaly">
+      <%content_tag "div", id: "all_items", data: {temp: @items} do %>
+        <% end %>
       <%@items.each do |item| %>
       <div class="col-sm-6 col-md-2">
         <div class="thumbnail">
@@ -18,3 +23,5 @@
   <%= link_to "Back", root_path %>
   </div>
 </div>
+<%= javascript_include_tag 'item_filter' %>
+</html>
