@@ -21,8 +21,12 @@ class ItemsController < ApplicationController
 
   def search
     query = get_query
-    @items = get_search_results(query)
-    @categories = Item.subclasses.map{|i| i.name}
+    if query == nil
+      redirect_to root_path
+    else
+      @items = get_search_results(query)
+      @categories = Item.subclasses.map{|i| i.name}
+    end
   end
 
   def show
