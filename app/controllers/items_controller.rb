@@ -82,7 +82,6 @@ class ItemsController < ApplicationController
   end
 
   private
-
     def get_sub(class_name)
       '''
       Recursively get a dictionary of the complete class hierarchy
