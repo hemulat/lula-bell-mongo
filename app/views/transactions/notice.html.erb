@@ -23,9 +23,19 @@
       <tr>
         <td><%= transaction.student_id %></td>
         <td><%= transaction.item_id %></td>
-        <td><%= transaction.start_date %></td>
-        <td><%= transaction.end_date %></td>
-        <td><%= transaction.return_date %></td>
+        <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
+        <% if transaction.item.rentable %>
+          <td><%= transaction.end_date.strftime("%B %d, %Y") %></td>
+          <% if transaction.return_date == nil %>
+            <td>&nbsp&nbsp</td>
+          <% else %>
+            <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
+          <% end %>
+        <% else %>
+          <td>UNAVIALABLE</td>
+          <td>NON-RETURNABLE</td>
+        <% end %>
+
         <td class="actions">
           <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
           <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
