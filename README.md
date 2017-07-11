@@ -37,7 +37,7 @@ seed_super_admin
 If you want you can create a dummy database for testing.
 * Open rails console
 ```
-rails c
+$ rails c
 ```
 * Load script
 ```
