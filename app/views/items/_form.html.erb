@@ -1,3 +1,5 @@
+<div id="form">
+
 <%= simple_form_for :item, method: yield(:form_method),
                     url: {action: yield(:form_action)} do |form| %>
   <% process_types(@item_details, @item).each do |feature,details| %>
@@ -28,3 +30,4 @@
   <%= hidden_field_tag :class, "#{@item.class.name}"%>
   <%= form.submit "Save #{@item.class.name.titleize}", class: "btn btn-success" %>
 <% end %>
+</div>
