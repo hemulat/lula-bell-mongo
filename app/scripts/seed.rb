@@ -9,6 +9,6 @@ def reset_counter
   seed_counter
 end
 
-def seed_super_admin
-  Admin.create(email: "test@example.com", superadmin: true, password: 'password')
+def seed_super_admin(e="test@example.com", p = "password")
+  Admin.create(email: e, superadmin: true, password: p)
 end
