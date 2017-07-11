@@ -31,6 +31,13 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @features = get_features(@item.class)
+    @features.delete("name")
+    @features.delete("description")
+    if !admin_signed_in?
+      @features.delete("rentable")
+      @features.delete("reservable")
+    end
   end
 
   def category
@@ -74,7 +81,7 @@ class ItemsController < ApplicationController
   def destroy
   end
 
-  private 
+  private
     def get_sub(class_name)
       '''
       Recursively get a dictionary of the complete class hierarchy
@@ -174,10 +181,12 @@ class ItemsController < ApplicationController
       return item
     end
 
+    # Gets search query
     def get_query
       params[:query]
     end
 
+    # Gets all features from all subclasses of Item
     def get_all_features
       categories = Item.descendants
       features = []
@@ -189,22 +198,24 @@ class ItemsController < ApplicationController
       return features
     end
 
+    # Queries database with single word
     def query_db(word)
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
       results = Item.where({features[0] => /#{word}/i})
       features.drop(1).each do |feature|
-        results = results | Item.where({feature => /#{word}/i})
+        results = Item.or(results.selector, Item.where({feature => /#{word}/i}).selector)
       end
       return results
     end
 
+    # Queries database with multiple words
     def get_search_results(query)
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
-        results = results & query_db(word)
+        results = Item.and(results.selector, query_db(word).selector)
       end
       return results
     end
