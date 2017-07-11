@@ -37,7 +37,7 @@ seed_super_admin
 If you want you can create a dummy database for testing.
 * Open rails console
 ```
-rails c
+$ rails c
 ```
 * Load script
 ```
@@ -57,3 +57,6 @@ Finally start app in the local server
 ```
 $ rails s
 ```
+
+### Notes
+* If you have an already existing database, you might want to query all items and re-save all items.
