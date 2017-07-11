@@ -54,25 +54,6 @@
   <%= image_tag("cart.png", id: 'cart')%>
 
   <div  id="cart-container">
-    <script>
-    $(window).scroll(function(){
-      var st = $(this).scrollTop(),
-        winH = $(this).height(),
-        add=100,
-        posCart= $('#cart-container').position().top;
-        if(st + winH >= posCart + add){
-          $('#cart-container').stop().animate({opacity:1, marginTop:10},3500);
-          $( "#cart" ).animate({ left: 2000},{duration: 3000,
-        step: function( now, fx ){
-              $( "#cart" ).css( "left", now );
-            }
-          })
-        }else{
-            $('#cart-container').css({opacity:0, marginTop:0},'slow');
-        }
-  });
-
-    </script>
   <div class="row" id="mission-community">
       <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
       <h4><a href="#col1Content" data-toggle="collapse">Mission Statement</a></h4>
@@ -127,7 +108,7 @@
           <%= image_tag @blog.image.url(:medium) %>
         </div>
         <div>
-          <%= @blog.title %>
+          <h4><%= @blog.title %></h2>
         </div>
         <div>
           <%= @blog.content%>
@@ -146,6 +127,5 @@
     </div>
   </div>
 </div>
-<script src="home.js"></script>
   </body>
 </html>

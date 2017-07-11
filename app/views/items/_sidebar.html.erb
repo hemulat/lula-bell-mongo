@@ -1,11 +1,12 @@
 <div id="category-sidebar" class= "sidenav">
   <div class="dropdown">
+
     <% @categories.each do |category, dict|%>
       <%=link_to category, category_path(category)%>
   <div class="dropdown-content">
     <%if dict.each !=nil %>
       <% dict.each do |subcategory,subdict|%>
-        <ul><%= link_to subcategory, category_path(subcategory)%></ul>
+        <%= link_to subcategory, category_path(subcategory)%>
         <%end%>
     <%end%>
   </div>
