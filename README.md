@@ -17,7 +17,7 @@ https://docs.mongodb.com/manual/installation/
 To get the app running you need to do a few one time operations.
 * Open rails console
 ```
-rails c
+$ rails c
 ```
 * Load script
 ```
