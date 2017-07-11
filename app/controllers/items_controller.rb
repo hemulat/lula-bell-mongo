@@ -74,7 +74,7 @@ class ItemsController < ApplicationController
   def destroy
   end
 
-
+  private 
     def get_sub(class_name)
       '''
       Recursively get a dictionary of the complete class hierarchy
@@ -88,7 +88,7 @@ class ItemsController < ApplicationController
       sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
       return sub_class_hierarchy
     end
-  private
+
     def change_delimiter(str,d1 = " ", d2= "")
       # Given a string, replaces 'd1'(default spaces) with 'd2'(default empty)
       str.split(d1).join(d2)
