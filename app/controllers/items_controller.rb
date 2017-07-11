@@ -90,18 +90,26 @@ class ItemsController < ApplicationController
     end
 
     def change_delimiter(str,d1 = " ", d2= "")
+      # Given a string, replaces 'd1'(default spaces) with 'd2'(default empty)
       str.split(d1).join(d2)
     end
 
     def get_class_name(str)
-      begin
-        return Object.const_defined?(str) ? str.constantize : Item
-      rescue
-        return Item
+      '''
+      Changes a given string to one of the valid Item models
+      '''
+      if (Item.descendants.map { |i| i.name }).include? str
+        str.constantize
+      else
+        Item
       end
     end
 
     def curr_selection
+      '''
+      Return a class form params hash. If params hash doesnt have :items keys
+      return Item class
+      '''
       param_val = params[:item]
       if (param_val == nil)
         return Item
@@ -110,19 +118,27 @@ class ItemsController < ApplicationController
     end
 
     def get_choices(class_name)
+      '''
+      Given a class name get a list of all subclass names
+      '''
       class_name.subclasses.map {|i| i.name.titleize}
     end
 
     def get_features(class_name)
+      '''
+      Given a class name (Item model) get all the fields that need to be filled
+      '''
       # ignore internal fields kept by mongoid and fields kept by paperclip
       class_name.fields.keys.select do |field|
         field[0] != "_" && field.split("_")[0] != "image"
       end
     end
 
-
-
     def get_feature_type(class_name)
+      '''
+      Given a class name (Item model) get all the fields that need to be filled,
+      along with their data types.
+      '''
       class_features = get_features(class_name)
       all_fields = class_name.fields
       final_map = {}
@@ -131,17 +147,26 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
+      '''
+      Permit non-array valid features for a given class in that params hash
+      '''
       permitted_features = get_features(class_name).push(:image)
       a = params.require(:item).permit(*permitted_features)
       return a
     end
 
     def get_array(field_name)
+      '''
+      Permit array type valid features given the field name
+      '''
       restriction_param = params.require(:item).permit(field_name => [])
       restriction_param[field_name]
     end
 
     def get_item
+      '''
+      Create an item from params fields (permitting only valid features)
+      '''
       class_name = get_class_name(params[:class])
       item = class_name.new(valid_features(class_name))
       features = get_feature_type(class_name)
