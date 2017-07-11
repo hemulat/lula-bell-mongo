@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
   get '/items/see/:class', to: 'items#category', as: :category
+  get '/search', to: 'items#search', as: :search
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin
@@ -34,8 +35,6 @@ Rails.application.routes.draw do
   resources :items,  except:[:new]
 
   root 'static#home'
-
-  # get 'static/item_requests'
 
   get 'static/admin_home'
 

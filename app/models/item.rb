@@ -6,17 +6,21 @@ class Item
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
   field :_sku, type: String
+  field :_status, type: String, default: "Available"
 
   has_many :transactions
   
-  validates_presence_of :name
+  scope :available, -> {where(_status: "Available")}
 
+  validates_presence_of :name
   has_mongoid_attached_file :image,
     styles: { :thumb => "150x150#", :medium => "400>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
+
+
   def options
-    {}
+    {_status: ["Checked Out", "In Laundray", "Available"]}
   end
 
   protected

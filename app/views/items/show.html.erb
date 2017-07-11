@@ -12,7 +12,7 @@
       </div>
       <% if admin_signed_in? %>
         <div class="edit-button">
-          <a href="#">Edit Item</a>
+          <%=link_to "Edit Item", edit_item_path(@item)%>
         </div>
       <% end %>
     </div>
@@ -24,9 +24,9 @@
     </div>
   </div>
   <div class="links">
-    <%= link_to "Back", :back %> |
+    <%= link_to "Back", :back %>
     <% if admin_signed_in? %>
-      <%= link_to "Delete", item_path(@item),
+       | <%= link_to "Delete", item_path(@item),
                             method: :delete,
                             data: { confirm: "Are you sure?" } %>
     <% end %>
