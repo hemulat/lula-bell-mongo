@@ -119,7 +119,7 @@
 
 <div class="my-fluid-container">
   <div class="row" id="Blogs-PSA">
-    <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
+    <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12", id="blogDisplay">
     <h4><a href="#col3Content" data-toggle="collapse">Recent Blogs</a></h4>
       <div id="col1Content" class="collapse in">
         <p>
@@ -128,7 +128,7 @@
         <% if @blog != nil %>
         <div>
           <%= image_tag @blog.image.url(:medium) %>
-        </div>  
+        </div>
           <%= @blog.title %>
           <%= @blog.content%>
         <%else%>
@@ -136,7 +136,7 @@
         <%end%>
       </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12", id="psaDisplay">
       <h4><a href="#col4Content" data-toggle="collapse">Public Service Announcements</a></h4>
       <%= render 'psa', locals: { psas: @psa_posts } %>
     </div>
