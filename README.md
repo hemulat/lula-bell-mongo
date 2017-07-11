@@ -1,24 +1,62 @@
-# README
+# Lula Bell's Resource Center
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails app for Lula Bell's Resource Center
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+To get started with the app, clone the repo and then install the needed gems:
+```
+$ bundle update && bundle install
+```
 
-* System dependencies
+This app uses MongoDB so install MongoDB
+```
+https://docs.mongodb.com/manual/installation/
+```
+### Required
+To get the app running you need to do a few one time operations.
+* Open rails console
+```
+$ rails c
+```
+* Load script
+```
+load 'app/script/seed.rb'
+```
 
-* Configuration
+* Seed Counter - This is needed for generating SKU naming of items
+```
+seed_counter
+```
 
-* Database creation
+* Seed Super Admin - Only Super Admin can do certain things. This creates the first dummy super admin
+```
+seed_super_admin
+```
+### Optional
+If you want you can create a dummy database for testing.
+* Open rails console
+```
+$ rails c
+```
+* Load script
+```
+load 'app/script/populateDB.rb'
+```
+* Run the script (for fine  tuned options look at the script)
+```
+g_all
+```
+* Attach default image (currently 'apple.jpg' - 'app/assets/images/apple.jpg' )
+```
+attach_images
+```
 
-* Database initialization
+Finally start app in the local server
 
-* How to run the test suite
+```
+$ rails s
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Notes
+* If you have an already existing database, you might want to query all items and re-save all items.

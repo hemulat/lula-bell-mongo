@@ -1,0 +1,44 @@
+.psa-main-page {
+
+  max-width: 500px;
+  margin: auto;
+
+  .psas-wrapper {
+    max-height: 300px;
+    margin: 10px 0px;
+    overflow-y: scroll;
+  }
+
+  .psa {
+    border-top: 1px solid #f0f0f0;
+    padding: 10px;
+  }
+
+  .psa div p {
+    margin: 0px;
+  }
+
+  .psa-title p {
+    font-weight: bold;
+    display: inline;
+    float: left;
+  }
+
+  .psa-time {
+    float: right;
+
+    p {
+      font-size: 13px;
+      color: #808080;
+    }
+  }
+
+  .psa-text {
+    clear: both;
+
+    p {
+      text-align: left;
+      text-overflow: ellipsis;
+    }
+  }
+}

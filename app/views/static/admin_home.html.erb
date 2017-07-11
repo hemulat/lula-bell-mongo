@@ -1,0 +1,35 @@
+<h1>Administrative Side of Web</h2>
+  <div>
+    <div tag: checking>
+    <p><%= link_to 'Check In', '#' %></p>
+
+    <p><%= link_to 'Check Out', '#' %> </p>
+    </div>
+    <div tag: requests>
+      <p><%= link_to 'Reserve Request', '#' %></p>
+
+      <p>
+        <%= link_to 'View Item Requests', item_requests_path %>
+      </p>
+    </div>
+    <hr>
+    <div tag: Inventory>
+      <p><%= link_to 'Inventory', items_path %></p>
+    </div>
+    <p><%= link_to 'Add an Item',new_item_path%></p>
+    <hr>
+    <div tag: admins>
+      <p><%= link_to 'View Admins', admins_path %></p>
+
+      <p><%= link_to 'Add Admin', new_admin_registration_path %></p>
+    </div>
+    <div>
+      <%= link_to 'New PSA', new_psa_post_path %>
+    </div>
+
+    <div>
+      <%= link_to 'New Blog', new_blog_path %>
+    </div>
+
+
+</div>

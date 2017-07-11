@@ -1,0 +1,25 @@
+<div class="all-admins-view">
+  <table id="admins-table">
+    <tr>
+      <th>Admin Email</th>
+      <th>Superadmin Privileges</th>
+      <th>&nbsp;</th>
+    </tr>
+    <% @admins.each do |admin| %>
+      <tr>
+        <td><%= admin.email %></td>
+        <% if admin.superadmin %>
+          <td>Yes</td>
+        <% else %>
+          <td>No</td>
+        <% end %>
+        <% if current_admin.superadmin %>
+          <td><%= link_to "Remove", admin_path(admin),
+                  method: :delete,
+                  data: { confirm: "Are you sure you want to delete this account?" } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= link_to "Back", static_admin_home_path %>
+</div>
