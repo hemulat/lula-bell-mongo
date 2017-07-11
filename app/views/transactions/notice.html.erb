@@ -12,10 +12,9 @@
   <table class="listing"  >
     <tr class="header">
       <th>Student ID</th>
-      <th>Student Email</th>
       <th>Item ID</th>
       <th>Pick-up Date</th>
-      <th>Return Date</th>
+      <th>Due Date</th>
       <th>Rental Returned On:</th>
       <th>Actions</th>
     </tr>
@@ -23,7 +22,6 @@
       <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.student_id %></td>
-        <td><%= transaction.email %></td>
         <td><%= transaction.item_id %></td>
         <td><%= transaction.start_date %></td>
         <td><%= transaction.end_date %></td>

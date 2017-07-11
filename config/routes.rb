@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :transactions, except:[:show, :index] do
+  resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get :display
       get :notice
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get :delete
     end
   end
-  
+
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
                       controllers: { registrations: "registrations" }
