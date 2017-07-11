@@ -11,19 +11,27 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #e2e8ee;
   overflow-x: hidden;
   padding-top: 100px;
+    #category{
+      font-size: 18px;
+    }
+
+    #subcategory{
+      padding-left:50px;
+      font-size: 12px;
+    }
 
     a {
       padding: 8px 8px 8px 32px;
       text-decoration: none;
       font-size: 18px;
-      color: #818181;
+      color: #1775d3;
       display: block;
-      transition: 0.3s;
+      transition: 0.5s;
       &:hover, .offcanvas &:focus{
-        color: #f1f1f1;
+        color: #022b50;
       }
   }
 }

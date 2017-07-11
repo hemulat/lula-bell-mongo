@@ -1,6 +1,21 @@
+$(window).scroll(function(){
+  var st = $(this).scrollTop(),
+    winH = $(this).height(),
+    add=100,
+    posCart= $('#cart-container').position().top;
+    if(st + winH >= posCart + add){
+      $('#cart-container').stop().animate({opacity:1, marginTop:10},3500);
+      $( "#cart" ).animate({ left: 4000},{duration: 3000,
+    step: function( now, fx ){
+          $( "#cart" ).css( "left", now );
+        }
+      })
+    }else{
+        $('#cart-container').css({opacity:0, marginTop:0},'slow');
+    }
+});
 
-//Code below causes all p tags to fade into the page when you scroll
-//$(window).scroll(function(){
+$(window).scroll(function(){
 var st = $(this).scrollTop(),
     winH = $(this).height(),
     /* you can set this add,
@@ -13,6 +28,7 @@ var st = $(this).scrollTop(),
 
 $('div').each(function(){
     var pos = $(this).position().top;
+
     if(st + winH >= pos + add){
         $(this).stop().animate({opacity:1, marginTop:10},'fast');
     }else{
@@ -20,8 +36,3 @@ $('div').each(function(){
     }
 });
 });
-
-//Code below will make there be a shopping cart through 2nd toolbar
-function moveCart(){
-
- }
