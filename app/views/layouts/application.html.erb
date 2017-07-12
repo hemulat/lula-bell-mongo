@@ -66,17 +66,20 @@
   </head>
 
   <body>
-  <% if notice && notice != "" %>
-    <div class="alert alert-success"><%= notice %></div>
-  <% end %>
-  <% if alert && alert != "" %>
-    <div class="alert alert-danger"><%= alert %></div>
-  <% end %>
-
-  <%= yield %>
-
+    <% if notice && notice != "" %>
+      <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert && alert != "" %>
+      <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <%= alert %>
+      </div>
+    <% end %>
+    <%= yield %>
   </body>
-  <%= debug(params) if Rails.env.development? %>
   <footer>
         <div class="container">
             <p>&copy; 2017 Lula Bell Resource Center. All Rights Reserved.</p>

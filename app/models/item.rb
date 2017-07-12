@@ -19,7 +19,7 @@ class Item
 
 
   def options
-    {_status: ["Checked Out", "In Laundray", "Available"]}
+    {_status: ["Checked Out", "In Laundry", "Available"]}
   end
 
   protected
@@ -43,6 +43,13 @@ end
 
 class Kitchen < Item
 end
+
+class Hygiene < Item
+end
+
+class Cleaning < Item
+end
+
 
 class Clothing < Item
   field :type, type: String
@@ -86,11 +93,6 @@ class Food < Kitchen
   end
 end
 
-class Hygiene < Item
-end
-
-class Cleaning < Item
-end
 
 
 class Book < SchoolSupply
