@@ -12,12 +12,12 @@
         </tr>
           <% @item_requests.reverse.each do |request|%>
         <tr>
-          <td><%= request.created_at.to_time.strftime('%B %e %Y at %l:%M %p') %></td>
+          <td><%= request.created_at.strftime('%m/%d/%Y %H:%M:%S %p') %></td>
           <td><%= request.studentID%></td>
-          <td><%=request.title %></td>
-          <td><%=request.description %></td>
-          <td><%=link_to 'Delete', item_requests_path(request) , method: :delete,
-                  data: { confirm: 'Are you sure?' } %></td>
+          <td><%= request.title %></td>
+          <td><%= request.description %></td>
+          <td><%= button_to 'Delete', item_request_path(request), method: :delete,
+                  data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
         <%end%>
       </table>

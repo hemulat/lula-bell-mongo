@@ -1,14 +1,8 @@
+
 <h1>Blog Posts</h1>
-<div class="well">
-  <%= link_to "New Blog", new_blog_path, class: "btn btn-primary" %>
-</div>
 
-<% if flash[:notice] %>
-  <div class="alert alert-success"><%= flash[:notice] %></div>
-<% end %>
 
-<table class="table table-bordered table-striped">
-  <thead>
+<table class="table table-bordered table-striped" id="form">
     <tr>
       <th>Title</th>
       <th>Content</th>
@@ -17,9 +11,8 @@
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
-  </thead>
-  <tbody>
-      <% @blogs.each do |blog| %>
+
+    <% @blogs.reverse.each do |blog| %>
         <tr>
           <td><%= blog.title %></td>
           <td><%= blog.content %></td>
@@ -29,10 +22,12 @@
             <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-default" %>
           </td>
           <td>
-            <%= button_to "Delete", blog, method: :delete, data: { confirm: "Are you sure you wish to delete #{blog.title}?" }, class: "btn btn-danger" %>
+            <%= button_to "Delete", blog, method: :delete,
+            data: { confirm: "Are you sure you wish to delete #{blog.title}?" },
+             class: "btn btn-danger" %>
           </td>
         </tr>
 
     <% end %>
-  </tbody>
+
 </table>
