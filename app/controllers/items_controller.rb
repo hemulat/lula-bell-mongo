@@ -70,9 +70,7 @@ class ItemsController < ApplicationController
     if @item.update(valid_features(@item.class))
       redirect_to action: 'show', id:  @item._id
     else
-      # can add flash messages here if update fails
-      redirect_to items_path
-    end
+    render 'edit'
 
   end
 
