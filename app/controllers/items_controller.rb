@@ -56,8 +56,9 @@ class ItemsController < ApplicationController
     @item._sku = @item.class.next_sku
     if @item.save
       redirect_to action: 'show', id:  @item._id
+    else
+      render 'new'
     end
-    render 'new'
   end
 
   def edit
@@ -67,10 +68,12 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
+    @item_details = get_feature_type(@item)
     if @item.update(valid_features(@item.class))
       redirect_to action: 'show', id:  @item._id
+    else
+      render 'edit'
     end
-    render 'edit'
 
   end
 
