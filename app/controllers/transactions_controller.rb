@@ -54,11 +54,8 @@ class TransactionsController < ApplicationController
   def check_out
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
-
-    unless @item.rentable   
-      @transaction.skip_date_validation = true
-    end
   end
+  
   private
   def transaction_params
     params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
