@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     if @item.update(valid_features(@item.class))
       redirect_to action: 'show', id:  @item._id
-    else
+    end
     render 'edit'
 
   end
