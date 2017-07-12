@@ -56,10 +56,8 @@ class ItemsController < ApplicationController
     @item._sku = @item.class.next_sku
     if @item.save
       redirect_to action: 'show', id:  @item._id
-    else
-      # can add flash messages here if update fails
-      redirect_to items_path
     end
+    render 'new'
   end
 
   def edit
