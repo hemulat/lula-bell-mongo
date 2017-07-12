@@ -5,7 +5,7 @@ class Item
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
-  field :_sku, type: String
+  field :_SKU, type: String
   field :_status, type: String, default: "Available"
 
 
