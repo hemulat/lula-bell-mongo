@@ -13,6 +13,7 @@
       <th>Title</th>
       <th>Content</th>
       <th>Image</th>
+      <th>URL</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -23,6 +24,7 @@
           <td><%= blog.title %></td>
           <td><%= blog.content %></td>
           <td><%= image_tag blog.image.url(:thumb)%></td>
+          <td><%= blog.url%></td>
           <td>
             <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-default" %>
           </td>

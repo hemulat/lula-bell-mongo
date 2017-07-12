@@ -19,7 +19,7 @@ class Item
 
 
   def options
-    {_status: ["Checked Out", "In Laundray", "Available"]}
+    {_status: ["Checked Out", "In Laundry", "Available"]}
   end
 
   protected
