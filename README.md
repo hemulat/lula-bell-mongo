@@ -67,4 +67,3 @@ $ rails c
 >> load 'app/scripts/populateDB.rb'
 >> repopulate_all
 ```
-```
