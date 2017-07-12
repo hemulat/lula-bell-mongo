@@ -19,7 +19,7 @@ class ItemRequestsController < ApplicationController
 
     def create
       @item_request = ItemRequest.new(item_params)
-    
+
       if @item_request.save
         redirect_to @item_request
       else
