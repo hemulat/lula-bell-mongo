@@ -7,15 +7,15 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.available
-    @categories = Item.subclasses.map{|i| i.name} #get_sub(Item)
+    @categories = get_sub(Item)
   end
 
   def select
     @curr_class = curr_selection
     @choices = get_choices(@curr_class)
 
-    if @choices.empty? # can add flash messages here
-       redirect_to items_new, class: @curr_class.name
+    if @choices.empty?
+       redirect_to "/items/new/#{@curr_class.name}"
     end
   end
 
@@ -25,17 +25,24 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       @items = get_search_results(query)
-      @categories = Item.subclasses.map{|i| i.name}
+      @categories = get_sub(Item)
     end
   end
 
   def show
     @item = Item.find(params[:id])
+    @features = get_features(@item.class)
+    @features.delete("name")
+    @features.delete("description")
+    if !admin_signed_in?
+      @features.delete("rentable")
+      @features.delete("reservable")
+    end
   end
 
   def category
     @items = get_class_name(params[:class]).available
-    @categories = Item.subclasses.map{|i| i.name}
+    @categories = get_sub(Item)
   end
 
   def new
@@ -90,18 +97,26 @@ class ItemsController < ApplicationController
     end
 
     def change_delimiter(str,d1 = " ", d2= "")
+      # Given a string, replaces 'd1'(default spaces) with 'd2'(default empty)
       str.split(d1).join(d2)
     end
 
     def get_class_name(str)
-      begin
-        return Object.const_defined?(str) ? str.constantize : Item
-      rescue
-        return Item
+      '''
+      Changes a given string to one of the valid Item models
+      '''
+      if (Item.descendants.map { |i| i.name }).include? str
+        str.constantize
+      else
+        Item
       end
     end
 
     def curr_selection
+      '''
+      Return a class form params hash. If params hash doesnt have :items keys
+      return Item class
+      '''
       param_val = params[:item]
       if (param_val == nil)
         return Item
@@ -110,19 +125,27 @@ class ItemsController < ApplicationController
     end
 
     def get_choices(class_name)
+      '''
+      Given a class name get a list of all subclass names
+      '''
       class_name.subclasses.map {|i| i.name.titleize}
     end
 
     def get_features(class_name)
+      '''
+      Given a class name (Item model) get all the fields that need to be filled
+      '''
       # ignore internal fields kept by mongoid and fields kept by paperclip
       class_name.fields.keys.select do |field|
         field[0] != "_" && field.split("_")[0] != "image"
       end
     end
 
-
-
     def get_feature_type(class_name)
+      '''
+      Given a class name (Item model) get all the fields that need to be filled,
+      along with their data types.
+      '''
       class_features = get_features(class_name)
       all_fields = class_name.fields
       final_map = {}
@@ -131,17 +154,26 @@ class ItemsController < ApplicationController
     end
 
     def valid_features(class_name)
+      '''
+      Permit non-array valid features for a given class in that params hash
+      '''
       permitted_features = get_features(class_name).push(:image)
       a = params.require(:item).permit(*permitted_features)
       return a
     end
 
     def get_array(field_name)
+      '''
+      Permit array type valid features given the field name
+      '''
       restriction_param = params.require(:item).permit(field_name => [])
       restriction_param[field_name]
     end
 
     def get_item
+      '''
+      Create an item from params fields (permitting only valid features)
+      '''
       class_name = get_class_name(params[:class])
       item = class_name.new(valid_features(class_name))
       features = get_feature_type(class_name)
@@ -149,10 +181,12 @@ class ItemsController < ApplicationController
       return item
     end
 
+    # Gets search query
     def get_query
       params[:query]
     end
 
+    # Gets all features from all subclasses of Item
     def get_all_features
       categories = Item.descendants
       features = []
@@ -164,22 +198,24 @@ class ItemsController < ApplicationController
       return features
     end
 
+    # Queries database with single word
     def query_db(word)
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
       results = Item.where({features[0] => /#{word}/i})
       features.drop(1).each do |feature|
-        results = results | Item.where({feature => /#{word}/i})
+        results = Item.or(results.selector, Item.where({feature => /#{word}/i}).selector)
       end
       return results
     end
 
+    # Queries database with multiple words
     def get_search_results(query)
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
-        results = results & query_db(word)
+        results = Item.and(results.selector, query_db(word).selector)
       end
       return results
     end

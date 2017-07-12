@@ -1,5 +1,7 @@
 class BlogsController < ApplicationController
-  def index
+
+  before_action :authorize_admin, except: :index
+    def index
       @blogs=Blog.all
     end
 
