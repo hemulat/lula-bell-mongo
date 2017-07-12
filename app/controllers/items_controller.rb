@@ -57,8 +57,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to action: 'show', id:  @item._id
     else
-      # can add flash messages here if update fails
-      redirect_to items_path
+      render 'new'
     end
   end
 
@@ -69,16 +68,19 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
+    @item_details = get_feature_type(@item)
     if @item.update(valid_features(@item.class))
       redirect_to action: 'show', id:  @item._id
     else
-      # can add flash messages here if update fails
-      redirect_to items_path
+      render 'edit'
     end
 
   end
 
   def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to items_path
   end
 
   private
