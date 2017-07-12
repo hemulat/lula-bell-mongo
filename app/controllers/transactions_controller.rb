@@ -55,8 +55,8 @@ class TransactionsController < ApplicationController
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
 
-    unless @item.rentable
-      @transaction.skip_end_validation = true
+    unless @item.rentable   
+      @transaction.skip_date_validation = true
     end
   end
   private

@@ -11,11 +11,11 @@ class Transaction
   belongs_to :item
 
   #method to skip end date validation
-  attr_accessor :skip_end_validation
+  attr_accessor :skip_date_validation
 
   validates_presence_of :student_id
   validates_confirmation_of :student_id
   validates_presence_of :start_date
-  validates_presence_of :end_date, :on => create, unless: :skip_end_validation
+  validates :end_date, presence: true, :unless => :skip_date_validation
 
 end
