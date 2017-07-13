@@ -66,16 +66,16 @@
   </head>
 
   <body>
-    <% if notice && notice != "" %>
+    <% if flash[:notice] && flash[:notice] != "" %>
       <div class="alert alert-success alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= notice %>
+        <%= flash[:notice] %>
       </div>
     <% end %>
-    <% if alert && alert != "" %>
+    <% if flash[:alert] && flash[:alert] != "" %>
       <div class="alert alert-danger alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= alert %>
+        <%= flash[:alert] %>
       </div>
     <% end %>
     <%= yield %>

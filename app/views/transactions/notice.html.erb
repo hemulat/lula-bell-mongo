@@ -1,11 +1,4 @@
 <%= link_to("<<Back to AdminHome", {:controller => 'static', :action => 'admin_home'}, :class => 'back-link')%>
-
-<% if !flash[:notice].blank? %>
-  <div>
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-
 <div class="transactions notice">
   <h2>Transaction Log</h2>
 

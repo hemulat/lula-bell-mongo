@@ -4,7 +4,7 @@ class Transaction
   include Mongoid::Attributes::Dynamic
   field :student_id, type: Integer
   field :email, type: String
-  field :start_date, type: DateTime
+  field :start_date, type: DateTime, default: proc {DateTime.now}
   field :end_date, type: DateTime
   field :return_date, type: DateTime
 

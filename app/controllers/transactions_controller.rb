@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      flash[:notice] = "Check out failed."
+      flash[:alert] = "Check out failed."
       redirect_to(:action => 'display')
     end
   end
@@ -55,7 +55,7 @@ class TransactionsController < ApplicationController
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
   end
-  
+
   private
   def transaction_params
     params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
