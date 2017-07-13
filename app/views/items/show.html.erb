@@ -16,9 +16,9 @@
         <% end %>
       </div>
       <% if admin_signed_in? %>
-        <div class="edit-button">
-          <%=link_to "Edit Item", edit_item_path(@item)%>
-        </div>
+
+        <%=link_to "Edit Item", edit_item_path(@item), class: 'btn btn-info'%>
+        <%= link_to "Check Out", check_out_transaction_path(@item.id), class: 'btn btn-info'%>
       <% end %>
     </div>
     <div class="left-column">
