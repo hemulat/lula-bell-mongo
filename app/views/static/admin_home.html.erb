@@ -4,7 +4,7 @@
     <div tag: checking>
     <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
 
-    <p><%= link_to("Check Out", {:controller => 'transactions', :action => 'display'}) %> </p>
+    <p><%= link_to("Check Out", items_path, notice: "Search for the item you want to checkout") %> </p>
     </div>
     <hr />
     <div tag: requests>

@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
-      get :display
       get :notice
     end
     member do

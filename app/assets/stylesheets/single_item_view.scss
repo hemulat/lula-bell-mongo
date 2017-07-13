@@ -18,27 +18,6 @@
     clear: left;
   }
 
-  .reserve-button {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .reserve-button a {
-    display: block;
-    background-color: #2095F2;
-    padding: 10px 12px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 6px;
-  }
-
-  .reserve-button a:hover {
-    background-color: #1a80d1;
-  }
-
   .left-column h5 {
     margin-top: 20px;
     text-align: center;
@@ -65,47 +44,6 @@
   .item-features {
     font-size: 16px;
     margin-bottom: 40px;
-  }
-
-  .delete-button {
-    float: left;
-    width: 50%;
-    justify-content: center;
-    //align-items: center;
-  }
-
-  .delete-button, .edit-button {
-    display: flex;
-    //align-items: center;
-    //justify-content: center;
-  }
-
-  .delete-button a, .edit-button a {
-    display: block;
-    padding: 10px 12px;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 6px;
-    border: 1px solid black;
-  }
-
-  .delete-button a {
-    background-color: #d9534f;
-    color: #fff;
-  }
-
-  .edit-button a {
-    background-color: #f9f9f9;
-    color: #000000;
-  }
-
-  .delete-button a:hover {
-    background-color: #e50000;
-  }
-
-  .edit-button a:hover {
-    background-color: #a9a9a9;
-    color: #fff;
   }
 
   .links {

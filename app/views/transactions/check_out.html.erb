@@ -1,37 +1,21 @@
-<%= link_to("<<Back to Check Out",{:controller => 'transactions', :action => 'display'}, :class => 'back-link')%>
+<%= link_to("<< Back to Item",item_path(@item.id), :class => 'back-link')%>
 
-<div class="transactions display">
-  <h2>Check Out!</h2>
+  <div id="form">
+    <h2>Check Out!</h2>
+    <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
 
-  <%= render(:partial => 'info') %>
-
-  <%= form_for(@transaction, :url => transactions_path, :method => 'post') do |f| %>
-    <table>
-      <tr>
-        <th>Student ID</th>
-        <td><%= f.text_field(:student_id) %></td>
-      </tr>
+        <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
       <!--<tr>
         <th>Confirm Student ID</th>
         <td><%#= f.text_field(:student_id_confirmation) %></td>
       </tr> -->
-      <tr>
-        <th>Object ID</th>
-        <td><%= f.text_field(:item_id, :value => "#{@item.id}", :readonly => true) %></td>
-      </tr>
-      <tr>
-        <th>Start Date</th>
-        <td><%= f.date_field(:start_date, :order => [:month, :day, :year]) %></td>
-      </tr>
+
+      <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
+      <%= f.input :start_date, label: "Start Date",as: :date, order: [:month, :day, :year] %>
       <% if @item.rentable%>
-        <tr>
-          <th>End Date</th>
-          <td><%= f.date_field(:end_date, :order => [:month, :day, :year]) %></td>
-        </tr>
+        <%= f.input :end_date, label: "End Date",as: :date, order: [:month, :day, :year] %>
       <% end %>
-    </table>
-    <div class="form-buttons">
-      <%= f.submit("Check Out") %>
+      <%= f.submit "Check Out", class: "btn btn-success" %>
     </div>
 
   <% end %>
