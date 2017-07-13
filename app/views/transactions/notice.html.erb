@@ -20,13 +20,9 @@
         <td>&nbsp&nbsp</td>
         <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
         <% if transaction.item.rentable %>
-          <% if transaction.end_date == nil %>
-            <td>&nbsp&nbsp</td>
-          <% else %>
             <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
-          <% end %>
           <% if transaction.return_date == nil %>
-            <td>&nbsp&nbsp</td>
+            <td style='color:red;'>Item not returned</td>
           <% else %>
             <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
           <% end %>

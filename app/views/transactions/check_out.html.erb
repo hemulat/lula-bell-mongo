@@ -5,18 +5,11 @@
     <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
 
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
-      <!--<tr>
-        <th>Confirm Student ID</th>
-        <td><%#= f.text_field(:student_id_confirmation) %></td>
-      </tr> -->
-
-      <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
-      <%= f.input :start_date, label: "Start Date",as: :date, order: [:month, :day, :year] %>
-      <% if @item.rentable%>
-        <%= f.input :end_date, label: "End Date",as: :date, order: [:month, :day, :year] %>
-      <% end %>
-      <%= f.submit "Check Out", class: "btn btn-success" %>
-    </div>
-
-  <% end %>
-</div>
+        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
+        <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
+        <% if @item.rentable%>
+          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+        <% end %>
+        <%= f.submit "Check Out", class: "btn btn-success" %>
+    <% end %>
+  </div>
