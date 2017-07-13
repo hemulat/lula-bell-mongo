@@ -1,25 +1,21 @@
-// var sidebarLink= document.getElementById("category");
-// var item_container=document.getElementById("category-content");
+var sidebarLink= document.getElementById("testbutton");
+var item_container=document.getElementById("category-content");
 
-var ourRequest=new XMLHttpRequest();
+
+sidebarLink.addEventListener("click", function(){
+  var ourRequest=new XMLHttpRequest();
+  ourRequest.open("GET", gon.items,true );
+  ourRequest.onload=function() {
+    var ourData= gon.items;
+    console.log(gon.items);
+    renderHTML(ourData);
+    };
+  ourRequest.send();
+ });
+
+
+function renderHTML(data){
+  var HTMLtag="testing this ajax";
+  item_container.insertAdjacentHTML('beforeend', HTMLtag);
+};
 // console.log(gon.items);
-
-ourRequest.open("GET", gon.items,true );
-
-ourRequest.onload=function() {
-  var ourData= gon.items;
-  console.log(gon.items);
-  // renderHTML(ourData);
-  };
-// var item_info= $('#item_display').data('item')
-
-ourRequest.send();
-console.log(gon.items);
-// });
-
-// sidebarLink.addEventListener("click", function(){
-
-
-// function renderHTML(data){
-//   item_container.insertAdjacentHTML('beforeend', 'testing123')
-// }
