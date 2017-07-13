@@ -15,14 +15,21 @@ sidebarLink.addEventListener("click", function(){
 
 
 function renderHTML(data){
-  var htmlString="hi";
+  var htmlString="";
 
   for (i=0; i<data.length; i++){
-
-
-
-
-
+    htmlString+=
+      "<div class=\"row\">"
+          +"<div class=\"col-sm-6 col-md-2\">" +
+            "<div class=\"thumbnail\">"
+              +"<a href=\"items\\" +data._id.$oid+ "\">Link"
+                +"<div class=\"caption\">"
+                  +data.name +"<br>"
+                  + "</div>"
+              +"</a>"
+            +"</div>"
+          +"</div>"
+        +"</div>"
   }
 
   item_container.insertAdjacentHTML('beforeend', htmlString);
