@@ -49,40 +49,38 @@
 
                 <%= text_field_tag :query, params[:query], class: "search-query form-control", placeholder: "Search"%>
                   <%= submit_tag "Submit", name: nil, class: "btn btn-default" %>
-
             <% end %>
           </li>
         </ul>
-
-
+      </div>
     </div>
-  </div>
-</nav>
+    </nav>
+
     <title>LulaBell</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <% if notice && notice != "" %>
+    <% if flash[:notice] && flash[:notice] != "" %>
       <div class="alert alert-success alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= notice %>
+        <%= flash[:notice] %>
       </div>
     <% end %>
-    <% if alert && alert != "" %>
+    <% if flash[:alert] && flash[:alert] != "" %>
       <div class="alert alert-danger alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= alert %>
+        <%= flash[:alert] %>
       </div>
     <% end %>
     <%= yield %>
   </body>
   <footer>
         <div class="container">
-            <p>&copy; 2017 Lula Bell Resource Center. All Rights Reserved.</p>
+            <p>&copy; 2017 Lula Bell's Resource Center. All Rights Reserved.</p>
             <ul class="list-inline">
                 <li>
                     <a href="#">About Us</a>

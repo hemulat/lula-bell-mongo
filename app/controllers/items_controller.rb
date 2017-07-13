@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   def create
     @item = get_item
     @item_details = get_feature_type(@item)
-    @item._sku = @item.class.next_sku
+    @item._SKU = @item.class.next_sku
     if @item.save
       redirect_to action: 'show', id:  @item._id
     else
