@@ -1,19 +1,13 @@
-<%= link_to("<<Return to Reservation List",reserves_path, :class => 'back-link')%>
-
-<div class="reserves notice">
-  <h2>Check In!</h2>
-
-  <%= form_for(@reserve, :url => reserves_path(@reserve), :method => 'patch') do |f| %>
-
+<%= form_for(@reserve, :url => reserves_path, :method => 'post') do |f| %>
   <table>
     <tr>
       <th>Item ID</th>
-      <td><%= f.text_field(:item_id, :readonly => true) %></td>
+      <td><%= f.text_field(:item_id, :value => "#{@item.id}", :readonly => true) %></td>
     </tr>
     <% if defined? @item.qty_id %>
     <tr>
       <th>Qty ID</th>
-      <td><%= f.text_field(:qty_id, :readonly => true) %></td>
+      <td><%= f.text_field(:qty_id, :value => "#{@item.qty_id}", :readonly => true) %></td>
     </tr>
     <% end %>
     <tr>
@@ -33,8 +27,3 @@
       <td><%= f.date_field(:end_date, :order => [:month, :day, :year]) %></td>
     </tr>
   </table>
-  <div class="form-buttons">
-    <%= f.submit("Update") %>
-  </div>
-  <% end %>
-</div>

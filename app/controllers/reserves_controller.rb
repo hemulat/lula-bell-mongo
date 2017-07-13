@@ -29,10 +29,21 @@ class ReservesController < ApplicationController
   end
 
   def edit
+    @reserve = Reserve.find(params[:id])
   end
 
   def update
-
+    #Find a new object using form parameters
+    @reserve = Reserve.find(params[:id])
+    #Update the object
+    if @reserve.update_attributes(reserve_params)
+      #If save succeeds, redirect to the show action
+      flash[:notice] = "Transaction updated successfully."
+      redirect_to(:action => 'index')
+    else
+      #If save fails, redisplay the form so user can fix problems
+      render('edit') # this renews the form template
+    end
   end
 
   def delete

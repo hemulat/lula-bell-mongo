@@ -24,6 +24,7 @@
         <td><%= reserve.end_date.strftime("%a, %B %d, %Y") %></td>
         <td class="actions">
           <%= link_to("Details", reserf_path(reserve.id), :class => 'action show')%>
+          <%= link_to("Edit", edit_reserf_path(reserve), :class => 'action edit')%>
           <%= link_to("Check Out", {:controller => 'transactions',:action => 'check_out', :id => reserve.item_id}, :class => 'action check_out')%>
           <%= link_to("Delete", '#', :class => 'action delete') %>
         </td>
