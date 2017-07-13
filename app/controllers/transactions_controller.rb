@@ -21,7 +21,7 @@ class TransactionsController < ApplicationController
     else
       #If save fails, redisplay the form so user can fix problems
       flash[:notice] = "Check out failed.
-      Please provide Student Id and Date(s)."
+      Please provide 9-digit Student Id and Date(s)."
       redirect_to(:action => 'display')
     end
   end
