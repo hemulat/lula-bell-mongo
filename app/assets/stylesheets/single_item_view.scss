@@ -64,28 +64,48 @@
 
   .item-features {
     font-size: 16px;
+    margin-bottom: 40px;
   }
 
-  .edit-button {
-    display: flex;
-    align-items: center;
+  .delete-button {
+    float: left;
+    width: 50%;
     justify-content: center;
-    margin-top: 40px;
+    //align-items: center;
   }
 
-  .edit-button a {
+  .delete-button, .edit-button {
+    display: flex;
+    //align-items: center;
+    //justify-content: center;
+  }
+
+  .delete-button a, .edit-button a {
     display: block;
-    background-color: #ffffff;
     padding: 10px 12px;
-    color: #000000;
     text-decoration: none;
     font-size: 20px;
     border-radius: 6px;
     border: 1px solid black;
   }
 
+  .delete-button a {
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  .edit-button a {
+    background-color: #f9f9f9;
+    color: #000000;
+  }
+
+  .delete-button a:hover {
+    background-color: #e50000;
+  }
+
   .edit-button a:hover {
-    background-color: #f7f7f7;
+    background-color: #a9a9a9;
+    color: #fff;
   }
 
   .links {
