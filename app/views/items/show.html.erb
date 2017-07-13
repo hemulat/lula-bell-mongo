@@ -16,8 +16,13 @@
         <% end %>
       </div>
       <% if admin_signed_in? %>
+        <div class="delete-button">
+          <%= link_to "Delete", item_path(@item),
+                               method: :delete,
+                               data: { confirm: "Are you sure?" } %>
+        </div>
         <div class="edit-button">
-          <%=link_to "Edit Item", edit_item_path(@item)%>
+          <%=link_to "Edit Item", edit_item_path(@item), class: "btn btn-outline-danger"%>
         </div>
       <% end %>
     </div>
@@ -30,10 +35,5 @@
   </div>
   <div class="links">
     <%= link_to "Back", :back %>
-    <% if admin_signed_in? %>
-       | <%= link_to "Delete", item_path(@item),
-                            method: :delete,
-                            data: { confirm: "Are you sure?" } %>
-    <% end %>
   </div>
 </div>
