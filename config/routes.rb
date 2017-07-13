@@ -39,7 +39,6 @@ Rails.application.routes.draw do
 
   resources :item_requests
 
-  post '/psa_posts', to: 'psa_posts#create'
-  get '/psa_posts/new', to: 'psa_posts#new', as: :new_psa_post
+  resources :psa_posts
 
 end
