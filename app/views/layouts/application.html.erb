@@ -49,20 +49,18 @@
 
                 <%= text_field_tag :query, params[:query], class: "search-query form-control", placeholder: "Search"%>
                   <%= submit_tag "Submit", name: nil, class: "btn btn-default" %>
-
             <% end %>
           </li>
         </ul>
-
-
+      </div>
     </div>
-  </div>
-</nav>
+    </nav>
+
     <title>LulaBell</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
