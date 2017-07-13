@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'reserves/index'
-
-  get 'reserves/show'
-
-  get 'reserves/new'
-
-  get 'reserves/create'
-
-  get 'reserves/edit'
-
-  get 'reserves/delete'
+  get 'reserves/index', to: 'reserves#index'
+  get 'reserves/confirm', to: 'reserves#confirm'
+  resources :reserves do
+    member do
+      get :delete
+    end
+  end
 
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do

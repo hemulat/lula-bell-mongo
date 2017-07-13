@@ -24,7 +24,7 @@
     <div class="left-column">
       <h5>This item is currently <span>available</span>.</h5>
       <div class="reserve-button">
-        <a href="#">Reserve</a>
+        <%= link_to("Reserve", {:controller => 'reserves', :action => 'new',:id => @item.id})%>
       </div>
     </div>
   </div>

@@ -6,6 +6,11 @@ class ReservesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get confirm" do
+    get reserves_confirm_url
+    assert_response :success
+  end
+
   test "should get show" do
     get reserves_show_url
     assert_response :success
