@@ -1,5 +1,5 @@
 <div id="form">
-
+<%= render 'shared/error_msg'%>
 <%= simple_form_for :item, method: yield(:form_method),
                     url: {action: yield(:form_action)} do |form| %>
   <% process_types(@item_details, @item).each do |feature,details| %>

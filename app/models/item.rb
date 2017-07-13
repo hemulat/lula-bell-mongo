@@ -45,6 +45,13 @@ end
 class Kitchen < Item
 end
 
+class Hygiene < Item
+end
+
+class Cleaning < Item
+end
+
+
 class Clothing < Item
   field :type, type: String
   field :color, type: String
@@ -87,11 +94,6 @@ class Food < Kitchen
   end
 end
 
-class Hygiene < Item
-end
-
-class Cleaning < Item
-end
 
 
 class Book < SchoolSupply
