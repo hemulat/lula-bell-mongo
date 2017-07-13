@@ -15,7 +15,10 @@ sidebarLink.addEventListener("click", function(){
 
 
 function renderHTML(data){
-  var HTMLtag="testing this ajax";
-  item_container.insertAdjacentHTML('beforeend', HTMLtag);
+  var htmlString="hello";
+
+
+
+  item_container.insertAdjacentHTML('beforeend', htmlString);
 };
 // console.log(gon.items);
