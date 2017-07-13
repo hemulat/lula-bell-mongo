@@ -20,7 +20,8 @@ class TransactionsController < ApplicationController
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      flash[:notice] = "Check out failed."
+      flash[:notice] = "Check out failed.
+      Please provide Student Id and Date(s)."
       redirect_to(:action => 'display')
     end
   end
