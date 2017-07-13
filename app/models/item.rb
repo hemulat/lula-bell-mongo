@@ -8,7 +8,8 @@ class Item
   field :_SKU, type: String
   field :_status, type: String, default: "Available"
 
-
+  has_many :transactions
+  
   scope :available, -> {where(_status: "Available")}
 
   validates_presence_of :name

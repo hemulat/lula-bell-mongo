@@ -1,0 +1,30 @@
+<%= link_to("<<Back to Check In",{:controller => 'transactions', :action => 'notice'}, :class => 'back-link')%>
+
+<div class="transactions notice">
+  <h2>Check In!</h2>
+
+  <%= form_for(@transaction, :url => transaction_path(@transaction), :method => 'patch') do |f| %>
+    <table>
+      <tr>
+        <th>Student ID</th>
+        <td><%= f.text_field(:student_id, :readonly => true) %></td>
+      </tr>
+      <tr>
+        <th>Pick-up Date</th>
+        <td><%= f.date_field(:start_date, :order => [:month, :day, :year], :readonly => true) %></td>
+      </tr>
+      <tr>
+        <th>Return Date</th>
+        <td><%= f.date_field(:end_date, :order => [:month, :day, :year], :readonly => true) %></td>
+      </tr>
+      <tr>
+        <th>Item Returned On</th>
+        <td><%= f.date_field(:return_date, :order => [:month, :day, :year]) %></td>
+      </tr>
+    </table>
+    <div class="form-buttons">
+      <%= f.submit("Check In") %>
+    </div>
+
+  <% end %>
+</div>

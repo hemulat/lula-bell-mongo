@@ -2,9 +2,9 @@
 <h1>Administrative Side of Web</h1>
   <div id="administration">
     <div tag: checking>
-    <p><%= link_to 'Check In', '#' %></p>
+    <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
 
-    <p><%= link_to 'Check Out', '#' %> </p>
+    <p><%= link_to("Check Out", {:controller => 'transactions', :action => 'display'}) %> </p>
     </div>
     <hr />
     <div tag: requests>

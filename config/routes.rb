@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+
+  resources :transactions, except:[:show, :index, :new, :edit] do
+    collection do
+      get :display
+      get :notice
+    end
+    member do
+      get :check_in
+      get :check_out
+      get :delete
+    end
+  end
+
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
                       controllers: { registrations: "registrations" }
@@ -9,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :blogs
+
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
