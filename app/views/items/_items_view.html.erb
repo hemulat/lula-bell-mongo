@@ -1,6 +1,6 @@
 <div class = "all-category-content"> <!-- need this class to add top margin -->
   <%= render 'sidebar'%>
-  <div class = 'category-content'> <!-- need this class to add left margin -->
+  <div class = 'category-content'id="category-content"> <!-- need this class to add left margin -->
     <% if @items.empty? %>
       <h4>Hmm, looks like there's nothing here...</h4>
     <% else %>
@@ -20,4 +20,5 @@
       </div>
     <% end %>
   </div>
+
 </div>

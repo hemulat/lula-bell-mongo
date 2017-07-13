@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.available
+    gon.items= Item.available
     @categories = get_sub(Item)
   end
 
