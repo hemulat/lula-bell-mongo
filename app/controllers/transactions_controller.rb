@@ -1,4 +1,7 @@
 class TransactionsController < ApplicationController
+
+  before_action :authorize_admin
+
   def display
     @items = Item.all
   end
