@@ -37,16 +37,13 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def delete
-    @transaction = Transaction.find(params[:id])
-  end
-
   def destroy
     @transaction = Transaction.find(params[:id])
-    @transaction.destroy
-
-    flash[:notice] = "Transaction destroyed successfully."
-    redirect_to(:action => 'notice')
+    if @transaction.destroy
+      redirect_to transactions_path, notice: "Transaction destroyed successfully."
+    else
+      redirect_to transactions_path, alert: "Transaction could not be destroyed."
+    end
   end
 
   def check_out
