@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.available
+    gon.items = Item.available
     @categories = get_sub(Item)
   end
 
@@ -29,12 +30,28 @@ class ItemsController < ApplicationController
     end
   end
 
+  def transactions
+    @item = Item.find(params[:id])
+    @transactions = @item.transactions.order_by(:updated_at => 'desc')
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    logger.tagged("A Tag") {logger.info "#{@transactions.class}"}
+  end
+
   def show
     @item = Item.find(params[:id])
+    @features = get_features(@item.class)
+    @features.delete("name")
+    @features.delete("description")
+    if !admin_signed_in?
+      @features.delete("rentable")
+      @features.delete("reservable")
+    end
+    @categories = get_sub(Item)
   end
 
   def category
     @items = get_class_name(params[:class]).available
+    gon.items = @items
     @categories = get_sub(Item)
   end
 
@@ -46,12 +63,11 @@ class ItemsController < ApplicationController
   def create
     @item = get_item
     @item_details = get_feature_type(@item)
-    @item._sku = @item.class.next_sku
+    @item._SKU = @item.class.next_sku
     if @item.save
       redirect_to action: 'show', id:  @item._id
     else
-      # can add flash messages here if update fails
-      redirect_to items_path
+      render 'new'
     end
   end
 
@@ -62,19 +78,22 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
+    @item_details = get_feature_type(@item)
     if @item.update(valid_features(@item.class))
       redirect_to action: 'show', id:  @item._id
     else
-      # can add flash messages here if update fails
-      redirect_to items_path
+      render 'edit'
     end
 
   end
 
   def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to items_path
   end
 
-
+  private
     def get_sub(class_name)
       '''
       Recursively get a dictionary of the complete class hierarchy
@@ -88,7 +107,7 @@ class ItemsController < ApplicationController
       sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
       return sub_class_hierarchy
     end
-  private
+
     def change_delimiter(str,d1 = " ", d2= "")
       # Given a string, replaces 'd1'(default spaces) with 'd2'(default empty)
       str.split(d1).join(d2)
@@ -174,10 +193,12 @@ class ItemsController < ApplicationController
       return item
     end
 
+    # Gets search query
     def get_query
       params[:query]
     end
 
+    # Gets all features from all subclasses of Item
     def get_all_features
       categories = Item.descendants
       features = []
@@ -189,22 +210,24 @@ class ItemsController < ApplicationController
       return features
     end
 
+    # Queries database with single word
     def query_db(word)
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
       results = Item.where({features[0] => /#{word}/i})
       features.drop(1).each do |feature|
-        results = results | Item.where({feature => /#{word}/i})
+        results = Item.or(results.selector, Item.where({feature => /#{word}/i}).selector)
       end
       return results
     end
 
+    # Queries database with multiple words
     def get_search_results(query)
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
-        results = results & query_db(word)
+        results = Item.and(results.selector, query_db(word).selector)
       end
       return results
     end

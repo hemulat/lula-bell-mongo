@@ -5,10 +5,11 @@ class Item
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
-  field :_sku, type: String
+  field :_SKU, type: String
   field :_status, type: String, default: "Available"
 
-
+  has_many :transactions
+  
   scope :available, -> {where(_status: "Available")}
 
   validates_presence_of :name
@@ -19,7 +20,7 @@ class Item
 
 
   def options
-    {_status: ["Checked Out", "In Laundray", "Available"]}
+    {_status: ["Checked Out", "In Laundry", "Available"]}
   end
 
   protected
@@ -43,6 +44,13 @@ end
 
 class Kitchen < Item
 end
+
+class Hygiene < Item
+end
+
+class Cleaning < Item
+end
+
 
 class Clothing < Item
   field :type, type: String
@@ -86,11 +94,6 @@ class Food < Kitchen
   end
 end
 
-class Hygiene < Item
-end
-
-class Cleaning < Item
-end
 
 
 class Book < SchoolSupply

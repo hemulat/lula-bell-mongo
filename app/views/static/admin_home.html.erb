@@ -1,10 +1,12 @@
-<h1>Administrative Side of Web</h2>
-  <div>
+<div id="form">
+<h1>Administrative Side of Web</h1>
+  <div id="administration">
     <div tag: checking>
-    <p><%= link_to 'Check In', '#' %></p>
+    <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
 
-    <p><%= link_to 'Check Out', '#' %> </p>
+    <p><%= link_to("Check Out", items_path )%> </p>
     </div>
+    <hr />
     <div tag: requests>
       <p><%= link_to 'Reserve Request', '#' %></p>
 
@@ -23,13 +25,22 @@
 
       <p><%= link_to 'Add Admin', new_admin_registration_path %></p>
     </div>
-    <div>
+    <hr />
+    <div tag: PSA-Blog>
+    <p>
       <%= link_to 'New PSA', new_psa_post_path %>
-    </div>
-
-    <div>
+    </p>
+    <p>
+      <%= link_to 'View PSAs', psa_posts_path %>
+    </p>
+    <p>
       <%= link_to 'New Blog', new_blog_path %>
-    </div>
+    </p>
+    <p>
+      <%= link_to "View Blogs", blogs_path%>
+    </p>
+  </div>
 
 
+</div>
 </div>

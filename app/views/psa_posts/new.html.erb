@@ -1,9 +1,4 @@
+<div id="form">
 <h3>New PSA</h3>
-
-<%= simple_form_for @psa_post do |f| %>
-  <%= f.input :title %>
-  <%= f.input :text, as: :text %>
-  <%= f.button :submit %>
-<% end %>
-
-<%= link_to "Back", root_path %>
+<%= render 'form' %>
+<%= link_to "Back", :back %>

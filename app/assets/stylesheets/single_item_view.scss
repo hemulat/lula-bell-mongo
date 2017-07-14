@@ -1,14 +1,14 @@
 .single-item-view {
 
   .container {
-    max-width: 90%;
+    max-width: 70%;
     margin: auto;
   }
 
   .item-image {
     border: 2px solid black;
     max-width: 400px;
-    margin: 20px 40px 40px;
+    margin: 60px 40px 40px;
     overflow: hidden;
     float: left;
   }
@@ -16,27 +16,6 @@
   .left-column {
     border-top: 1px solid black;
     clear: left;
-  }
-
-  .reserve-button {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .reserve-button a {
-    display: block;
-    background-color: #2095F2;
-    padding: 10px 12px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 6px;
-  }
-
-  .reserve-button a:hover {
-    background-color: #1a80d1;
   }
 
   .left-column h5 {
@@ -49,12 +28,14 @@
   }
 
   .main-column {
-    margin-left: 400px;
+    width: 60%;
+    margin-left: 470px;
     margin-top: 40px;
     padding: 10px;
+    text-align: left;
   }
 
-  .item-name {
+  .item-name, .item-description {
     margin-bottom: 20px;
   }
 
@@ -62,26 +43,9 @@
     font-size: 18px;
   }
 
-  .edit-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-  }
-
-  .edit-button a {
-    display: block;
-    background-color: #ffffff;
-    padding: 10px 12px;
-    color: #000000;
-    text-decoration: none;
-    font-size: 20px;
-    border-radius: 6px;
-    border: 1px solid black;
-  }
-
-  .edit-button a:hover {
-    background-color: #f7f7f7;
+  .item-features {
+    font-size: 16px;
+    margin-bottom: 40px;
   }
 
   .links {

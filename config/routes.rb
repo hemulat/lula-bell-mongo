@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+
+  resources :transactions, except:[:show, :index, :new, :edit] do
+    collection do
+      get '/', to: 'transactions#notice'
+    end
+    member do
+      get :check_in
+      get :check_out
+      get :delete
+    end
+  end
+
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
                       controllers: { registrations: "registrations" }
@@ -9,11 +21,13 @@ Rails.application.routes.draw do
   end
 
   resources :blogs
+
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'
   get '/items/new/:class', to: 'items#new'
   get '/items/see/:class', to: 'items#category', as: :category
   get '/search', to: 'items#search', as: :search
+  get '/items/:id/transactions', to: 'items#transactions', as: :item_transactions
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin
@@ -26,7 +40,6 @@ Rails.application.routes.draw do
 
   resources :item_requests
 
-  post '/psa_posts', to: 'psa_posts#create'
-  get '/psa_posts/new', to: 'psa_posts#new', as: :new_psa_post
+  resources :psa_posts
 
 end

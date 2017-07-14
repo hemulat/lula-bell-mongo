@@ -1,6 +1,6 @@
 <div class = "all-category-content"> <!-- need this class to add top margin -->
   <%= render 'sidebar'%>
-  <div class = 'category-content'> <!-- need this class to add left margin -->
+  <div class = 'category-content'id="category-content"> <!-- need this class to add left margin -->
     <% if @items.empty? %>
       <h4>Hmm, looks like there's nothing here...</h4>
     <% else %>
@@ -11,7 +11,7 @@
             <a href= <%= item_path(item)%> >
               <%= image_tag(item.image.url(:thumb), alt: item.name)%>
               <div class="caption">
-                <%= item.name %><br>
+                <%= item.name %>
               </div>
             </a>
           </div>
@@ -19,5 +19,9 @@
         <% end %>
       </div>
     <% end %>
+    <a class = "btn btn-default btn-lg" id="testbutton" role="button">Test</a>
+
+    </div>
   </div>
+<%= javascript_include_tag 'item_filter' %>
 </div>

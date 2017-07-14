@@ -1,0 +1,15 @@
+<%= link_to("<< Back to Item",item_path(@item.id), :class => 'back-link')%>
+
+  <div id="form">
+    <h2>Check Out!</h2>
+    <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
+
+        <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
+        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
+        <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
+        <% if @item.rentable%>
+          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+        <% end %>
+        <%= f.submit "Check Out", class: "btn btn-success" %>
+    <% end %>
+  </div>

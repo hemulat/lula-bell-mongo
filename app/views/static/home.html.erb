@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lula Bell Resource Center</title>
-
+    <title>Lula Bell's Resource Center</title>
   </head>
   <body>
   <div class= "my-fluid-container">
@@ -20,7 +19,7 @@
             <%= image_tag("suit.jpg", class: 'picSlide1')%>
             <div class="slide1"></div>
               <div class="carousel-caption">
-                <h1>Welcome to Lula Bell</h1>
+                <h1>Welcome to Lula Bell's</h1>
                 <p> Rent Suits, Checkout Textbooks, and more</p>
                 <a href="\items" class = "btn btn-default btn-lg" role="button">View Items</a>
               </div>
@@ -113,7 +112,7 @@
           <%= @blog.content%>
         </div>
         <div>
-          <%=link_to "Continue Reading", @blog.url %>
+          <%=link_to  "Continue Reading",@blog.url %>
         </div>
         <%else%>
             <h3> There are currently no blogs </h3>
@@ -127,5 +126,5 @@
   </div>
 </div>
   </body>
-  <%= javascript_include_tag 'home' %>
+<%= javascript_include_tag 'home' %>
 </html>
