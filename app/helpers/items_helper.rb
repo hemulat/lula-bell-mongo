@@ -9,7 +9,8 @@ module ItemsHelper
     # final will be key-value. key is field name and value is
     # [options(Array),required(boolean),Type]
     type_map = {"String" => "string", "Mongoid::Boolean"=>"boolean",
-                  "Time" => "date", "Array" => "check_boxes"}
+                  "Time" => "date", "Array" => "check_boxes",
+                  "Integer" => "integer"}
     final = {}
     options = item.options
 

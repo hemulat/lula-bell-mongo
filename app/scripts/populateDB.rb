@@ -148,3 +148,7 @@ def repopulate_all
   g_all
   attach_images
 end
+
+def resave_items
+  Item.all.each {|i| i.update}
+end
