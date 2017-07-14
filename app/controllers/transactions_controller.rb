@@ -11,14 +11,27 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
+    @item = @transaction.item
+
+    @item = @transaction.item
+    if @item._quantity.empty?
+      flash[:alert] = "Out of stock!"
+      render 'check_out'
+      return
+    else
+      @transaction._qty_id = @item._quantity.pop()
+      if !@item.rentable
+        @item.quantity -= 1
+      end
+    end
+
     #Save the object
-    if @transaction.save
+    if @transaction.save && @item.save
       #If save succeeds, redirect to the index action
       flash[:notice] = "Transaction created successfully."
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      @item = @transaction.item
       render 'check_out'
     end
   end
@@ -26,8 +39,12 @@ class TransactionsController < ApplicationController
   def update
     #Find a new object using form parameters
     @transaction = Transaction.find(params[:id])
-    #Update the object
-    if @transaction.update_attributes(transaction_params)
+    @item = @transaction.item
+    # update item info
+    @item._quantity.push(@transaction._qty_id)
+
+    # update and persist to DB
+    if @transaction.update_attributes(transaction_params) && @item.save
       #If save succeeds, redirect to the show action
       flash[:notice] = "Transaction updated successfully."
       redirect_to(:action => 'notice')
