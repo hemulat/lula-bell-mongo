@@ -26,7 +26,7 @@
           <%= link_to("Details", reserf_path(reserve.id), :class => 'action show')%>
           <%= link_to("Edit", edit_reserf_path(reserve), :class => 'action edit')%>
           <%= link_to("Check Out", {:controller => 'transactions',:action => 'check_out', :id => reserve.item_id}, :class => 'action check_out')%>
-          <%= link_to("Delete", '#', :class => 'action delete') %>
+          <%= link_to("Delete", delete_reserf_path(reserve), :class => 'action delete') %>
         </td>
       </tr>
       <% end %>

@@ -38,7 +38,7 @@ class ReservesController < ApplicationController
     #Update the object
     if @reserve.update_attributes(reserve_params)
       #If save succeeds, redirect to the show action
-      flash[:notice] = "Transaction updated successfully."
+      flash[:notice] = "Reserve updated successfully."
       redirect_to(:action => 'index')
     else
       #If save fails, redisplay the form so user can fix problems
@@ -47,10 +47,15 @@ class ReservesController < ApplicationController
   end
 
   def delete
+    @reserve = Reserve.find(params[:id])
   end
 
   def destroy
+    @reserve = Reserve.find(params[:id])
+    @reserve.destroy
 
+    flash[:notice] = "Reservation destroyed successfully."
+    redirect_to(:action => 'index')
   end
 
   private
