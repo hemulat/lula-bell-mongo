@@ -81,7 +81,13 @@ class ItemsController < ApplicationController
 
     new_q = valid_features(@item.class)[:quantity].to_i
     qty_list = @item._quantity
-    max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
+
+    if @item.transactions.empty?
+      max_in_transactions = 0
+    else
+      max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
+    end
+
     max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
 
     if (new_q > @item.quantity) # adding quantity

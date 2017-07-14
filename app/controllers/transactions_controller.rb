@@ -54,10 +54,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def delete
-    @transaction = Transaction.find(params[:id])
-  end
-
   def destroy
     @transaction = Transaction.find(params[:id])
     @item = @transaction.item
@@ -74,7 +70,7 @@ class TransactionsController < ApplicationController
     else
       flash[:alert] = "Transaction could not be deleted."
     end
-    
+
     redirect_to(:action => 'notice')
   end
 
