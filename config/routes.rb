@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
-      get :notice
+      get '/', to: 'transactions#notice'
     end
     member do
       get :check_in
