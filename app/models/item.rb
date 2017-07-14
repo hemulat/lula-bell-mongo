@@ -12,7 +12,7 @@ class Item
 
   has_many :transactions
 
-  scope :available, -> {where(_status: "Available")}
+  scope :available, -> {where(:_quantity.ne =>[])}
 
   validates_presence_of :name
   has_mongoid_attached_file :image,
@@ -26,6 +26,10 @@ class Item
   end
 
   protected
+    def self.shorthand
+      self.name[0]
+    end
+
     def self.required_fields
       validators.select do |v|
         v.is_a?(Mongoid::Validatable::PresenceValidator)
@@ -36,7 +40,7 @@ class Item
       sku_str = ""
       cur_clas = self
       while cur_clas != Item do
-        sku_str = cur_clas.name[0] + sku_str
+        sku_str = cur_clas.shorthand + sku_str
         cur_clas = cur_clas.superclass
       end
       return "#{sku_str}#{Counter.next(self.name)}"
@@ -51,6 +55,9 @@ class Hygiene < Item
 end
 
 class Cleaning < Item
+  def self.shorthand
+    "Cln"
+  end
 end
 
 
@@ -65,6 +72,11 @@ class Clothing < Item
     {type: ['Winter', "Formal", "Professional", "Shoes","Other"],
      fit: %w"M W Jr Uni BT Plus"}
   end
+
+  def self.shorthand
+    "Clo"
+  end
+
 end
 
 class SchoolSupply < Item
@@ -80,6 +92,10 @@ class CookingEquipment < Kitchen
 
   def options
     {type: ["Pot", "Pan", "Utensil", "Other"]}
+  end
+
+  def self.shorthand
+    return 'Co'
   end
 
 end

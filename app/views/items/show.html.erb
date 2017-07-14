@@ -14,11 +14,14 @@
       <div class="item-features">
         <% @features.each do |feature| %>
           <% if feature == "quantity" %>
-            <p> <%= "#{capitalize(feature)} - " %><%= @item._quantity.size%></p>
+            <p> <%= "#{capitalize(feature)} - " %>
+              <%= @item._quantity.size || "Undefined" %></p>
           <% else %>
-            <p> <%= "#{capitalize(feature)} - " %><%= @item.attributes[feature]%></p>
+            <p> <%= "#{capitalize(feature)} - " %>
+              <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
           <% end %>
         <% end %>
+        <p> <%= "SKU - " %><%= @item._SKU%></p>
       </div>
         <%=link_to "Reserve",'#', class: "btn btn-success"%>
         <% if admin_signed_in? %>

@@ -6,7 +6,11 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.available
+    if admin_signed_in?
+      @items = Item.all
+    else
+      @items = Item.available
+    end
     @categories = get_sub(Item)
   end
 
@@ -49,7 +53,11 @@ class ItemsController < ApplicationController
   end
 
   def category
-    @items = get_class_name(params[:class]).available
+    if admin_signed_in?
+      @items = get_class_name(params[:class])
+    else
+      @items = get_class_name(params[:class]).available
+    end
     @categories = get_sub(Item)
   end
 
