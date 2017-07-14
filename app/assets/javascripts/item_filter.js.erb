@@ -7,30 +7,31 @@ sidebarLink.addEventListener("click", function(){
   ourRequest.open("GET", gon.items,true );
   ourRequest.onload=function() {
     var ourData= gon.items;
-    console.log(gon.items);
     renderHTML(ourData);
+
     };
+
   ourRequest.send();
  });
 
 
 function renderHTML(data){
-  var htmlString="";
-
-  for (i=0; i<data.length; i++){
+  console.log(gon.items);
+  var htmlString="<div class=\"row\">";
+  <%data.each do |data| %>
     htmlString+=
-      "<div class=\"row\">"
-          +"<div class=\"col-sm-6 col-md-2\">" +
+          "<div class=\"col-sm-6 col-md-2\">" +
             "<div class=\"thumbnail\">"
-              +"<a href=\"items\\" +data._id.$oid+ "\">Link"
+              +"<a href="<%= item_path(data[i])%> >
+                +"<img src="+ <%= image_tag(data[i].image.url(:thumb), alt: data[i].name)%>
                 +"<div class=\"caption\">"
-                  +data.name +"<br>"
-                  + "</div>"
+                  +  <%= data[i].name %> +"<br>"
+                +"</div>"
               +"</a>"
             +"</div>"
           +"</div>"
-        +"</div>"
-  }
+        +<%end%>
+      +"</div>"
 
   item_container.insertAdjacentHTML('beforeend', htmlString);
 };
