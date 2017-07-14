@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/items/new/:class', to: 'items#new'
   get '/items/see/:class', to: 'items#category', as: :category
   get '/search', to: 'items#search', as: :search
+  get '/items/:id/transactions', to: 'items#transactions', as: :item_transactions
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin
