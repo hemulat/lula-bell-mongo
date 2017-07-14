@@ -1,0 +1,30 @@
+<h1>PSA Posts</h1>
+
+
+<table class="table table-bordered table-striped" id="form">
+    <tr>
+      <th>Title</th>
+      <th>Text</th>
+      <th>Posted</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+
+    <% @psa_posts.each do |psa_post| %>
+        <tr>
+          <td><%= psa_post.title %></td>
+          <td><%= psa_post.text %></td>
+          <td><%= psa_post.created_at.strftime('%m/%d/%Y %H:%M %p')%></td>
+          <td>
+            <%= link_to "Edit", edit_psa_post_path(psa_post), class: "btn btn-default" %>
+          </td>
+          <td>
+            <%= link_to "Delete", psa_post_path(psa_post), method: :delete,
+            data: { confirm: "Are you sure you wish to delete this PSA?" },
+             class: "btn btn-danger" %>
+          </td>
+        </tr>
+
+    <% end %>
+
+</table>
