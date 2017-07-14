@@ -46,14 +46,12 @@
           <% end %>
           <li>
             <%= form_tag(search_path, method: 'get', class: "navbar-form navbar-right", role: "search", enforce_utf8: false) do %>
-
-                <%= text_field_tag :query, params[:query], class: "search-query form-control", placeholder: "Search"%>
-                  <%= submit_tag "Submit", name: nil, class: "btn btn-default" %>
+              <%= text_field_tag :query, params[:query], class: "search-query form-control", placeholder: "Search"%>
+              <%= submit_tag "Submit", name: nil, class: "btn btn-default" %>
             <% end %>
           </li>
         </ul>
       </div>
-    </div>
     </nav>
 
     <title>LulaBell</title>

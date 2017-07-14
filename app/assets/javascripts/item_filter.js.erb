@@ -18,20 +18,9 @@ sidebarLink.addEventListener("click", function(){
 function renderHTML(data){
   console.log(gon.items);
   var htmlString="<div class=\"row\">";
-  <%data.each do |data| %>
-    htmlString+=
-          "<div class=\"col-sm-6 col-md-2\">" +
-            "<div class=\"thumbnail\">"
-              +"<a href="<%= item_path(data[i])%> >
-                +"<img src="+ <%= image_tag(data[i].image.url(:thumb), alt: data[i].name)%>
-                +"<div class=\"caption\">"
-                  +  <%= data[i].name %> +"<br>"
-                +"</div>"
-              +"</a>"
-            +"</div>"
-          +"</div>"
-        +<%end%>
-      +"</div>"
+
+    htmlString+="hello";
+
 
   item_container.insertAdjacentHTML('beforeend', htmlString);
 };
