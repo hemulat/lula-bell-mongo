@@ -19,7 +19,7 @@ class TransactionsController < ApplicationController
     else
       #If save fails, redisplay the form so user can fix problems
       flash[:alert] = "Check out failed."
-      redirect_to(:action => 'display')
+      render 'check_out'
     end
   end
 
@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      render('check_in') # this renews the form template
+      render 'check_in' 
     end
   end
 
@@ -52,6 +52,9 @@ class TransactionsController < ApplicationController
   def check_out
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
+    unless @item.rentable
+      @transaction.end_date = Date.today
+    end
   end
 
   private
