@@ -19,7 +19,7 @@ class TransactionsController < ApplicationController
       render 'check_out'
       return
     else
-      @transaction._qty_id = @item._quantity.pop()
+      @transaction.qty_id = @item._quantity.pop()
       if !@item.rentable
         @item.quantity -= 1
       end
@@ -41,7 +41,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
     @item = @transaction.item
     # update item info
-    @item._quantity.push(@transaction._qty_id)
+    @item._quantity.push(@transaction.qty_id)
 
     # update and persist to DB
     if @transaction.update_attributes(transaction_params) && @item.save
@@ -60,9 +60,21 @@ class TransactionsController < ApplicationController
 
   def destroy
     @transaction = Transaction.find(params[:id])
-    @transaction.destroy
+    @item = @transaction.item
 
-    flash[:notice] = "Transaction destroyed successfully."
+    # if the transaction is not checked in
+    if !@transaction.return_date
+      @item._quantity.push(@transaction.qty_id)
+      if !@item.rentable
+        @item.quantity += 1
+      end
+    end
+    if @transaction.destroy && @item.save
+      flash[:notice] = "Transaction destroyed successfully."
+    else
+      flash[:alert] = "Transaction could not be deleted."
+    end
+    
     redirect_to(:action => 'notice')
   end
 
@@ -75,7 +87,7 @@ class TransactionsController < ApplicationController
   end
 
   private
-  def transaction_params
-    params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
-  end
+    def transaction_params
+      params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
+    end
 end

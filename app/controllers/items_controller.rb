@@ -78,10 +78,12 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     @item_details = get_feature_type(@item)
+
     new_q = valid_features(@item.class)[:quantity].to_i
     qty_list = @item._quantity
-    max_in_transactions = 0#@item.transactions.order_by(qty_id: -1).first.qty_id
-    max_qty = [@item.quantity,].max
+    max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
+    max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
+
     if (new_q > @item.quantity) # adding quantity
       add_qty = new_q - @item.quantity
       @item._quantity = qty_list + (max_qty+1..add_qty+max_qty).to_a
@@ -90,7 +92,7 @@ class ItemsController < ApplicationController
       rm_count = (@item.quantity - new_q)
       if (rm_count > qty_list.size)
         flash[:alert] = "Make sure you have at least #{rm_count} items " +
-                        "in stoke.(Make sure the items are checked in)"
+                        "in stock. Make sure the items are checked in."
         render 'edit'
         return
       else
