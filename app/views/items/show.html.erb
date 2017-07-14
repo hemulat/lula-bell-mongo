@@ -21,7 +21,9 @@
               <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
           <% end %>
         <% end %>
-        <p> <%= "SKU - " %><%= @item._SKU%></p>
+        <% if admin_signed_in? %>
+          <p> <%= "SKU - " %><%= @item._SKU%></p>
+        <%end%>
       </div>
         <%=link_to "Reserve",'#', class: "btn btn-success"%>
         <% if admin_signed_in? %>
