@@ -11,8 +11,7 @@ class Transaction
   belongs_to :item
 
   validates_presence_of :student_id
-  validates_length_of :student_id, :minimum: 9, maximum: 9,
-                      message: "Length of Student ID should be 9"
+  validates_length_of :student_id, minimum: 9, maximum: 9
   validates_presence_of :start_date
 
 end
