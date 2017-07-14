@@ -62,6 +62,7 @@ class ItemsController < ApplicationController
     @item = get_item
     @item_details = get_feature_type(@item)
     @item._SKU = @item.class.next_sku
+    @item._quantity = (1..@item.quantity).to_a
     if @item.save
       redirect_to action: 'show', id:  @item._id
     else
@@ -77,7 +78,37 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     @item_details = get_feature_type(@item)
+
+    new_q = valid_features(@item.class)[:quantity].to_i
+    qty_list = @item._quantity
+
+    if @item.transactions.empty?
+      max_in_transactions = 0
+    else
+      max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
+    end
+
+    max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
+
+    if (new_q > @item.quantity) # adding quantity
+      add_qty = new_q - @item.quantity
+      @item._quantity = qty_list + (max_qty+1..add_qty+max_qty).to_a
+
+    elsif (@item.quantity > new_q) # decreasing quantity
+      rm_count = (@item.quantity - new_q)
+      if (rm_count > qty_list.size)
+        flash[:alert] = "Make sure you have at least #{rm_count} items " +
+                        "in stock. Make sure the items are checked in."
+        render 'edit'
+        return
+      else
+        (1..rm_count).each{qty_list.pop()}
+        @item._quantity = qty_list
+      end
+    end
+
     if @item.update(valid_features(@item.class))
+      flash[:notice] = "Item update successful"
       redirect_to action: 'show', id:  @item._id
     else
       render 'edit'

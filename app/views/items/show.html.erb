@@ -13,12 +13,22 @@
       </div>
       <div class="item-features">
         <% @features.each do |feature| %>
-          <p> <%= "#{capitalize(feature)} - " %><%= @item.attributes[feature] %></p>
+          <% if feature == "quantity" %>
+            <p> <%= "#{capitalize(feature)} - " %><%= @item._quantity.size%></p>
+          <% else %>
+            <p> <%= "#{capitalize(feature)} - " %><%= @item.attributes[feature]%></p>
+          <% end %>
         <% end %>
       </div>
         <%=link_to "Reserve",'#', class: "btn btn-success"%>
         <% if admin_signed_in? %>
-          <%= link_to "Check Out", check_out_transaction_path(@item.id), class: 'btn btn-info'%>
+          <% if @item._quantity.empty?%>
+            <%= link_to "Check Out", check_out_transaction_path(@item.id),
+                                              class: 'btn disabled btn-info'%>
+          <% else %>
+            <%= link_to "Check Out", check_out_transaction_path(@item.id),
+                                              class: 'btn btn-info'%>
+          <% end%>
           <%=link_to "Edit Item", edit_item_path(@item), class: "btn btn-info"%>
           <%= link_to "Recent Activity", item_transactions_path(@item), class: "btn btn-warning" %>
           <%= link_to "Delete", item_path(@item),

@@ -7,9 +7,11 @@ class Item
   field :description, type: String
   field :_SKU, type: String
   field :_status, type: String, default: "Available"
+  field :_quantity, type: Array, default: [1]
+  field :quantity, type: Integer, default: 1
 
   has_many :transactions
-  
+
   scope :available, -> {where(_status: "Available")}
 
   validates_presence_of :name
