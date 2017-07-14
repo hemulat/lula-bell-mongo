@@ -1,6 +1,5 @@
-<%= link_to("<<Back to AdminHome", {:controller => 'static', :action => 'admin_home'}, :class => 'back-link')%>
 <div class="transactions notice">
-  <h2>Transaction Log</h2>
+  <h2>Transaction Log for <%= @item.name %></h2>
 
   <table class="listing"  >
     <tr class="header">
@@ -28,14 +27,14 @@
           <% end %>
           <td class="actions">
             <%= link_to("Check In", check_in_transaction_path(transaction), :class => 'action notice')%>
-            <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
+            <%= link_to("Delete", delete_transaction_path(transaction), :class => 'action delete') %>
           </td>
         <% else %>
           <td>UNAVAILABLE</td>
           <td>NON-RETURNABLE</td>
           <td class="actions">
             Check In
-            <%= link_to("Delete", {:action => 'delete', :id => transaction.id}, :class => 'action delete') %>
+            <%= link_to("Delete", delete_transaction_path(transaction), :class => 'action delete') %>
           </td>
         <% end %>
       </tr>

@@ -29,6 +29,11 @@ class ItemsController < ApplicationController
     end
   end
 
+  def transactions
+    @item = Item.find(params[:id])
+    @transactions = @item.transactions
+  end
+
   def show
     @item = Item.find(params[:id])
     @features = get_features(@item.class)
@@ -38,6 +43,7 @@ class ItemsController < ApplicationController
       @features.delete("rentable")
       @features.delete("reservable")
     end
+    @categories = get_sub(Item)
   end
 
   def category
