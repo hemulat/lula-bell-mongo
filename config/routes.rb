@@ -7,7 +7,6 @@ Rails.application.routes.draw do
     member do
       get :check_in
       get :check_out
-      get :delete
     end
   end
 
