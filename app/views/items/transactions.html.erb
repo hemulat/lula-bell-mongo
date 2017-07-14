@@ -1,7 +1,7 @@
 <div class="transactions notice">
   <h2>Transaction Log for <%= @item.name %></h2>
 
-  <table class="listing"  >
+  <table class="listing" >
     <tr class="header">
       <th>Student ID</th>
       <th>Item ID</th>
@@ -12,7 +12,7 @@
       <th>Actions</th>
     </tr>
     <% unless @transactions.size == 0 %>
-      <% @transactions.reverse.each do |transaction| %>
+      <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.student_id %></td>
         <td><%= transaction.item_id %></td>

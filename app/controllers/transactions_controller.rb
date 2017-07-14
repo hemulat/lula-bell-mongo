@@ -2,7 +2,7 @@ class TransactionsController < ApplicationController
   before_action :authorize_admin
 
   def notice
-    @transactions = Transaction.all
+    @transactions = Transaction.all.order_by(:updated_at => 'desc')
   end
 
   def check_in

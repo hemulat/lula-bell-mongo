@@ -31,7 +31,9 @@ class ItemsController < ApplicationController
 
   def transactions
     @item = Item.find(params[:id])
-    @transactions = @item.transactions
+    @transactions = @item.transactions.order_by(:updated_at => 'desc')
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    logger.tagged("A Tag") {logger.info "#{@transactions.class}"}
   end
 
   def show
