@@ -13,7 +13,11 @@
       </div>
       <div class="item-features">
         <% @features.each do |feature| %>
-          <p> <%= "#{capitalize(feature)} - " %><%= @item.attributes[feature] %></p>
+          <% if feature == "quantity" %>
+            <p> <%= "#{capitalize(feature)} - " %><%= @item._quantity.size%></p>
+          <% else %>
+            <p> <%= "#{capitalize(feature)} - " %><%= @item.attributes[feature]%></p>
+          <% end %>
         <% end %>
       </div>
         <%=link_to "Reserve",'#', class: "btn btn-success"%>
