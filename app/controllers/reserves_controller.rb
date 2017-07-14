@@ -14,7 +14,6 @@ class ReservesController < ApplicationController
   def new
     @item = Item.find(params[:id])
     @reserve = Reserve.new()
-    #session[:return_to] ||= request.refer
   end
 
   def create
@@ -27,7 +26,7 @@ class ReservesController < ApplicationController
     else
       #If save fails, redisplay the form so user can fix problems
       flash[:notice] = "Please enter your 9-digit student id, email, and dates."
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: root_path )
     end
   end
 
@@ -45,6 +44,8 @@ class ReservesController < ApplicationController
       redirect_to(:action => 'index')
     else
       #If save fails, redisplay the form so user can fix problems
+      flash[:notice] = "You need to have:
+      Dates, 9-digit Student ID, Student's email"
       render('edit') # this renews the form template
     end
   end
