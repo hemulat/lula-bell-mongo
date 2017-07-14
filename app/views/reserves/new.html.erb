@@ -2,8 +2,10 @@
 <div class="reserves new">
   <h2>Reserve Item Form</h2>
 
-  <%= render(:partial => 'form')%>
-  
+  <%= form_for(@reserve, :url => reserves_path, :method => 'post') do |f| %>
+
+  <%= render(:partial => 'form', :locals => {:f => f})%>
+
   <div class="form-buttons">
     <%= f.submit("Reserve") %>
   </div>

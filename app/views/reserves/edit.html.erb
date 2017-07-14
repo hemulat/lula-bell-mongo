@@ -18,11 +18,11 @@
     <% end %>
     <tr>
       <th>Student ID</th>
-      <td><%= f.text_field(:student_id, :maxlength => 9) %></td>
+      <td><%= f.text_field(:student_id, :readonly => true) %></td>
     </tr>
     <tr>
       <th>Student Email</th>
-      <td><%= f.text_field(:email) %></td>
+      <td><%= f.text_field(:email, :readonly => true) %></td>
     </tr>
     <tr>
       <th>Start Date</th>
