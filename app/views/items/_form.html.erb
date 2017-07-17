@@ -1,12 +1,12 @@
 <div id="form">
-<%= render 'shared/error_msg'%>
+<%= render 'shared/error_msg', item: @item %>
 <%= simple_form_for :item, method: yield(:form_method),
                     url: {action: yield(:form_action)} do |form| %>
   <% process_types(@item_details, @item).each do |feature,details| %>
       <% if details[0]!=nil%>
         <% if details[2] == "check_boxes"%>
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= capitalize(feature) %>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

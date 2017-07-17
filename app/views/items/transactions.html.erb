@@ -1,0 +1,50 @@
+<div class="transactions notice">
+  <h2>Transaction Log for <%= @item.name %></h2>
+
+  <table class="listing" >
+    <tr class="header">
+      <th>Student ID</th>
+      <th>Item Name</th>
+      <th>Qty ID</th>
+      <th>Pick-up Date</th>
+      <th>Due Date</th>
+      <th>Rental Returned On:</th>
+      <th>Actions</th>
+    </tr>
+    <% unless @transactions.size == 0 %>
+      <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.student_id %></td>
+        <td><%= link_to transaction.item.name, item_path(transaction.item) %></td>
+        <td>&nbsp&nbsp</td>
+        <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
+        <% if transaction.item.rentable %>
+            <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
+          <% if transaction.return_date == nil %>
+            <td style='color:red;'>Item not returned</td>
+          <% else %>
+            <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
+          <% end %>
+          <td class="actions", style="text-align: center">
+            <%= link_to "Check In", check_in_transaction_path(transaction), class: "btn btn-info" %>
+            <%= link_to "Delete", transaction_path(transaction),
+                                  method: :delete,
+                                  data: { confirm: "Are you sure you want to delete this transaction?" },
+                                  class: "btn btn-danger" %>
+          </td>
+        <% else %>
+          <td>UNAVAILABLE</td>
+          <td>NON-RETURNABLE</td>
+          <td class="actions", style="text-align: center">
+            <%= link_to "Check In", "#", class: "btn btn-link disabled" %>
+            <%= link_to "Delete", transaction_path(transaction),
+                                  method: :delete,
+                                  data: { confirm: "Are you sure you want to delete this transaction?" },
+                                  class: "btn btn-danger" %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

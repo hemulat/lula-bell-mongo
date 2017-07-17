@@ -4,7 +4,7 @@
     <div tag: checking>
     <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
 
-    <p><%= link_to("Check Out", {:controller => 'transactions', :action => 'display'}) %> </p>
+    <p><%= link_to("Check Out", items_path )%> </p>
     </div>
     <hr />
     <div tag: requests>
@@ -30,7 +30,9 @@
     <p>
       <%= link_to 'New PSA', new_psa_post_path %>
     </p>
-
+    <p>
+      <%= link_to 'View PSAs', psa_posts_path %>
+    </p>
     <p>
       <%= link_to 'New Blog', new_blog_path %>
     </p>

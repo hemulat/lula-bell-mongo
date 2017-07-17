@@ -1,4 +1,4 @@
-
+require_relative'seed'
 def flip_a_coin
   rand(2) == 0 ? false : true
 end
@@ -20,7 +20,7 @@ def  g_items(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "This is a general item with only bare minimum item requirement"
     Item.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, _sku: Item.next_sku})
+                description: descr, _SKU: Item.next_sku})
   end
 end
 
@@ -31,7 +31,7 @@ def g_kitchen_items(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "Not just any Item - This item belongs in the Kitchen section"
     Kitchen.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, _sku: Kitchen.next_sku})
+                description: descr, _SKU: Kitchen.next_sku})
   end
 end
 
@@ -42,7 +42,7 @@ def g_hygiene_items(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "A Hygine item - use it to keep yourself clean"
     Hygiene.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, _sku: Hygiene.next_sku})
+                description: descr, _SKU: Hygiene.next_sku})
   end
 end
 
@@ -53,7 +53,7 @@ def g_cleaning_items(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "A Cleaning item - use it to keep your stuff clean"
     Cleaning.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, _sku: Cleaning.next_sku})
+                description: descr, _SKU: Cleaning.next_sku})
   end
 end
 
@@ -65,7 +65,7 @@ def g_cooking_equipments(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "A Kitchen item, specifically useful for cooking"
     CookingEquipment.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, type: typ, _sku: CookingEquipment.next_sku})
+                description: descr, type: typ, _SKU: CookingEquipment.next_sku})
   end
 end
 
@@ -80,7 +80,7 @@ def g_food(n=5)
     descr = "#{typ} that is #{restri.join(",")}"
     Food.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, type: typ, expiration: exp,
-                restriction:restri, _sku: Food.next_sku})
+                restriction:restri, _SKU: Food.next_sku})
   end
 end
 
@@ -96,7 +96,7 @@ def g_clothing(n=5)
     descr = "#{colo} #{typ} - put it on if it fits you"
     Clothing.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, color: colo, type:typ,
-                fit: fit, size:rand(42), _sku: Clothing.next_sku})
+                fit: fit, size:rand(42), _SKU: Clothing.next_sku})
   end
 end
 
@@ -107,7 +107,7 @@ def g_school_supplies(n=5)
     reserve = rent ? flip_a_coin : false
     descr = "This is a general school supply."
     SchoolSupply.create({name: na, rentable: rent, reservable: reserve,
-                description: descr, _sku: SchoolSupply.next_sku})
+                description: descr, _SKU: SchoolSupply.next_sku})
   end
 end
 
@@ -122,7 +122,7 @@ def g_books(n=5)
     isb = "123456789015973".split("").shuffle.join("")
     Book.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, type:typ,author:auth, ISBN:isb,
-                _sku: Book.next_sku})
+                _SKU: Book.next_sku})
   end
 end
 
@@ -140,4 +140,15 @@ end
 
 def remove_all
   Item.destroy_all
+end
+
+def repopulate_all
+  Item.destroy_all
+  reset_counter
+  g_all
+  attach_images
+end
+
+def resave_items
+  Item.all.each {|i| i.update}
 end

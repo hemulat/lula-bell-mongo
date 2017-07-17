@@ -35,8 +35,6 @@ gem 'mongoid-paperclip'
 # Add bootstrap
 gem 'jquery-rails'
 gem 'bootstrap-sass'
-#Add for windows use
-gem 'wdm', '>= 0.1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

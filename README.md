@@ -59,4 +59,13 @@ $ rails s
 ```
 
 ### Notes
-* If you have an already existing database, you might want to query all items and re-save all items.
+* If you have an already existing database, you might want to repopulate your
+database. If you want to keep your existing items, the following will save
+your existing items with the default values.
+```
+$ rails c
+```
+```ruby
+>> load 'app/scripts/populateDB.rb'
+>> resave_items
+```

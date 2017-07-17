@@ -16,12 +16,11 @@
           <td><%= request.studentID%></td>
           <td><%= request.title %></td>
           <td><%= request.description %></td>
-          <td><%= link_to 'Delete', item_request_path(request), method: :delete,
+          <td style="text-align:center"><%= link_to 'Delete', item_request_path(request), method: :delete,
                   data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
         <%end%>
       </table>
     </div>
   </body>
-
 </html>
