@@ -10,6 +10,8 @@
         <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
         <% if @item.rentable%>
           <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+        <% else %>
+          <% f.hidden_field :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% end %>
         <%= f.submit "Check Out", class: "btn btn-success" %>
     <% end %>
