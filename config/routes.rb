@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'reserves/index', to: 'reserves#index'
+  get 'reserve/:item_id', to: 'reserves#new', as: :reserve
   get 'reserves/confirm', to: 'reserves#confirm'
-  resources :reserves do
+  resources :reserves, except: [:new] do
     member do
       get :delete
     end

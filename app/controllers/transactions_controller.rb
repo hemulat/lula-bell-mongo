@@ -11,7 +11,6 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
-    @item = @transaction.item
 
     @item = @transaction.item
     if @item._quantity.empty?

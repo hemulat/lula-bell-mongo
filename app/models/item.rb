@@ -1,6 +1,8 @@
 class Item
   include Mongoid::Document
   include Mongoid::Paperclip
+  include Mongoid::Attributes::Dynamic
+
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
@@ -11,6 +13,7 @@ class Item
   field :quantity, type: Integer, default: 1
 
   has_many :transactions
+  has_many :reservations, class_name: "Reserve", inverse_of: :item
 
   scope :available, -> {where(:_quantity.ne =>[])}
 
