@@ -39,7 +39,7 @@ class TransactionsController < ApplicationController
       #If save fails, redisplay the form so user can fix problems
       flash[:notice] = "Check out failed.
       Please provide 9-digit Student Id and Date(s)."
-      redirect_to(:action => 'display')
+      render('check_out')
     end
   end
 
