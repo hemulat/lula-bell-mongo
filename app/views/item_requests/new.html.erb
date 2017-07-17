@@ -1,19 +1,8 @@
 <html>
   <div id="request-form">
     <h1>Request an Item Form</h1>
-    <% if @item_request.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-danger">
-      The form contains <%= pluralize(@item_request.errors.count, "errors") %>.
-    </div>
-    <ul>
-      <% @item_request.errors.full_messages.each do |msg|%>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-    <%= form_for :item_request , url: item_requests_path do |f| %>
+    <%= render 'shared/error_msg', item: @item_request%>
+    <%= form_for @item_request , url: item_requests_path do |f| %>
       <p>
         <%= f.label :title %><br>
         <%= f.text_field :title , class: "form-control"%>

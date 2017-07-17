@@ -4,6 +4,4 @@ class ItemRequest
   field :title, type: String
   field :description, type: String
   field :studentID, type: Integer
-
-
 end
