@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'reserves/index', to: 'reserves#index'
+  get 'reserves/confirm', to: 'reserves#confirm'
+  resources :reserves do
+    member do
+      get :delete
+    end
+  end
+
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'

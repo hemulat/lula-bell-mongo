@@ -7,7 +7,7 @@ class Transaction
   field :start_date, type: DateTime, default: proc {DateTime.now}
   field :end_date, type: DateTime
   field :return_date, type: DateTime
-  field :qty_id, type: Integer 
+  field :qty_id, type: Integer
 
   belongs_to :item
 

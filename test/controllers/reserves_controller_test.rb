@@ -1,0 +1,39 @@
+require 'test_helper'
+
+class ReservesControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    get reserves_index_url
+    assert_response :success
+  end
+
+  test "should get confirm" do
+    get reserves_confirm_url
+    assert_response :success
+  end
+
+  test "should get show" do
+    get reserves_show_url
+    assert_response :success
+  end
+
+  test "should get new" do
+    get reserves_new_url
+    assert_response :success
+  end
+
+  test "should get create" do
+    get reserves_create_url
+    assert_response :success
+  end
+
+  test "should get edit" do
+    get reserves_edit_url
+    assert_response :success
+  end
+
+  test "should get delete" do
+    get reserves_delete_url
+    assert_response :success
+  end
+
+end
