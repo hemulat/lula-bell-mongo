@@ -10,7 +10,7 @@ class Item
   field :_quantity, type: Array, default: [1]
   field :quantity, type: Integer, default: 1
 
-  has_many :transactions
+  has_many :transactions, dependent: :delete, dependent: :destroy
 
   scope :available, -> {where(:_quantity.ne =>[])}
 
