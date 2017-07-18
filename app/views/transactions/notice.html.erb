@@ -17,7 +17,7 @@
       <tr>
         <td><%= transaction.student_id %></td>
         <td><%= link_to transaction.item.name, item_path(transaction.item) %></td>
-        <td>&nbsp&nbsp</td>
+        <td><%= transaction.qty_id %></td>
         <td><%= transaction.start_date.strftime("%B %d, %Y") %></td>
         <% if transaction.item.rentable %>
             <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
