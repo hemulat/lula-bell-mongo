@@ -1,5 +1,7 @@
 class ReservesController < ApplicationController
 
+  before_action :authorize_admin
+
   def index
     @reserves = Reserve.all
   end
