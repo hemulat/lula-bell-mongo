@@ -36,8 +36,6 @@ class ItemsController < ApplicationController
   def transactions
     @item = Item.find(params[:id])
     @transactions = @item.transactions.order_by(:updated_at => 'desc')
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    logger.tagged("A Tag") {logger.info "#{@transactions.class}"}
   end
 
   def show
@@ -230,25 +228,29 @@ class ItemsController < ApplicationController
       return item
     end
 
-    # Gets search query
     def get_query
+      '''
+      Gets search query.
+      '''
       params[:query]
     end
 
-    # Gets all features from all subclasses of Item
     def get_all_features
+      '''
+      Gets all features from all subclasses of Item.
+      '''
       categories = Item.descendants
       features = []
       categories.each do |category|
         features = features | get_features(category)
       end
-      #logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-      #logger.tagged("LOG_TAG") {logger.info "#{features}"}
       return features
     end
 
-    # Queries database with single word
     def query_db(word)
+      '''
+      Queries database with single word.
+      '''
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
@@ -259,14 +261,37 @@ class ItemsController < ApplicationController
       return results
     end
 
-    # Queries database with multiple words
     def get_search_results(query)
+      '''
+      Queries database with multiple words.
+      '''
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
         results = Item.and(results.selector, query_db(word).selector)
       end
       return results
+    end
+
+    def is_available?(item, qty_id, start_date, end_date)
+      '''
+      Given an item, qty_id, start date, and end date, this function returns
+      whether the item is available on those days.
+      '''
+      date_range = start_date..end_date
+      transactions = Transaction.where(item_id: item._id, qty_id: qty_id)
+      possible = true
+      date_range.each do |date|
+        transactions.each do |transaction|
+          if (transaction.return_date == nil)
+            if (transaction.start_date..transaction.end_date).cover?(date)
+              possible = false
+              break
+            end
+          end
+        end
+      end
+      return possible
     end
 
 end
