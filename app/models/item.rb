@@ -12,8 +12,9 @@ class Item
   field :_quantity, type: Array, default: [1]
   field :quantity, type: Integer, default: 1
 
-  has_many :transactions
-  has_many :reservations, class_name: "Reserve", inverse_of: :item
+  has_many :transactions, dependent: :destroy
+  has_many :reservations, class_name: "Reserve", inverse_of: :item,
+                          dependent: :destroy
 
   scope :available, -> {where(:_quantity.ne =>[])}
 
