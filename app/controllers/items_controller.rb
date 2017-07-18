@@ -1,13 +1,14 @@
 class ItemsController < ApplicationController
 
   before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy]
+
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
     @items = Item.available
-    gon.items = Item.available
+    gon.items = @items
     @categories = get_sub(Item)
   end
 

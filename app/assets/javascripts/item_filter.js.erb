@@ -10,16 +10,32 @@ sidebarLink.addEventListener("click", function(){
     renderHTML(ourData);
 
     };
-
   ourRequest.send();
  });
 
 
 function renderHTML(data){
-  console.log(gon.items);
+  console.log(data);
   var htmlString="<div class=\"row\">";
+  if (data.length==0){
+    "<h4>Hmm, looks like there's nothing here...</h4>";
+  }
+  else{
+    for (i=0;i<data.length;i++){
+      htmlString+= "<div class=\"col-sm-6 col-md-3\">"+
+      "  <div class=\"thumbnail\">"+
+      "    <a href=\"\\items"  +"\"" + ">"+
+      "     <img src=\"" + "\"" + "alt=\""+ data[i].name +"\"" +"height=\"150\" width=\"150\">"+
+      "      <div class=\"caption\">"+
+              data[i].name+
+      "      </div>"+
+      "    </a>"+
+      "  </div>"+
+    "  </div>";
+    }
 
-    htmlString+="hello";
+    htmlString+= "</div>"
+  }
 
 
   item_container.insertAdjacentHTML('beforeend', htmlString);
