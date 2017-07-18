@@ -273,25 +273,5 @@ class ItemsController < ApplicationController
       return results
     end
 
-    def is_available?(item, qty_id, start_date, end_date)
-      '''
-      Given an item, qty_id, start date, and end date, this function returns
-      whether the item is available on those days.
-      '''
-      date_range = start_date..end_date
-      transactions = Transaction.where(item_id: item._id, qty_id: qty_id)
-      possible = true
-      date_range.each do |date|
-        transactions.each do |transaction|
-          if (transaction.return_date == nil)
-            if (transaction.start_date..transaction.end_date).cover?(date)
-              possible = false
-              break
-            end
-          end
-        end
-      end
-      return possible
-    end
 
 end

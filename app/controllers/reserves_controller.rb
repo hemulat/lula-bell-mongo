@@ -6,9 +6,11 @@ class ReservesController < ApplicationController
 
   def check_out
     reservation = Reserve.find(params[:reserve_id])
-    if reservation.item._quantity.include? reservation.qty_id.to_i
-      @item = reservation.item
-      @item._quantity.delete(reservation.qty_id.to_i)
+    @item = reservation.item
+    picked_id = pick_available(@item,reservation.start_date,reservation.end_date).to_i
+    final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : picked_id
+    if  final_id
+      @item._quantity.delete(final_id)
       @item.save
 
       @transaction = Transaction.new
@@ -17,13 +19,14 @@ class ReservesController < ApplicationController
       @transaction.end_date = reservation.end_date
       @transaction.start_date = reservation.start_date
       @transaction.item = @item
-      @transaction.qty_id = reservation.qty_id
+      @transaction.qty_id = final_id
 
       @transaction.save
       reservation.destroy
       flash[:notice] = "Item checked out successfully."
     else
-      flash[:alert] = "The item you are trying to checkout is already checked out."
+      flash[:alert] = "The item you are trying to checkout is already checked out.
+                        Most likely not returned after a checkout."
     end
     redirect_to reserves_path
   end
@@ -45,15 +48,16 @@ class ReservesController < ApplicationController
     @reserve = Reserve.new(reserve_params)
     @item = @reserve.item
 
-    if false
+    qty_id = pick_available(@item,@reserve.start_date,@reserve.end_date)
+    if !qty_id
       #if reservation is not possible, redisplay form so user can change Dates
       flash[:alert] = "Reservation for the selected times is not possible,
-      please select different times!"
+      please select different dates!"
       render 'new'
       return
     end
 
-    @reserve.qty_id = @item._quantity[0]
+    @reserve.qty_id = qty_id
     if @reserve.save
       #If save succeeds, show confirmation
       flash[:notice] = "Reservation created successfully."

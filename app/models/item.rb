@@ -29,6 +29,16 @@ class Item
     {_status: ["Checked Out", "In Laundry", "Available"]}
   end
 
+  def qty_ids()
+    qty_ids = (self._quantity).clone
+    self.transactions.each do |t|
+      if t.return_date.nil? && !qty_ids.include?(t.qty_id)
+        qty_ids.push(t.qty_id)
+      end
+    end
+    return qty_ids
+  end
+
   protected
     def self.shorthand
       self.name[0]

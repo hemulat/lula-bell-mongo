@@ -10,15 +10,22 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    @transaction = Transaction.new(transaction_params)
 
+    @transaction = Transaction.new(transaction_params)
     @item = @transaction.item
-    if @item._quantity.empty?
-      flash[:alert] = "Out of stock!"
+
+    start_date = @transaction.start_date
+    end_date = @transaction.end_date
+
+    picked_id = pick_available(@item,start_date,end_date)
+    if !(picked_id)
+      flash.now[:alert] = "No available item for the given dates!"
       render 'check_out'
       return
     else
-      @transaction.qty_id = @item._quantity.pop()
+
+      @item._quantity.delete(picked_id)
+      @transaction.qty_id = picked_id
       if !@item.rentable
         @item.quantity -= 1
       end
@@ -27,7 +34,7 @@ class TransactionsController < ApplicationController
     #Save the object
     if @transaction.save && @item.save
       #If save succeeds, redirect to the index action
-      flash[:notice] = "Transaction created successfully."
+      flash[:notice] = "Check out successful."
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
