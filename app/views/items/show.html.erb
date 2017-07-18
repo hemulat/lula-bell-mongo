@@ -25,7 +25,9 @@
           <p> <%= "SKU - " %><%= @item._SKU%></p>
         <%end%>
       </div>
-        <%=link_to "Reserve", reserve_path(@item), class: "btn btn-success"%>
+        <% if @item.reservable %>
+          <%=link_to "Reserve",reserve_path(@item), class: "btn btn-success"%>
+        <% end %>
         <% if admin_signed_in? %>
           <% if @item._quantity.empty?%>
             <%= link_to "Check Out", check_out_transaction_path(@item.id),
