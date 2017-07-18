@@ -1,4 +1,6 @@
 <div class= "sidenav">
+    <h3 id="title">Items</h3>
+    <%= link_to "View All", items_path, id:"category"%>
     <% @categories.each do |category, dict|%>
       <%=link_to category.titleize, category_path(category), id: "category", remote: true%>
       <span >

@@ -22,7 +22,7 @@ function renderHTML(data){
   }
   else{
     for (i=0;i<data.length;i++){
-      htmlString+= "<div class=\"col-sm-6 col-md-3\">"+
+      htmlString+= "<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">"+
       "  <div class=\"thumbnail\">"+
       "    <a href=\"\\items"  +"\"" + ">"+
       "     <img src=\"" + "\"" + "alt=\""+ data[i].name +"\"" +"height=\"150\" width=\"150\">"+
@@ -36,8 +36,5 @@ function renderHTML(data){
 
     htmlString+= "</div>"
   }
-
-
-  item_container.insertAdjacentHTML('beforeend', htmlString);
+    item_container.insertAdjacentHTML('beforeend', htmlString);
 };
-// console.log(gon.items);
