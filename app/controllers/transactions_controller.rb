@@ -89,6 +89,13 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def edit_multiple
+    @items = Item.where(:student_id => 'input')
+  end
+
+  def student_check_in
+  end
+
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)

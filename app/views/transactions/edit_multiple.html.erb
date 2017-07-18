@@ -1,0 +1,16 @@
+<div id="form">
+  <h2>Check In!</h2>
+  
+  <table class="listing">
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+      </tr>
+    <% end %>
+  <%= simple_form_for @transaction, url: {action: 'update'}, method: :patch do |f| %>
+      <%= f.input :return_date, label: "Item Returned On", as: :date,
+                                input_html: {value: Time.now.strftime("%Y-%m-%d")},
+                                html5: true  %>
+      <%= f.submit "Check In", class: "btn btn-success" %>
+  <% end %>
+</div>
