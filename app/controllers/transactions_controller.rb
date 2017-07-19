@@ -53,12 +53,8 @@ class TransactionsController < ApplicationController
     #Find a new object using form parameters
     @transaction = Transaction.find(params[:id])
     @item = @transaction.item
-    # update item info
-    if (@item.rentable && @transaction.return_date.nil?)
-      @item._quantity.push(@transaction.qty_id)
-    end
     # update and persist to DB
-    if @transaction.update_attributes(transaction_params) && @item.save
+    if @transaction.update_attributes(transaction_params)
       #If save succeeds, redirect to the show action
       flash[:notice] = "Transaction updated successfully."
       redirect_to(:action => 'notice')
