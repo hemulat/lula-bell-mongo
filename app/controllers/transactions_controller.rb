@@ -15,7 +15,7 @@ class TransactionsController < ApplicationController
     start_date = @transaction.start_date
     @transaction.end_date ||=  @transaction.start_date
     end_date = @transaction.end_date
-    picked_id = pick_available(@item,start_date,end_date)
+    picked_id = pick_available_checkout(@item,start_date,end_date)
 
     if !(picked_id) || picked_id==0
       flash.now[:alert] = "No available item for the given dates!"
@@ -130,7 +130,7 @@ class TransactionsController < ApplicationController
           transaction.end_date = transaction.start_date
         end
 
-        picked_id = pick_available(@item, transaction.start_date, transaction.end_date)
+        picked_id = pick_available_checkout(@item, transaction.start_date, transaction.end_date)
         if !(picked_id) || picked_id==0
           redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "No available item for the given dates!"
           return
