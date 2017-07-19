@@ -32,11 +32,20 @@ class Item
   def qty_ids()
     qty_ids = (self._quantity).clone
     self.transactions.each do |t|
-      if t.return_date.nil? && !qty_ids.include?(t.qty_id)
-        qty_ids.push(t.qty_id)
+      if t.return_date.nil? && !t.end_date.nil?
+        qty_ids.push(t.qty_id.to_i)
       end
     end
     return qty_ids
+  end
+
+  def available_quantity_ids()
+    current = self._quantity.clone
+    reserved = []
+    self.reservations.each do |r|
+      reserved.push(r.qty_id.to_i)
+    end
+    current.select {|i| !reserved.include?(i.to_i)}
   end
 
   protected

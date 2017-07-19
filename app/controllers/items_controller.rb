@@ -35,7 +35,9 @@ class ItemsController < ApplicationController
 
   def transactions
     @item = Item.find(params[:id])
-    @transactions = @item.transactions.order_by(:updated_at => 'desc')
+    unreturned = @item.transactions.where(return_date: nil).desc(:updated_at)
+    returned = @item.transactions.where(:return_date.ne =>  nil).desc(:updated_at)
+    @transactions = unreturned+returned
   end
 
   def show
@@ -86,30 +88,32 @@ class ItemsController < ApplicationController
     @item_details = get_feature_type(@item)
 
     new_q = valid_features(@item.class)[:quantity].to_i
-    qty_list = @item._quantity
-
-    if @item.transactions.empty?
-      max_in_transactions = 0
-    else
-      max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
-    end
-
-    max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
+    qty_list = @item.available_quantity_ids()
 
     if (new_q > @item.quantity) # adding quantity
+
+      if @item.transactions.empty?
+        max_in_transactions = 0
+      else
+        max_in_transactions = @item.transactions.desc(:qty_id).first.qty_id
+      end
+
+      max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
       add_qty = new_q - @item.quantity
-      @item._quantity = qty_list + (max_qty+1..add_qty+max_qty).to_a
+      @item._quantity += (max_qty+1..add_qty+max_qty).to_a
 
     elsif (@item.quantity > new_q) # decreasing quantity
       rm_count = (@item.quantity - new_q)
       if (rm_count > qty_list.size)
-        flash[:alert] = "Make sure you have at least #{rm_count} items " +
-                        "in stock. Make sure the items are checked in."
+        flash.now[:alert] = "Make sure you have at least #{rm_count} " +
+                            "#{'item'.pluralize(rm_count)}, not checked " +
+                            "out or reserved in stock."
         render 'edit'
         return
       else
-        (1..rm_count).each{qty_list.pop()}
-        @item._quantity = qty_list
+        (1..rm_count).each do
+          @item._quantity.delete(qty_list.pop())
+        end
       end
     end
 

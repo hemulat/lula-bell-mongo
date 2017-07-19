@@ -7,9 +7,9 @@ class ReservesController < ApplicationController
   def check_out
     reservation = Reserve.find(params[:reserve_id])
     @item = reservation.item
-    picked_id = pick_available(@item,reservation.start_date,reservation.end_date).to_i
-    final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : picked_id
-    if  final_id
+    next_id = pick_different_from(@item,reservation.start_date,reservation.end_date,reservation.qty_id.to_i)
+    final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : next_id
+    if final_id && reservation.item._quantity.include?(final_id)
       @item._quantity.delete(final_id)
       @item.save
 
@@ -51,7 +51,7 @@ class ReservesController < ApplicationController
     qty_id = pick_available(@item,@reserve.start_date,@reserve.end_date)
     if !qty_id
       #if reservation is not possible, redisplay form so user can change Dates
-      flash[:alert] = "Reservation for the selected times is not possible,
+      flash.now[:alert] = "Reservation for the selected times is not possible,
       please select different dates!"
       render 'new'
       return
@@ -82,7 +82,7 @@ class ReservesController < ApplicationController
       redirect_to(:action => 'index')
     else
       #If save fails, redisplay the form so user can fix problems
-      flash[:notice] = "You need to have:
+      flash.now[:notice] = "You need to have:
       Dates, 9-digit Student ID, Student's email"
       render('edit') # this renews the form template
     end
