@@ -5,7 +5,7 @@
       <div class="multi-checkout-static">
         Enter student ID: <p><%= number_field_tag :student_id, params[:student_id], class: "number", :required => true %></p>
         Enter item SKU: <p><%= text_field_tag :sku, params[:sku], placeholder: "Enter SKU of an item...", :required => true %>
-        <%= submit_tag "Check SKU", name: nil, class: "btn btn-link" %></p>
+        <%= submit_tag "Check SKU", name: :submit, class: "btn btn-link" %></p>
       </div>
       <% if @item != nil %>
         <div class="valid-SKU">
@@ -18,7 +18,7 @@
           <% end %>
         </div>
         <div class="buttons">
-          <%= submit_tag "Checkout", name: nil, class: "btn btn-success" %>
+          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
           <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
         </div>
       <% elsif params.has_key?(:sku) %>
