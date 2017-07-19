@@ -27,7 +27,11 @@
             <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
           <% end %>
           <td class="actions", style="text-align: center">
-            <%= link_to "Check In", check_in_transaction_path(transaction), class: "btn btn-info" %>
+            <% if transaction.return_date.nil? %>
+              <%= link_to "Check in", direct_checkin_path(transaction), class: "btn btn-info" %>
+            <% else %>
+              <%= link_to "Edit", check_in_transaction_path(transaction), class: "btn btn-info" %>
+            <% end %>
             <%= link_to "Delete", transaction_path(transaction),
                                   method: :delete,
                                   data: { confirm: "Are you sure you want to delete this transaction?" },

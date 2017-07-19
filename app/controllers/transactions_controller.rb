@@ -7,10 +7,6 @@ class TransactionsController < ApplicationController
     @transactions = unreturned+returned
   end
 
-  def check_in
-    @transaction = Transaction.find(params[:id])
-  end
-
   def create
     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     @transaction = Transaction.new(transaction_params)
@@ -49,23 +45,43 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def check_in
+    @transaction = Transaction.find(params[:id])
+  end
+
   def update
+    #Find a new object using form parameters
+    @transaction = Transaction.find(params[:id])
+    @item = @transaction.item
+    # update and persist to DB
+    if @transaction.update_attributes(transaction_params)
+      #If save succeeds, redirect to the show action
+      flash[:notice] = "Transaction updated successfully."
+      redirect_to(:action => 'notice')
+    else
+      #If save fails, redisplay the form so user can fix problems
+      render 'check_in'
+    end
+  end
+
+  def direct_checkin
     #Find a new object using form parameters
     @transaction = Transaction.find(params[:id])
     @item = @transaction.item
     # update item info
     if (@item.rentable && @transaction.return_date.nil?)
       @item._quantity.push(@transaction.qty_id)
-    end 
-    # update and persist to DB
-    if @transaction.update_attributes(transaction_params) && @item.save
-      #If save succeeds, redirect to the show action
+    end
+
+    @transaction.return_date = DateTime.now
+
+    if @transaction.save && @item.save
       flash[:notice] = "Check in successfully."
-      redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
-      render 'check_in'
+      flash[:alert] = "Check in failed"
     end
+    redirect_to(:action => 'notice')
   end
 
   def destroy
