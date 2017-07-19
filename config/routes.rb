@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'reserve/:item_id', to: 'reserves#new', as: :reserve
+  get 'reserves/confirm', to: 'reserves#confirm'
+  get 'reserves/check_out/:reserve_id', to: 'reserves#check_out',
+                                        as: :checkout_reserve
+  resources :reserves, except: [:new] do
+    member do
+      get :delete
+    end
+  end
+
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'

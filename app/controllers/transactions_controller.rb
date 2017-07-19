@@ -2,7 +2,9 @@ class TransactionsController < ApplicationController
   before_action :authorize_admin
 
   def notice
-    @transactions = Transaction.all.order_by(:updated_at => 'desc')
+    unreturned = Transaction.where(return_date: nil).desc(:updated_at)
+    returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
+    @transactions = unreturned+returned
   end
 
   def check_in
@@ -10,16 +12,27 @@ class TransactionsController < ApplicationController
   end
 
   def create
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
     @transaction = Transaction.new(transaction_params)
     @item = @transaction.item
 
-    @item = @transaction.item
-    if @item._quantity.empty?
-      flash[:alert] = "Out of stock!"
+    start_date = @transaction.start_date
+    end_date = @transaction.end_date
+    logger.tagged("pick_available return val") {logger.info "#{pick_available(@item,start_date,end_date)}"}
+    logger.tagged("item given") {logger.info "#{p @item}"}
+    logger.tagged("start_date given") {logger.info "#{start_date}"}
+    logger.tagged("end_date given") {logger.info "#{end_date}"}
+    picked_id = pick_available(@item,start_date,end_date)
+    logger.tagged("Picked ID val") {logger.info "#{picked_id}"}
+
+    if !(picked_id) || picked_id==0
+      flash.now[:alert] = "No available item for the given dates!"
       render 'check_out'
       return
+
     else
-      @transaction.qty_id = @item._quantity.pop()
+      @item._quantity.delete(picked_id)
+      @transaction.qty_id = picked_id
       if !@item.rentable
         @item.quantity -= 1
       end
@@ -28,7 +41,7 @@ class TransactionsController < ApplicationController
     #Save the object
     if @transaction.save && @item.save
       #If save succeeds, redirect to the index action
-      flash[:notice] = "Transaction created successfully."
+      flash[:notice] = "Check out successful."
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
@@ -41,12 +54,13 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
     @item = @transaction.item
     # update item info
-    @item._quantity.push(@transaction.qty_id)
-
+    if (@item.rentable && @transaction.return_date.nil?)
+      @item._quantity.push(@transaction.qty_id)
+    end 
     # update and persist to DB
     if @transaction.update_attributes(transaction_params) && @item.save
       #If save succeeds, redirect to the show action
-      flash[:notice] = "Transaction updated successfully."
+      flash[:notice] = "Check in successfully."
       redirect_to(:action => 'notice')
     else
       #If save fails, redisplay the form so user can fix problems
@@ -84,6 +98,7 @@ class TransactionsController < ApplicationController
 
   private
     def transaction_params
-      params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
+      params.require(:transaction).permit(:student_id, :item_id, :start_date,
+                                              :end_date, :return_date, :email)
     end
 end
