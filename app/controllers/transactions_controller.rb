@@ -82,6 +82,44 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def multiple_check_out
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    logger.tagged("A Tag") {logger.info "#{params.inspect}"}
+
+    if params.has_key?(:sku)
+      @item = Item.find_by(_SKU: params[:sku])
+
+      if params.has_key?(:start_date) && params[:start_date][0] != ""
+        transaction = Transaction.new
+        transaction.student_id = params[:student_id]
+        transaction.item_id = @item._id
+        transaction.start_date = params[:start_date][0]
+        if @item._quantity.empty?
+          redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Out of stock!"
+          return
+        else
+          transaction.qty_id = @item._quantity.pop()
+          if !@item.rentable
+            @item.quantity -= 1
+          end
+        end
+        if @item.rentable
+          if !params.has_key?(:end_date) || params[:end_date][0] == ""
+            redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "End date cannot be empty!"
+            return
+          end
+          transaction.end_date = params[:end_date][0]
+        end
+        if transaction.save && @item.save
+          redirect_to multiple_check_out_path(:student_id => params[:student_id]), notice: "Successfully checked out!"
+          return
+        end
+      elsif params.has_key?(:start_date) && params[:start_date][0] == ""
+        redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Start date cannot be empty!"
+      end
+    end
+  end
+
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date, :end_date, :return_date)
