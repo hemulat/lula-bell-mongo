@@ -1,16 +1,21 @@
-<div id="form">
-  <h2>Check In!</h2>
-  
-  <table class="listing">
-    <% @items.each do |item| %>
-      <tr>
-        <td><%= item.name %></td>
-      </tr>
+<div class="form">
+  <%= form_for(:transaction, :url => update_multiple_transactions_path, :method => 'patch') do |f| %>
+  <ul>
+    <% @transactions.each do |transaction| %>
+      <li>
+        <%= transaction.item.name %>
+        <%= hidden_field_tag "items_id[]", transaction.id%>
+      </li>
     <% end %>
-  <%= simple_form_for @transaction, url: {action: 'update'}, method: :patch do |f| %>
-      <%= f.input :return_date, label: "Item Returned On", as: :date,
-                                input_html: {value: Time.now.strftime("%Y-%m-%d")},
-                                html5: true  %>
-      <%= f.submit "Check In", class: "btn btn-success" %>
+  </ul>
+  <table>
+    <tr>
+      <th>Due Date</th>
+      <td><%= f.date_field(:end_date, :order => [:month, :day, :year]) %></td>
+    </tr>
+  </table>
+  <div>
+    <%= f.submit("Check In!") %>
+  </div>
   <% end %>
 </div>

@@ -4,12 +4,10 @@
       <th>Item ID</th>
       <td><%= f.text_field(:item_id, :value => "#{@item.id}", :readonly => true) %></td>
     </tr>
-    <% if defined? @item.qty_id %>
     <tr>
       <th>Qty ID</th>
-      <td><%= f.text_field(:qty_id, :value => "#{@item.qty_id}", :readonly => true) %></td>
+      <td><%= f.text_field(:qty_id, :value => "#{@item.quantity}", :readonly => true) %></td>
     </tr>
-    <% end %>
     <tr>
       <th>Student ID</th>
       <td><%= f.text_field(:student_id, :maxlength => 9) %></td>

@@ -89,11 +89,25 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def edit_multiple
-    @items = Item.where(:student_id => 'input')
+  def student_check_in
+    #just form for Student id
   end
 
-  def student_check_in
+  def student_item_check
+    @transactions = Transaction.where(:student_id => params[:input])
+  end
+
+  def edit_multiple
+    @transactions = Transaction.find(params[:items_id])
+  end
+
+  def update_multiple
+    @transactions = Transaction.find(params[:items_id])
+    @transactions.each do |transaction|
+      transaction.update_attributes!(params[:transaction].reject {|k,v| v.blank? })
+    end
+    flash[:notice] = "Your items have been checked in!"
+    redirect_to(transactions_path)
   end
 
   private

@@ -17,7 +17,7 @@
       <% @reserves.each do |reserve| %>
       <tr>
         <td><%= reserve.item_id %></td>
-        <td><%#= reserve.qty_id %></td>
+        <td><%= reserve.qty_id %></td>
         <td><%= reserve.student_id %></td>
         <td><%= reserve.email %></td>
         <td><%= reserve.start_date.strftime("%B %d, %Y") %></td>
