@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       get :check_out
     end
   end
+  get '/transactions/multiple_check_out', to: 'transactions#multiple_check_out',
+                                          as: :multiple_check_out
 
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',

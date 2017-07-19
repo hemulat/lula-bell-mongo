@@ -218,7 +218,7 @@ class ItemsController < ApplicationController
       Permit array type valid features given the field name
       '''
       restriction_param = params.require(:item).permit(field_name => [])
-      restriction_param[field_name]
+      restriction_param[field_name].select{|i| !i.empty?}
     end
 
     def get_item

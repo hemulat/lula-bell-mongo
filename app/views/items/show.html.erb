@@ -18,7 +18,11 @@
               <%= @item._quantity.size || "Undefined" %></p>
           <% else %>
             <p> <%= "#{capitalize(feature)} - " %>
-              <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
+              <% if @item.attributes[feature].is_a?(Array) && !@item.attributes[feature].empty? %>
+                <%= @item.attributes[feature].join(", ") %>
+              <% else %>
+                <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
+              <% end %>
           <% end %>
         <% end %>
         <% if admin_signed_in? %>

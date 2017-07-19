@@ -41,6 +41,16 @@ class ApplicationController < ActionController::Base
     return nil
   end
 
+  def pick_available_checkout(item,start_date,end_date)
+    available_qty = item._quantity
+    available_qty.each do |q|
+      if is_available?(item,q,start_date,end_date)
+        return q
+      end
+    end
+    return nil
+  end
+
   def pick_different_from(item,start_date,end_date,unwanted_id)
     available_qty = item.qty_ids()
     available_qty.each do |q|
