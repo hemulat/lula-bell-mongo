@@ -157,9 +157,9 @@ class TransactionsController < ApplicationController
         elsif params.has_key?(:start_date) && params[:start_date][0] == ""
           redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Start date cannot be empty!"
         end
-      end
-    end
-  end
+      end# end of !if params key
+    end # end of if params key
+  end #end of method
 
   def student_check_in
     #just form for Student id
@@ -180,6 +180,7 @@ class TransactionsController < ApplicationController
     end
     flash[:notice] = "Your items have been checked in!"
     redirect_to(transactions_path)
+  end
 
   private
     def transaction_params
