@@ -1,14 +1,14 @@
-var sidebarLink= document.getElementById("testbutton");
+var sidebarLink2= document.getElementById("testbutton");
 var item_container=document.getElementById("category-content");
+console.log(gon.items);
 
-
-sidebarLink.addEventListener("click", function(){
+$(".ajax_filter").click(function(){
   var ourRequest=new XMLHttpRequest();
-  ourRequest.open("GET", gon.items,true );
+  ourRequest.open("GET", gon.items,true);
   ourRequest.onload=function() {
-    var ourData= gon.items;
+    var ourData= gon.items
+    
     renderHTML(ourData);
-
     };
   ourRequest.send();
  });
@@ -17,17 +17,17 @@ sidebarLink.addEventListener("click", function(){
 function renderHTML(data){
   console.log(data);
   var htmlString="<div class=\"row\">";
-  if (data.length==0){
+  if (data.length==0 || data==null){
     "<h4>Hmm, looks like there's nothing here...</h4>";
   }
   else{
     for (i=0;i<data.length;i++){
       htmlString+= "<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">"+
       "  <div class=\"thumbnail\">"+
-      "    <a href=\"\\items"  +"\"" + ">"+
-      "     <img src=\"" + "\"" + "alt=\""+ data[i].name +"\"" +"height=\"150\" width=\"150\">"+
+      "    <a href=\"" + data[i][1] + "\"" + ">"+
+      "     <img src=\"" + data[i][0] + "\"" + "alt=\""+ data[i][2] +"\"" +"height=\"150\" width=\"150\">"+
       "      <div class=\"caption\">"+
-              data[i].name+
+              data[i][2]+
       "      </div>"+
       "    </a>"+
       "  </div>"+

@@ -35,7 +35,6 @@ Rails.application.routes.draw do
   resources :items,  except:[:new]
 
   root 'static#home'
-
   get 'static/admin_home'
 
   resources :item_requests

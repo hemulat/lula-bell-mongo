@@ -2,10 +2,10 @@
     <h3 id="title">Items</h3>
     <%= link_to "View All", items_path, id:"category"%>
     <% @categories.each do |category, dict|%>
-      <%=link_to category.titleize, category_path(category), id: "category", remote: true%>
+      <%=link_to category.titleize, category_path(category),id: "category"%>
       <span >
       <% dict.each do |subcategory,subdict|%>
-        <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory", remote: true%>
+        <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
       <%end%>
       </span>
     <% end %>

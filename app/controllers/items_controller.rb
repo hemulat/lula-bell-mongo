@@ -7,8 +7,8 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.available
-    gon.items = @items
+    @items = Item.available.paginate(page: params[:page])
+    gon.items = get_links(@items)
     @categories = get_sub(Item)
   end
 
@@ -51,8 +51,8 @@ class ItemsController < ApplicationController
   end
 
   def category
-    @items = get_class_name(params[:class]).available
-    gon.items = @items
+    @items = get_class_name(params[:class]).available.paginate(page: params[:page])
+    gon.items = get_links(@items)
     @categories = get_sub(Item)
   end
 
@@ -231,6 +231,15 @@ class ItemsController < ApplicationController
         results = Item.and(results.selector, query_db(word).selector)
       end
       return results
+    end
+
+    #Creates Item objects for ajax functionality
+    def get_links(items)
+      images=Array.new
+        items.each do |item|
+          images.push([item.image.url(:thumb),item_path(item),item.name])
+        end
+      return images
     end
 
 end
