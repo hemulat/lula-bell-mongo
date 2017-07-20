@@ -1,6 +1,8 @@
 class Item
   include Mongoid::Document
   include Mongoid::Paperclip
+  include Mongoid::Attributes::Dynamic
+
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
@@ -10,7 +12,9 @@ class Item
   field :_quantity, type: Array, default: [1]
   field :quantity, type: Integer, default: 1
 
-  has_many :transactions, dependent: :delete, dependent: :destroy
+  has_many :transactions, dependent: :destroy
+  has_many :reservations, class_name: "Reserve", inverse_of: :item,
+                          dependent: :destroy
 
   scope :available, -> {where(:_quantity.ne =>[])}
 
@@ -23,6 +27,25 @@ class Item
 
   def options
     {_status: ["Checked Out", "In Laundry", "Available"]}
+  end
+
+  def qty_ids()
+    qty_ids = (self._quantity).clone
+    self.transactions.each do |t|
+      if t.return_date.nil? && !t.end_date.nil?
+        qty_ids.push(t.qty_id.to_i)
+      end
+    end
+    return qty_ids
+  end
+
+  def available_quantity_ids()
+    current = self._quantity.clone
+    reserved = []
+    self.reservations.each do |r|
+      reserved.push(r.qty_id.to_i)
+    end
+    current.select {|i| !reserved.include?(i.to_i)}
   end
 
   protected

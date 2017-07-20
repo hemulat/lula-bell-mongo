@@ -3,8 +3,8 @@
   <div id="administration">
     <div tag: checking>
     <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
-
     <p><%= link_to("Check Out", items_path )%> </p>
+    <p><%= link_to 'Multiple Checkout', multiple_check_out_path %>
     </div>
     <hr />
     <div tag: requests>

@@ -35,9 +35,9 @@ class ItemsController < ApplicationController
 
   def transactions
     @item = Item.find(params[:id])
-    @transactions = @item.transactions.order_by(:updated_at => 'desc')
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    logger.tagged("A Tag") {logger.info "#{@transactions.class}"}
+    unreturned = @item.transactions.where(return_date: nil).desc(:updated_at)
+    returned = @item.transactions.where(:return_date.ne =>  nil).desc(:updated_at)
+    @transactions = unreturned+returned
   end
 
   def show
@@ -88,30 +88,32 @@ class ItemsController < ApplicationController
     @item_details = get_feature_type(@item)
 
     new_q = valid_features(@item.class)[:quantity].to_i
-    qty_list = @item._quantity
-
-    if @item.transactions.empty?
-      max_in_transactions = 0
-    else
-      max_in_transactions = @item.transactions.order_by(qty_id: -1).first.qty_id
-    end
-
-    max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
+    qty_list = @item.available_quantity_ids()
 
     if (new_q > @item.quantity) # adding quantity
+
+      if @item.transactions.empty?
+        max_in_transactions = 0
+      else
+        max_in_transactions = @item.transactions.desc(:qty_id).first.qty_id
+      end
+
+      max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
       add_qty = new_q - @item.quantity
-      @item._quantity = qty_list + (max_qty+1..add_qty+max_qty).to_a
+      @item._quantity += (max_qty+1..add_qty+max_qty).to_a
 
     elsif (@item.quantity > new_q) # decreasing quantity
       rm_count = (@item.quantity - new_q)
       if (rm_count > qty_list.size)
-        flash[:alert] = "Make sure you have at least #{rm_count} items " +
-                        "in stock. Make sure the items are checked in."
+        flash.now[:alert] = "Make sure you have at least #{rm_count} " +
+                            "#{'item'.pluralize(rm_count)}, not checked " +
+                            "out or reserved in stock."
         render 'edit'
         return
       else
-        (1..rm_count).each{qty_list.pop()}
-        @item._quantity = qty_list
+        (1..rm_count).each do
+          @item._quantity.delete(qty_list.pop())
+        end
       end
     end
 
@@ -216,7 +218,7 @@ class ItemsController < ApplicationController
       Permit array type valid features given the field name
       '''
       restriction_param = params.require(:item).permit(field_name => [])
-      restriction_param[field_name]
+      restriction_param[field_name].select{|i| !i.empty?}
     end
 
     def get_item
@@ -230,25 +232,29 @@ class ItemsController < ApplicationController
       return item
     end
 
-    # Gets search query
     def get_query
+      '''
+      Gets search query.
+      '''
       params[:query]
     end
 
-    # Gets all features from all subclasses of Item
     def get_all_features
+      '''
+      Gets all features from all subclasses of Item.
+      '''
       categories = Item.descendants
       features = []
       categories.each do |category|
         features = features | get_features(category)
       end
-      #logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-      #logger.tagged("LOG_TAG") {logger.info "#{features}"}
       return features
     end
 
-    # Queries database with single word
     def query_db(word)
+      '''
+      Queries database with single word.
+      '''
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
@@ -259,8 +265,10 @@ class ItemsController < ApplicationController
       return results
     end
 
-    # Queries database with multiple words
     def get_search_results(query)
+      '''
+      Queries database with multiple words.
+      '''
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
@@ -268,5 +276,6 @@ class ItemsController < ApplicationController
       end
       return results
     end
+
 
 end
