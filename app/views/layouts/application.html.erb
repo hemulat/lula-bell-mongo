@@ -64,18 +64,20 @@
   </head>
 
   <body>
-    <% if flash[:notice] && flash[:notice] != "" %>
-      <div class="alert alert-success alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <% if flash[:alert] && flash[:alert] != "" %>
-      <div class="alert alert-danger alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
+    <div class="flashes" style="max-width: 50%; margin: auto">
+      <% if flash[:notice] && flash[:notice] != "" %>
+        <div class="alert alert-success alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert] && flash[:alert] != "" %>
+        <div class="alert alert-danger alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
   <footer>
