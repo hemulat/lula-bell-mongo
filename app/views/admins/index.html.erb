@@ -3,7 +3,9 @@
     <tr>
       <th>Admin Email</th>
       <th>Superadmin Privileges</th>
-      <th>&nbsp;</th>
+      <% if current_admin.superadmin %>
+        <th>&nbsp;</th>
+      <% end %>
     </tr>
     <% @admins.each do |admin| %>
       <tr>
@@ -14,9 +16,10 @@
           <td>No</td>
         <% end %>
         <% if current_admin.superadmin %>
-          <td><%= link_to "Remove", admin_path(admin),
+          <td style="text-align: center"><%= link_to "Remove", admin_path(admin),
                   method: :delete,
-                  data: { confirm: "Are you sure you want to delete this account?" } %></td>
+                  data: { confirm: "Are you sure you want to delete this account?" },
+                  class: "btn btn-danger" %></td>
         <% end %>
       </tr>
     <% end %>

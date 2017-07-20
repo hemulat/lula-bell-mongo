@@ -118,7 +118,7 @@ class ItemsController < ApplicationController
     end
 
     if @item.update(valid_features(@item.class))
-      flash[:notice] = "Item update successful"
+      flash[:notice] = "Item update successful!"
       redirect_to action: 'show', id:  @item._id
     else
       render 'edit'
