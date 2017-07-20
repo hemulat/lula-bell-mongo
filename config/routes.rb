@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
+  root 'static#home'
+  get 'reserve/:item_id', to: 'reserves#new', as: :reserve
+  get 'reserves/confirm', to: 'reserves#confirm'
+  get 'reserves/check_out/:reserve_id', to: 'reserves#check_out',
+                                        as: :checkout_reserve
+  resources :reserves, except: [:new] do
+    member do
+      get :delete
+    end
+  end
 
+  get 'check_in/:id', to: 'transactions#direct_checkin', as: :direct_checkin
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'
@@ -7,9 +18,10 @@ Rails.application.routes.draw do
     member do
       get :check_in
       get :check_out
-      get :delete
     end
   end
+  get '/transactions/multiple_check_out', to: 'transactions#multiple_check_out',
+                                          as: :multiple_check_out
 
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',

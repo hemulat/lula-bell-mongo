@@ -1,7 +1,8 @@
 <%= link_to("<< Back to Item",item_path(@item.id), :class => 'back-link')%>
 
   <div id="form">
-    <h2>Check Out!</h2>
+    <h2>Check Out</h2>
+    <%= render 'shared/error_msg', item: @transaction %>
     <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
 
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>

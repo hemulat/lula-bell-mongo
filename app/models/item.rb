@@ -1,16 +1,22 @@
 class Item
   include Mongoid::Document
   include Mongoid::Paperclip
+  include Mongoid::Attributes::Dynamic
+
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
   field :description, type: String
   field :_SKU, type: String
   field :_status, type: String, default: "Available"
+  field :_quantity, type: Array, default: [1]
+  field :quantity, type: Integer, default: 1
 
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
+  has_many :reservations, class_name: "Reserve", inverse_of: :item,
+                          dependent: :destroy
 
-  scope :available, -> {where(_status: "Available")}
+  scope :available, -> {where(:_quantity.ne =>[])}
 
   validates_presence_of :name
   has_mongoid_attached_file :image,
@@ -23,7 +29,30 @@ class Item
     {_status: ["Checked Out", "In Laundry", "Available"]}
   end
 
+  def qty_ids()
+    qty_ids = (self._quantity).clone
+    self.transactions.each do |t|
+      if t.return_date.nil? && !t.end_date.nil?
+        qty_ids.push(t.qty_id.to_i)
+      end
+    end
+    return qty_ids
+  end
+
+  def available_quantity_ids()
+    current = self._quantity.clone
+    reserved = []
+    self.reservations.each do |r|
+      reserved.push(r.qty_id.to_i)
+    end
+    current.select {|i| !reserved.include?(i.to_i)}
+  end
+
   protected
+    def self.shorthand
+      self.name[0]
+    end
+
     def self.required_fields
       validators.select do |v|
         v.is_a?(Mongoid::Validatable::PresenceValidator)
@@ -34,7 +63,7 @@ class Item
       sku_str = ""
       cur_clas = self
       while cur_clas != Item do
-        sku_str = cur_clas.name[0] + sku_str
+        sku_str = cur_clas.shorthand + sku_str
         cur_clas = cur_clas.superclass
       end
       return "#{sku_str}#{Counter.next(self.name)}"
@@ -49,6 +78,9 @@ class Hygiene < Item
 end
 
 class Cleaning < Item
+  def self.shorthand
+    "Cln"
+  end
 end
 
 
@@ -63,6 +95,11 @@ class Clothing < Item
     {type: ['Winter', "Formal", "Professional", "Shoes","Other"],
      fit: %w"M W Jr Uni BT Plus"}
   end
+
+  def self.shorthand
+    "Clo"
+  end
+
 end
 
 class SchoolSupply < Item
@@ -78,6 +115,10 @@ class CookingEquipment < Kitchen
 
   def options
     {type: ["Pot", "Pan", "Utensil", "Other"]}
+  end
+
+  def self.shorthand
+    return 'Co'
   end
 
 end
