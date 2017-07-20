@@ -1,0 +1,22 @@
+<div id="form">
+  <h2>Check Mark the Items to return</h2>
+  <% if @transactions.empty? %>
+    <h1>No Items found</h1>
+  <% else %>
+    <%= form_tag edit_multiple_transactions_path do %>
+      <table>
+        <% @transactions.each do |transaction| %>
+          <% if transaction.item.rentable %>
+            <tr>
+              <td><%= check_box_tag "items_id[]", transaction.id %></td>
+              <td><%= transaction.item.name %></td>
+              <td><%= transaction.start_date.strftime("%a, %B %d, %Y") %></td>
+              <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+      <%= submit_tag "Next" %>
+    <% end #end of form %>
+  <% end %>
+</div>

@@ -146,12 +146,33 @@ class TransactionsController < ApplicationController
           redirect_to multiple_check_out_path(:student_id => params[:student_id]), notice: "Successfully checked out!"
           return
         end
-      elsif params.has_key?(:start_date) && params[:start_date][0] == ""
-        redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Start date cannot be empty!"
+        elsif params.has_key?(:start_date) && params[:start_date][0] == ""
+          redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Start date cannot be empty!"
+        end
       end
     end
+
+  def student_check_in
+    #just form for Student id
   end
 
+  def student_item_check
+    @transactions = Transaction.where(:student_id => params[:input])
+  end
+
+  def edit_multiple
+    @transactions = Transaction.find(params[:items_id])
+  end
+
+  def update_multiple
+    @transactions = Transaction.find(params[:items_id])
+    @transactions.each do |transaction|
+      transaction.update_attributes!(params[:transaction].reject {|k,v| v.blank? })
+    end
+    flash[:notice] = "Your items have been checked in!"
+    redirect_to(transactions_path)
+  end
+  
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date,

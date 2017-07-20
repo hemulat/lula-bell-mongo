@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'
+      get :student_check_in
+      post :student_item_check
+      post :edit_multiple
+      put :update_multiple
     end
     member do
       get :check_in
