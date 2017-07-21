@@ -23,20 +23,20 @@
   .pagination .current {
     font-style: normal;
     font-weight: bold;
-    background: #c1e199;
+    background: #ff5a5f;
     color: white;
-    border: 1px solid #379721;
+    border: 1px solid #0b3954;
   }
 
   .pagination a {
     text-decoration: none;
-    color: #379721;
-    border: 1px solid #c1e199;
+    color: #ff5a5f;
+    border: 1px solid #0b3954;
   }
 
     .pagination a:hover, .pagination a:focus {
-      color: #321952;
-      border-color: #321952;
+      color: #0b3954;
+      border-color: #0b3954;
     }
 
   .pagination .page_info {
