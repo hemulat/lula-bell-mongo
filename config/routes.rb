@@ -11,11 +11,16 @@ Rails.application.routes.draw do
   end
 
   get 'check_in/:id', to: 'transactions#direct_checkin', as: :direct_checkin
+  get 'check_in/:student_id/:id', to: 'transactions#student_checkin',
+                                  as: :student_checkin
+
+  delete 'destroy/:student_id/:id', to: 'transactions#student_destroy',
+                                  as: :student_destroy
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'
-      get :student_check_in
-      post :student_item_check
+      get :student
+      post :student_items
       post :edit_multiple
       put :update_multiple
     end
