@@ -3,8 +3,14 @@ class TransactionsController < ApplicationController
 
   def notice
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
+    #returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
+    @transactions = returns_only(unreturned)
+  end
+
+  def display
+    unreturned = Transaction.where(return_date: nil).desc(:updated_at)
     returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
-    @transactions = unreturned + returned
+    nonreturn = non_returns_only(unreturned)
   end
 
   def create
@@ -164,6 +170,28 @@ class TransactionsController < ApplicationController
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date,
                                               :end_date, :return_date, :email)
+    end
+
+    def returns_only(transactions)
+      returnables = []
+      transactions.each do |t|
+        if t.item.rentable
+          returnables << t
+        end
+      end
+
+      return returnables
+    end
+
+    def non_returns_only(transactions)
+      returnables = []
+      transactions.each do |t|
+        unless t.item.rentable
+          returnables << t
+        end
+      end
+
+      return returnables
     end
 
     def delete_transaction(transaction)

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     collection do
       get '/', to: 'transactions#notice'
       get :student
+      get :display
       post :student_items
       post :edit_multiple
       put :update_multiple
