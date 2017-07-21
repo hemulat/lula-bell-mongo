@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
   def notice
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
     returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
-    @transactions = unreturned+returned
+    @transactions = unreturned + returned
   end
 
   def create
