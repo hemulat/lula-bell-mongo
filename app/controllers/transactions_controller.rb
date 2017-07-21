@@ -1,10 +1,5 @@
 class TransactionsController < ApplicationController
-
   before_action :authorize_admin
-
-  def display
-    @items = Item.all
-  end
 
   def notice
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
@@ -69,41 +64,14 @@ class TransactionsController < ApplicationController
 
   def direct_checkin
     #Find a new object using form parameters
-    @transaction = Transaction.find(params[:id])
-    @item = @transaction.item
-    # update item info
-    if (@item.rentable && @transaction.return_date.nil?)
-      @item._quantity.push(@transaction.qty_id)
-    end
-
-    @transaction.return_date = DateTime.now
-
-    if @transaction.save && @item.save
-      flash[:notice] = "Check in successfully."
-    else
-      #If save fails, redisplay the form so user can fix problems
-      flash[:alert] = "Check in failed"
-    end
+    transaction = Transaction.find(params[:id])
+    checkin_transaction(transaction)
     redirect_to(:action => 'notice')
   end
 
   def destroy
-    @transaction = Transaction.find(params[:id])
-    @item = @transaction.item
-
-    # if the transaction is not checked in
-    if !@transaction.return_date
-      @item._quantity.push(@transaction.qty_id)
-      if !@item.rentable
-        @item.quantity += 1
-      end
-    end
-    if @transaction.destroy && @item.save
-      flash[:notice] = "Transaction destroyed successfully."
-    else
-      flash[:alert] = "Transaction could not be deleted."
-    end
-
+    transaction = Transaction.find(params[:id])
+    delete_transaction(transaction)
     redirect_to(:action => 'notice')
   end
 
@@ -116,9 +84,6 @@ class TransactionsController < ApplicationController
   end
 
   def multiple_check_out
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    logger.tagged("A Tag") {logger.info "#{params.inspect}"}
-
     if params.has_key?(:sku)
       @item = Item.find_by(_SKU: params[:sku])
 
@@ -130,7 +95,9 @@ class TransactionsController < ApplicationController
           transaction.start_date = params[:start_date][0]
           if @item.rentable
             if !params.has_key?(:end_date) || params[:end_date][0] == ""
-              redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "End date cannot be empty!"
+              redirect_to multiple_check_out_path(student_id: params[:student_id],
+                          sku: params[:sku]),
+                          alert: "End date cannot be empty!"
               return
             end
             transaction.end_date = params[:end_date][0]
@@ -140,7 +107,9 @@ class TransactionsController < ApplicationController
 
           picked_id = pick_available_checkout(@item, transaction.start_date, transaction.end_date)
           if !(picked_id) || picked_id==0
-            redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "No available item for the given dates!"
+            redirect_to multiple_check_out_path(student_id: params[:student_id],
+                        sku: params[:sku]),
+                        alert: "No available item for the given dates!"
             return
           else
             @item._quantity.delete(picked_id)
@@ -151,11 +120,13 @@ class TransactionsController < ApplicationController
           end
 
           if transaction.save && @item.save
-            redirect_to multiple_check_out_path(:student_id => params[:student_id]), notice: "Successfully checked out!"
+            redirect_to multiple_check_out_path(student_id: params[:student_id]),
+                        notice: "Successfully checked out!"
             return
           end
         elsif params.has_key?(:start_date) && params[:start_date][0] == ""
-          redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku]), alert: "Start date cannot be empty!"
+          redirect_to multiple_check_out_path(student_id: params[:student_id],
+                      sku: params[:sku]), alert: "Start date cannot be empty!"
         end
       end# end of !if params key
     end # end of if params key
@@ -178,13 +149,72 @@ class TransactionsController < ApplicationController
     @transactions.each do |transaction|
       transaction.update_attributes!(params[:transaction].reject {|k,v| v.blank? })
     end
-    flash[:notice] = "Your items have been checked in!"
-    redirect_to(transactions_path)
+  end
+
+
+  def student
+    #just form for Student id (just input for student id)
+  end
+
+  def student_items
+    @std_id = params[:input]
+    @transactions = Transaction.where(:student_id => @std_id)
+  end
+
+  def student_checkin
+    #Find a new object using form parameters
+    transaction = Transaction.find(params[:id])
+    checkin_transaction(transaction)
+    @std_id = params[:student_id]
+    @transactions = Transaction.where(:student_id => @std_id)
+    render 'student_items'
+    return
+  end
+
+  def student_destroy
+    transaction = Transaction.find(params[:id])
+    @std_id = params[:student_id]
+    @transactions = Transaction.where(:student_id => @std_id)
+    delete_transaction(transaction)
+    redirect_to(:action => 'notice')
   end
 
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date,
                                               :end_date, :return_date, :email)
+    end
+
+    def delete_transaction(transaction)
+      item = transaction.item
+      # if the transaction is not checked in
+      if !transaction.return_date
+        item._quantity.push(transaction.qty_id)
+        if !item.rentable
+          item.quantity += 1
+        end
+      end
+      if transaction.destroy && item.save
+        flash[:notice] = "Transaction destroyed successfully."
+      else
+        flash[:alert] = "Transaction could not be deleted."
+      end
+    end
+
+    def checkin_transaction(transaction)
+      item = transaction.item
+      # update item info
+      if (item.rentable && transaction.return_date.nil?)
+        item._quantity.push(transaction.qty_id)
+      end
+
+      transaction.return_date = DateTime.now
+
+      if transaction.save && item.save
+        flash.now[:notice] = "Checked in successfully."
+      else
+        #If save fails, redisplay the form so user can fix problems
+        flash.now[:alert] = "Check in failed"
+      end
     end
 end

@@ -1,8 +1,6 @@
 class ReservesController < ApplicationController
   before_action :authorize_admin, except: [:new, :create, :confirm]
 
-  before_action :authorize_admin, :except => [:new, :create, :confirm]
-
   def index
     @reserves = Reserve.all
   end
