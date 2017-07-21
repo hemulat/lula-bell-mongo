@@ -45,7 +45,11 @@ class TransactionsController < ApplicationController
   def direct_checkin
     #Find a new object using form parameters
     transaction = Transaction.find(params[:id])
-    checkin_transaction(transaction)
+    if checkin_transaction(transaction)
+      flash[:notice] = "Checked in successfully."
+    else
+      flash[:alert] = "Check in failed." # this should never happen
+    end
     redirect_to(:action => 'notice')
   end
 
@@ -130,7 +134,11 @@ class TransactionsController < ApplicationController
   def student_checkin
     #Find a new object using form parameters
     transaction = Transaction.find(params[:id])
-    checkin_transaction(transaction)
+    if checkin_transaction(transaction)
+      flash.now[:notice] = "Checked in successfully."
+    else
+      flash.now[:alert] = "Check in failed." # this should never happen
+    end
     @std_id = params[:student_id]
     @transactions = Transaction.where(:student_id => @std_id)
     render 'student_items'
@@ -173,12 +181,7 @@ class TransactionsController < ApplicationController
 
       transaction.return_date = DateTime.now
 
-      if transaction.save && item.save
-        flash.now[:notice] = "Checked in successfully."
-      else
-        #If save fails, redisplay the form so user can fix problems
-        flash.now[:alert] = "Check in failed"
-      end
+      return transaction.save && item.save
     end
 
     def check_out_unrentable(transaction,item)
