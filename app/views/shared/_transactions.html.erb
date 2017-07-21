@@ -10,7 +10,7 @@
       <th>Rental Returned On:</th>
       <th>Actions</th>
     </tr>
-    <% unless @transactions.size == 0 %>
+    <% unless @transactions.nil? || @transactions.size == 0 %>
       <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.student_id %></td>
