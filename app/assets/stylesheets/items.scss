@@ -11,23 +11,29 @@
 }
 
 .sidenav{
+  z-index: 0;
   height: 100%;
-  width: 175px;
-  position: fixed;
+  width: 15%;
+  position: absolute;
   top: 0;
   left: 0;
   background-color: #c1e199;
+  color: #321952;
   overflow-x: hidden;
   padding-top: 100px;
     #category{
-      font-size: 18px;
+      font-size: 14px;
+      font-weight: bold;
     }
 
     #subcategory{
       padding-left:50px;
       font-size: 12px;
     }
-
+    #title{
+      margin-left: 14px;
+      color:#a57ed7;
+    }
     a {
       padding: 8px 8px 8px 32px;
       text-decoration: none;
@@ -36,13 +42,13 @@
       display: block;
       transition: 0.5s;
       &:hover, .offcanvas &:focus{
-        color: #022b50;
+        color: #25aee9;
       }
   }
 }
 
 .category-content{
-  margin-left: 200px;
+  margin-left: 17%;
 }
 
 .all-category-content{

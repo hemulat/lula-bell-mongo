@@ -12,7 +12,7 @@
         </tr>
           <% @item_requests.reverse.each do |request|%>
         <tr>
-          <td><%= request.created_at.strftime('%m/%d/%Y %H:%M:%S %p') %></td>
+          <td><%= request.created_at.strftime('%m/%d/%Y %H:%M:%S') %></td>
           <td><%= request.studentID%></td>
           <td><%= request.title %></td>
           <td><%= request.description %></td>
