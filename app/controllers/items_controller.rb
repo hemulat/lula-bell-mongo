@@ -1,16 +1,18 @@
 class ItemsController < ApplicationController
 
   before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy]
+
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
     if admin_signed_in?
-      @items = Item.all
+      @items = Item.all.paginate(page: params[:page])
     else
-      @items = Item.available
+      @items = Item.available.paginate(page: params[:page])
     end
+    gon.items = get_links(@items)
     @categories = get_sub(Item)
   end
 
@@ -54,9 +56,11 @@ class ItemsController < ApplicationController
 
   def category
     if admin_signed_in?
-      @items = get_class_name(params[:class])
+      @items = get_class_name(params[:class]).paginate(page: params[:page])
+      gon.items = get_links(@items)
     else
-      @items = get_class_name(params[:class]).available
+      @items = get_class_name(params[:class]).available.paginate(page: params[:page])
+      gon.items = get_links(@items)
     end
     @categories = get_sub(Item)
   end
@@ -277,5 +281,13 @@ class ItemsController < ApplicationController
       return results
     end
 
+    #Creates Item objects for ajax functionality
+    def get_links(items)
+      images=Array.new
+        items.each do |item|
+          images.push([item.image.url(:thumb),item_path(item),item.name])
+        end
+      return images
+    end
 
 end
