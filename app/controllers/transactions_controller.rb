@@ -69,6 +69,38 @@ class TransactionsController < ApplicationController
   end
 
   def multiple_check_out
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    logger.tagged("A Tag") {logger.info "#{params.inspect}"}
+    if params.has_key?(:transaction)
+      @transaction = Transaction.new(transaction_params)
+    else
+      @transaction = Transaction.new()
+    end
+
+    if params.has_key?(:sku)
+      @item = Item.find_by(_SKU: params[:sku])
+
+      if params.has_key?(:checkout)
+        if params[:transaction].has_key?(:end_date) &&
+           params[:transaction][:end_date] == ""
+          redirect_to multiple_check_out_path(transaction: transaction_params,
+                                              sku: params[:sku], qty: params[:qty]),
+                                              alert: "End date cannot be empty!"
+          return
+        end
+
+        qty = params[:qty].to_i
+        if check_out_n_items(qty)
+          redirect_to multiple_check_out_path(transaction: transaction_params),
+                                              notice: "Checked out successfully!"
+        else
+          redirect_to multiple_check_out_path(transaction: transaction_params,
+                                              sku: params[:sku], qty: params[:qty]),
+                                              alert: "No available items for the given dates!"
+        end
+      end
+    end
+    '''
     if params.has_key?(:sku)
       @item = Item.find_by(_SKU: params[:sku])
 
@@ -112,11 +144,12 @@ class TransactionsController < ApplicationController
           end
         elsif params.has_key?(:start_date) && params[:start_date][0] == ""
           redirect_to multiple_check_out_path(student_id: params[:student_id],
-                                              sku: params[:sku], email: params[:email]), 
+                                              sku: params[:sku], email: params[:email]),
                                               alert: "Start date cannot be empty!"
         end
       end
     end
+    '''
   end
 
 
