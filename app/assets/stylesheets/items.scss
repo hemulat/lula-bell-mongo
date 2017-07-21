@@ -17,13 +17,22 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #c1e199;
-  color: #321952;
+  background-color: #bfd7ea;
+  color: #eb4511;
   overflow-x: hidden;
   padding-top: 100px;
+
+    hr{
+      margin: 0px;
+      padding-left: 4px;
+      padding-right: 4px;
+      padding-top: 0px;
+      padding-bottom: 4px;
+    }
     #category{
       font-size: 14px;
       font-weight: bold;
+      padding-top: 6px;
     }
 
     #subcategory{
@@ -32,17 +41,17 @@
     }
     #title{
       margin-left: 14px;
-      color:#a57ed7;
+      color: #0B3954;
     }
     a {
       padding: 8px 8px 8px 32px;
       text-decoration: none;
       font-size: 18px;
-      color: #321952;
+      color: #eb4511;
       display: block;
       transition: 0.5s;
       &:hover, .offcanvas &:focus{
-        color: #25aee9;
+        color: #0B3954;
       }
   }
 }
