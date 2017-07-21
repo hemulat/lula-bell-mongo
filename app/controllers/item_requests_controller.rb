@@ -1,5 +1,5 @@
 class ItemRequestsController < ApplicationController
-  before_action :authorize_admin, except: [:new]
+  before_action :authorize_admin, except: [:new,:create]
 
   def index
       @item_requests=ItemRequest.all
@@ -10,7 +10,7 @@ class ItemRequestsController < ApplicationController
     end
 
     def new
-      @item_request=ItemRequest.new
+      @item_request = ItemRequest.new
     end
 
     def edit
@@ -21,7 +21,8 @@ class ItemRequestsController < ApplicationController
       @item_request = ItemRequest.new(item_params)
 
       if @item_request.save
-        redirect_to @item_request
+        flash[:notice] = "Item request placed successfully." 
+        redirect_to root_path
       else
         render 'new'
       end
@@ -35,6 +36,6 @@ class ItemRequestsController < ApplicationController
 
   private
     def item_params
-        params.require(:item_request).permit(:title, :description, :studentID, :created_at)
+        params.require(:item_request).permit(:title, :description, :studentID)
     end
 end

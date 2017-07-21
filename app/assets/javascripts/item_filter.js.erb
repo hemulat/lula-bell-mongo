@@ -1,27 +1,40 @@
-var sidebarLink= document.getElementById("testbutton");
+var sidebarLink2= document.getElementById("testbutton");
 var item_container=document.getElementById("category-content");
+console.log(gon.items);
 
-
-sidebarLink.addEventListener("click", function(){
+$(".pagination a").click(function(){
   var ourRequest=new XMLHttpRequest();
-  ourRequest.open("GET", gon.items,true );
+  ourRequest.open("GET", gon.items,true);
   ourRequest.onload=function() {
-    var ourData= gon.items;
+    var ourData= gon.items
+    $('.category-content').html('');
     renderHTML(ourData);
-
     };
-
   ourRequest.send();
  });
 
 
 function renderHTML(data){
-  console.log(gon.items);
+  console.log(data);
   var htmlString="<div class=\"row\">";
+  if (data.length==0 || data==null){
+    "<h4>Hmm, looks like there's nothing here...</h4>";
+  }
+  else{
+    for (i=0;i<data.length;i++){
+      htmlString+= "<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">"+
+      "  <div class=\"thumbnail\">"+
+      "    <a href=\"" + data[i][1] + "\"" + ">"+
+      "     <img src=\"" + data[i][0] + "\"" + "alt=\""+ data[i][2] +"\"" +"height=\"150\" width=\"150\">"+
+      "      <div class=\"caption\">"+
+              data[i][2]+
+      "      </div>"+
+      "    </a>"+
+      "  </div>"+
+    "  </div>";
+    }
 
-    htmlString+="hello";
-
-
-  item_container.insertAdjacentHTML('beforeend', htmlString);
+    htmlString+= "</div>"
+  }
+    item_container.insertAdjacentHTML('beforeend', htmlString);
 };
-// console.log(gon.items);

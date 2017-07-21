@@ -1,13 +1,18 @@
 class ItemsController < ApplicationController
 
   before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy]
+
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    @items = Item.available
-    gon.items = Item.available
+    if admin_signed_in?
+      @items = Item.all.paginate(page: params[:page])
+    else
+      @items = Item.available.paginate(page: params[:page])
+    end
+    gon.items = get_links(@items)
     @categories = get_sub(Item)
   end
 
@@ -25,16 +30,14 @@ class ItemsController < ApplicationController
     if query == nil
       redirect_to root_path
     else
-      @items = get_search_results(query)
+      @items = get_search_results(query).paginate(page: params[:page])
       @categories = get_sub(Item)
     end
   end
 
   def transactions
     @item = Item.find(params[:id])
-    @transactions = @item.transactions.order_by(:updated_at => 'desc')
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    logger.tagged("A Tag") {logger.info "#{@transactions.class}"}
+    @transactions = @item.transactions.desc(:updated_at)
   end
 
   def show
@@ -50,8 +53,13 @@ class ItemsController < ApplicationController
   end
 
   def category
-    @items = get_class_name(params[:class]).available
-    gon.items = @items
+    if admin_signed_in?
+      @items = get_class_name(params[:class]).paginate(page: params[:page])
+      gon.items = get_links(@items)
+    else
+      @items = get_class_name(params[:class]).available.paginate(page: params[:page])
+      gon.items = get_links(@items)
+    end
     @categories = get_sub(Item)
   end
 
@@ -64,6 +72,7 @@ class ItemsController < ApplicationController
     @item = get_item
     @item_details = get_feature_type(@item)
     @item._SKU = @item.class.next_sku
+    @item._quantity = (1..@item.quantity).to_a
     if @item.save
       redirect_to action: 'show', id:  @item._id
     else
@@ -79,7 +88,39 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     @item_details = get_feature_type(@item)
+
+    new_q = valid_features(@item.class)[:quantity].to_i
+    qty_list = @item.available_quantity_ids()
+
+    if (new_q > @item.quantity) # adding quantity
+
+      if @item.transactions.empty?
+        max_in_transactions = 0
+      else
+        max_in_transactions = @item.transactions.desc(:qty_id).first.qty_id
+      end
+
+      max_qty = [@item._quantity.max || @item.quantity,max_in_transactions].max
+      add_qty = new_q - @item.quantity
+      @item._quantity += (max_qty+1..add_qty+max_qty).to_a
+
+    elsif (@item.quantity > new_q) # decreasing quantity
+      rm_count = (@item.quantity - new_q)
+      if (rm_count > qty_list.size)
+        flash.now[:alert] = "Make sure you have at least #{rm_count} " +
+                            "#{'item'.pluralize(rm_count)}, not checked " +
+                            "out or reserved in stock."
+        render 'edit'
+        return
+      else
+        (1..rm_count).each do
+          @item._quantity.delete(qty_list.pop())
+        end
+      end
+    end
+
     if @item.update(valid_features(@item.class))
+      flash[:notice] = "Item update successful!"
       redirect_to action: 'show', id:  @item._id
     else
       render 'edit'
@@ -179,7 +220,7 @@ class ItemsController < ApplicationController
       Permit array type valid features given the field name
       '''
       restriction_param = params.require(:item).permit(field_name => [])
-      restriction_param[field_name]
+      restriction_param[field_name].select{|i| !i.empty?}
     end
 
     def get_item
@@ -193,25 +234,29 @@ class ItemsController < ApplicationController
       return item
     end
 
-    # Gets search query
     def get_query
+      '''
+      Gets search query.
+      '''
       params[:query]
     end
 
-    # Gets all features from all subclasses of Item
     def get_all_features
+      '''
+      Gets all features from all subclasses of Item.
+      '''
       categories = Item.descendants
       features = []
       categories.each do |category|
         features = features | get_features(category)
       end
-      #logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-      #logger.tagged("LOG_TAG") {logger.info "#{features}"}
       return features
     end
 
-    # Queries database with single word
     def query_db(word)
+      '''
+      Queries database with single word.
+      '''
       features = get_all_features
       features.delete("rentable")
       features.delete("reservable")
@@ -222,14 +267,25 @@ class ItemsController < ApplicationController
       return results
     end
 
-    # Queries database with multiple words
     def get_search_results(query)
+      '''
+      Queries database with multiple words.
+      '''
       words = query.strip.split(" ")
       results = query_db(words[0])
       words.drop(1).each do |word|
         results = Item.and(results.selector, query_db(word).selector)
       end
       return results
+    end
+
+    #Creates Item objects for ajax functionality
+    def get_links(items)
+      images=Array.new
+        items.each do |item|
+          images.push([item.image.url(:thumb),item_path(item),item.name])
+        end
+      return images
     end
 
 end
