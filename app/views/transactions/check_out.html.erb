@@ -9,10 +9,10 @@
         <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true %>
         <% if @item.rentable%>
           <%= f.input :email, label: "Student Email" %>
-          <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
-          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+          <%= f.input :start_date, label: "Start Date",as: "date", min: Date.today, html5: true, input_html: {min: Date.today} %>
+          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true, input_html: {min: Date.today}  %>
         <% else %>
-          <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
+          <%= f.input :start_date, label: "Start Date",as: "date", min: Date.today, html5: true, input_html: {min: Date.today}  %>
           <%= f.hidden_field :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% end %>
         <%= f.submit "Check Out", class: "btn btn-success" %>

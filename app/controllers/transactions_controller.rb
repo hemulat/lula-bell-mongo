@@ -132,25 +132,6 @@ class TransactionsController < ApplicationController
     end # end of if params key
   end #end of method
 
-  def student_check_in
-    #just form for Student id
-  end
-
-  def student_item_check
-    @transactions = Transaction.where(:student_id => params[:input])
-  end
-
-  def edit_multiple
-    @transactions = Transaction.find(params[:items_id])
-  end
-
-  def update_multiple
-    @transactions = Transaction.find(params[:items_id])
-    @transactions.each do |transaction|
-      transaction.update_attributes!(params[:transaction].reject {|k,v| v.blank? })
-    end
-  end
-
 
   def student
     #just form for Student id (just input for student id)
