@@ -96,62 +96,11 @@ class TransactionsController < ApplicationController
         else
           redirect_to multiple_check_out_path(transaction: transaction_params,
                                               sku: params[:sku], qty: params[:qty]),
-                                              alert: "No available items for the given dates!"
+                                              alert: "Items not available for the given dates!"
         end
       end
     end
-    '''
-    if params.has_key?(:sku)
-      @item = Item.find_by(_SKU: params[:sku])
-
-      if !params.has_key?(:submit)
-        if params.has_key?(:start_date) && params[:start_date][0] != ""
-          transaction = Transaction.new
-          transaction.student_id = params[:student_id]
-          transaction.item_id = @item._id
-          transaction.start_date = params[:start_date][0]
-          transaction.email = params[:email] if params[:email] != ""
-          if @item.rentable
-            if !params.has_key?(:end_date) || params[:end_date][0] == ""
-              redirect_to multiple_check_out_path(student_id: params[:student_id],
-                                                  sku: params[:sku], email: params[:email]),
-                                                  alert: "End date cannot be empty!"
-              return
-            end
-            transaction.end_date = params[:end_date][0]
-          else
-            transaction.end_date = transaction.start_date
-          end
-
-          picked_id = pick_available_checkout(@item, transaction.start_date, transaction.end_date)
-          if !(picked_id) || picked_id==0
-            redirect_to multiple_check_out_path(student_id: params[:student_id],
-                                                sku: params[:sku], email: params[:email]),
-                                                alert: "No available item for the given dates!"
-            return
-          else
-            @item._quantity.delete(picked_id)
-            transaction.qty_id = picked_id
-            if !@item.rentable
-              @item.quantity -= 1
-            end
-          end
-
-          if transaction.save && @item.save
-            redirect_to multiple_check_out_path(student_id: params[:student_id], email: params[:email]),
-                                                notice: "Successfully checked out!"
-            return
-          end
-        elsif params.has_key?(:start_date) && params[:start_date][0] == ""
-          redirect_to multiple_check_out_path(student_id: params[:student_id],
-                                              sku: params[:sku], email: params[:email]),
-                                              alert: "Start date cannot be empty!"
-        end
-      end
-    end
-    '''
   end
-
 
   def student
     #just form for Student id (just input for student id)

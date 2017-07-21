@@ -42,39 +42,5 @@
         <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
       </div>
     <% end %>
-    <!--<%= form_tag(multiple_check_out_path, method: 'get', enforce_utf8: false) do %>
-      <div class="multi-checkout-static">
-        </p>Enter student ID: <%= number_field_tag :student_id, params[:student_id], class: "number", :required => true %></p>
-        </p>Enter email address: <%= text_field_tag :email, params[:email], placeholder: "Optional..." %></p>
-        Enter item SKU: <p><%= text_field_tag :sku, params[:sku], placeholder: "Enter SKU of an item...", :required => true %>
-        <%= submit_tag "Check SKU", name: :submit, class: "btn btn-link" %></p>
-      </div>
-      <% if @item != nil %>
-        <div class="valid-SKU">
-          <p><%= @item.name %></p>
-        </div>
-        <div class="quantity">
-          <p>Quantity: <%= select_tag :qty,
-                            options_for_select(1..@item._quantity.size),
-                            :required => true  %></p>
-        </div>
-        <div class="dates">
-          Start date: <%= date_field :start_date, nil, value: Date.today, min: Date.today %>
-          <% if @item.rentable %>
-            End date: <%= date_field :end_date, nil, min: Date.today %>
-          <% end %>
-        </div>
-      <% elsif params.has_key?(:sku) %>
-        <div class="invalid-SKU">
-          <p>Invalid SKU</p>
-        </div>
-      <% end %>
-      <div class="buttons">
-        <% if @item != nil %>
-          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
-        <% end %>
-        <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
-      </div>
-    <% end %>-->
   </div>
 </div>
