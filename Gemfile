@@ -57,3 +57,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
+
+#Allows passing of controller variables to JS files
+gem 'gon'
+
+gem 'will_paginate'
+gem "will_paginate_mongoid"

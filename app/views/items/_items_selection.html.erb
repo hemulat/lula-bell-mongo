@@ -1,0 +1,23 @@
+
+<div class = 'category-content'id="category-content"> <!-- need this class to add left margin -->
+  <% if @items.empty? %>
+    <h4>Hmm, looks like there's nothing here...</h4>
+  <% else %>
+    <div class="row">
+      <%@items.each do |item| %>
+      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="thumbnail">
+          <a href= <%= item_path(item)%> >
+            <%= image_tag(item.image.url(:thumb), alt: item.name)%>
+            <div class="caption">
+              <%= item.name %>
+            </div>
+          </a>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+    <%= will_paginate @items %>
+
+  </div>
