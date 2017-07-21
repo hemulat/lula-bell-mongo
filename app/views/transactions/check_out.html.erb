@@ -11,6 +11,9 @@
         <% if @item.rentable%>
           <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% end %>
+        <%= label :quantity,"Quantity" %><br>
+        <%= number_field_tag :quantity, 1 ,min: 1, max: @item._quantity.size%>
+        <br><br>
         <%= f.submit "Check Out", class: "btn btn-success" %>
     <% end %>
   </div>

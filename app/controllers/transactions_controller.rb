@@ -8,36 +8,18 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    @transaction = Transaction.new(transaction_params)
-    @item = @transaction.item
+    qty_tosave = params[:quantity].to_i
 
-    start_date = @transaction.start_date
-    @transaction.end_date ||=  @transaction.start_date
-    end_date = @transaction.end_date
-    picked_id = pick_available_checkout(@item,start_date,end_date)
-
-    if !(picked_id) || picked_id==0
-      flash.now[:alert] = "No available item for the given dates!"
-      render 'check_out'
-      return
-
-    else
-      @item._quantity.delete(picked_id)
-      @transaction.qty_id = picked_id
-      if !@item.rentable
-        @item.quantity -= 1
-      end
-    end
-
-    #Save the object
-    if @transaction.save && @item.save
-      #If save succeeds, redirect to the index action
+    if check_out_n_items(qty_tosave)
       flash[:notice] = "Check out successful."
       redirect_to(:action => 'notice')
+      return
     else
-      #If save fails, redisplay the form so user can fix problems
-      render 'check_out'
+        flash.now[:alert] = "Couldn't find #{qty_tosave} " +
+                            "#{'item'.pluralize(qty_tosave)} for " +
+                            "the given dates!"
+        render 'check_out'
+        return
     end
   end
 
@@ -63,13 +45,22 @@ class TransactionsController < ApplicationController
   def direct_checkin
     #Find a new object using form parameters
     transaction = Transaction.find(params[:id])
-    checkin_transaction(transaction)
+    if checkin_transaction(transaction)
+      flash[:notice] = "Checked in successfully."
+    else
+      flash[:alert] = "Check in failed." # this should never happen
+    end
     redirect_to(:action => 'notice')
   end
 
   def destroy
     transaction = Transaction.find(params[:id])
-    delete_transaction(transaction)
+    result = delete_transaction(transaction)
+    if result
+      flash[:notice] = "Transaction destroyed successfully."
+    else
+      flash[:alert] = "Transaction could not be deleted."
+    end
     redirect_to(:action => 'notice')
   end
 
@@ -143,7 +134,11 @@ class TransactionsController < ApplicationController
   def student_checkin
     #Find a new object using form parameters
     transaction = Transaction.find(params[:id])
-    checkin_transaction(transaction)
+    if checkin_transaction(transaction)
+      flash.now[:notice] = "Checked in successfully."
+    else
+      flash.now[:alert] = "Check in failed." # this should never happen
+    end
     @std_id = params[:student_id]
     @transactions = Transaction.where(:student_id => @std_id)
     render 'student_items'
@@ -173,11 +168,8 @@ class TransactionsController < ApplicationController
           item.quantity += 1
         end
       end
-      if transaction.destroy && item.save
-        flash[:notice] = "Transaction destroyed successfully."
-      else
-        flash[:alert] = "Transaction could not be deleted."
-      end
+
+      return transaction.destroy && item.save
     end
 
     def checkin_transaction(transaction)
@@ -189,11 +181,60 @@ class TransactionsController < ApplicationController
 
       transaction.return_date = DateTime.now
 
-      if transaction.save && item.save
-        flash.now[:notice] = "Checked in successfully."
+      return transaction.save && item.save
+    end
+
+    def check_out_unrentable(transaction,item)
+      picked_id = item._quantity.pop()
+      if picked_id.nil?
+        return false
       else
-        #If save fails, redisplay the form so user can fix problems
-        flash.now[:alert] = "Check in failed"
+        transaction.qty_id = picked_id
+        item.quantity -= 1
+        return (transaction.save && item.save)
       end
     end
+
+    def check_out_rentable(transaction,item)
+      start_date = transaction.start_date
+      end_date = transaction.end_date
+
+      picked_id = pick_available_checkout(item,start_date,end_date)
+
+      if !(picked_id) || picked_id==0
+        return false
+      else
+        item._quantity.delete(picked_id)
+        transaction.qty_id = picked_id
+        return (transaction.save && item.save)
+      end
+    end
+
+    def undo_transactions(transactions)
+      transactions.each do |t|
+        delete_transaction(t)
+      end
+    end
+
+    def check_out_n_items(qty_tosave)
+      saved_transactions = []
+      (1..qty_tosave).each do
+        @transaction = Transaction.new(transaction_params)
+        @item = @transaction.item
+        if @item.rentable
+          result = check_out_rentable(@transaction,@item)
+        else
+          result = check_out_unrentable(@transaction,@item)
+        end
+
+        if result
+          saved_transactions.push(@transaction)
+        else
+          undo_transactions(saved_transactions)
+          return false
+        end
+      end
+      return true
+    end
+
 end
