@@ -7,10 +7,12 @@
 
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
         <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true %>
-        <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
         <% if @item.rentable%>
+          <%= f.input :email, label: "Student Email" %>
+          <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
           <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% else %>
+          <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
           <%= f.hidden_field :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% end %>
         <%= f.submit "Check Out", class: "btn btn-success" %>
