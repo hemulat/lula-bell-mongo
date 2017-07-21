@@ -1,3 +1,4 @@
+
 <div class = 'category-content'id="category-content"> <!-- need this class to add left margin -->
   <% if @items.empty? %>
     <h4>Hmm, looks like there's nothing here...</h4>
@@ -17,6 +18,6 @@
       <% end %>
     </div>
   <% end %>
-    <%= will_paginate @items%>
+    <%= will_paginate @items %>
 
   </div>

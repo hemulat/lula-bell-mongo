@@ -2,12 +2,12 @@ var sidebarLink2= document.getElementById("testbutton");
 var item_container=document.getElementById("category-content");
 console.log(gon.items);
 
-$(".ajax_filter").click(function(){
+$(".pagination a").click(function(){
   var ourRequest=new XMLHttpRequest();
   ourRequest.open("GET", gon.items,true);
   ourRequest.onload=function() {
     var ourData= gon.items
-    
+    $('.category-content').html('');
     renderHTML(ourData);
     };
   ourRequest.send();
