@@ -23,15 +23,17 @@
             End date: <%= date_field :end_date, nil, min: Date.today %>
           <% end %>
         </div>
-        <div class="buttons">
-          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
-          <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
-        </div>
       <% elsif params.has_key?(:sku) %>
         <div class="invalid-SKU">
           <p>Invalid SKU</p>
         </div>
       <% end %>
+      <div class="buttons">
+        <% if @item != nil %>
+          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
+        <% end %>
+        <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
+      </div>
     <% end %>
   </div>
 </div>
