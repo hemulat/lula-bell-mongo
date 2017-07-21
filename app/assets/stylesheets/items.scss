@@ -17,13 +17,22 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #c1e199;
-  color: #321952;
+  background-color: #eb4511;
+  color: #bfd7ea;
   overflow-x: hidden;
   padding-top: 100px;
+
+    hr{
+      margin: 0px;
+      padding-left: 4px;
+      padding-right: 4px;
+      padding-top: 0px;
+      padding-bottom: 4px;
+    }
     #category{
       font-size: 14px;
       font-weight: bold;
+      padding-top: 6px;
     }
 
     #subcategory{
@@ -32,7 +41,7 @@
     }
     #title{
       margin-left: 14px;
-      color:#a57ed7;
+      color:#88ccf1;
     }
     a {
       padding: 8px 8px 8px 32px;
