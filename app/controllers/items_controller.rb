@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
     if query == nil
       redirect_to root_path
     else
-      @items = get_search_results(query)
+      @items = get_search_results(query).paginate(page: params[:page])
       @categories = get_sub(Item)
     end
   end
