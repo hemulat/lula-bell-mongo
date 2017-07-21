@@ -37,9 +37,7 @@ class ItemsController < ApplicationController
 
   def transactions
     @item = Item.find(params[:id])
-    unreturned = @item.transactions.where(return_date: nil).desc(:updated_at)
-    returned = @item.transactions.where(:return_date.ne =>  nil).desc(:updated_at)
-    @transactions = unreturned+returned
+    @transactions = @item.transactions.desc(:updated_at)
   end
 
   def show
