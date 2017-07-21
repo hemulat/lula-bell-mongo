@@ -124,7 +124,7 @@ class TransactionsController < ApplicationController
           transaction.email = params[:email] if params[:email] != ""
           if @item.rentable
             if !params.has_key?(:end_date) || params[:end_date][0] == ""
-              redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku], email: params[:email]), alert: "End date cannot be empty!"
+              redirect_to multiple_check_out_path(student_id: params[:student_id], sku: params[:sku], email: params[:email]), alert: "End date cannot be empty!"
               return
             end
             transaction.end_date = params[:end_date][0]
@@ -134,7 +134,7 @@ class TransactionsController < ApplicationController
 
           picked_id = pick_available_checkout(@item, transaction.start_date, transaction.end_date)
           if !(picked_id) || picked_id==0
-            redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku], email: params[:email]), alert: "No available item for the given dates!"
+            redirect_to multiple_check_out_path(student_id: params[:student_id], sku: params[:sku], email: params[:email]), alert: "No available item for the given dates!"
             return
           else
             @item._quantity.delete(picked_id)
@@ -145,11 +145,11 @@ class TransactionsController < ApplicationController
           end
 
           if transaction.save && @item.save
-            redirect_to multiple_check_out_path(:student_id => params[:student_id], :email => params[:email]), notice: "Successfully checked out!"
+            redirect_to multiple_check_out_path(student_id: params[:student_id], email: params[:email]), notice: "Successfully checked out!"
             return
           end
         elsif params.has_key?(:start_date) && params[:start_date][0] == ""
-          redirect_to multiple_check_out_path(:student_id => params[:student_id], :sku => params[:sku], email: params[:email]), alert: "Start date cannot be empty!"
+          redirect_to multiple_check_out_path(student_id: params[:student_id], sku: params[:sku], email: params[:email]), alert: "Start date cannot be empty!"
         end
       end
     end
