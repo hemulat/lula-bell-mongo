@@ -3,6 +3,7 @@
   <table class="listing"  >
     <tr class="header">
       <th>Student ID</th>
+      <th>Student Email</th>
       <th>Item Name</th>
       <th>Qty ID</th>
       <th>Pick-up Date</th>
@@ -14,11 +15,20 @@
       <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.student_id %></td>
+        <% if transaction.item.rentable%>
+          <% if transaction.email.blank? %>
+            <td>UNAVAILABLE</td>
+          <% else %>
+            <td><%= transaction.email %></td>
+          <% end %>
+        <% else %>
+          <td>NON-RETURNABLE</td>
+        <% end %>
         <td><%= link_to transaction.item.name, item_path(transaction.item) %></td>
         <td><%= transaction.qty_id %></td>
         <td><%= transaction.start_date.strftime("%a, %B %d, %Y") %></td>
         <% if transaction.item.rentable %>
-            <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
+          <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
           <% if transaction.return_date == nil %>
             <td style='color:red;'>Item not returned</td>
           <% else %>
