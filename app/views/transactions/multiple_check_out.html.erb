@@ -4,7 +4,7 @@
     <%= simple_form_for @transaction, url: multiple_check_out_path, method: :get do |f| %>
       <div class="multi-checkout-static">
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer %>
-        <%= f.input :email, label: "Email", required: false %>
+        <%= f.input :email, label: "Email (required for rentable items)", required: false %>
         <%= label :sku, "Enter item SKU" %><br>
         <%= text_field_tag :sku, params[:sku], placeholder: "Enter SKU of an item",
                                 required: true %>

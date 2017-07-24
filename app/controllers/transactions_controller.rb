@@ -81,12 +81,19 @@ class TransactionsController < ApplicationController
       @item = Item.find_by(_SKU: params[:sku])
 
       if params.has_key?(:checkout)
-        if params[:transaction].has_key?(:end_date) &&
-           params[:transaction][:end_date] == ""
-          redirect_to multiple_check_out_path(transaction: transaction_params,
-                                              sku: params[:sku], qty: params[:qty]),
-                                              alert: "End date cannot be empty!"
-          return
+        if @item.rentable
+          if params[:transaction][:end_date] == ""
+            redirect_to multiple_check_out_path(transaction: transaction_params,
+                                                sku: params[:sku], qty: params[:qty]),
+                                                alert: "End date cannot be empty!"
+            return
+          end
+          if params[:transaction][:email] == ""
+            redirect_to multiple_check_out_path(transaction: transaction_params,
+                                                sku: params[:sku], qty: params[:qty]),
+                                                alert: "Email is required for rentable items!"
+            return
+          end
         end
 
         qty = params[:qty].to_i
