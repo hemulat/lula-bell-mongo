@@ -11,13 +11,11 @@
         <% end %>
         <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
         <%= f.input :start_date, label: "Start Date",as: "date",
-                          input_html: {value: Time.now.strftime("%Y-%m-%d"),
-                          min: DateTime.now, max: DateTime.now + 7},
+                          input_html: {value: Date.today, min: Date.today},
                           html5: true  %>
         <% if @item.rentable%>
           <%= f.input :end_date, label: "End Date", required: true, as: "date",
-                        input_html: {value: Time.now.strftime("%Y-%m-%d"),
-                        min: DateTime.now, max: DateTime.now + 7},
+                        input_html: {value: Date.today, min: Date.today},
                         html5: true  %>
         <% end %>
         <%= label :quantity,"Quantity" %><br>

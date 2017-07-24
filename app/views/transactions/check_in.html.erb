@@ -10,8 +10,7 @@
       <%= f.input :start_date, label: "Pick-up Date", as: :date, readonly: true, html5: true  %>
       <%= f.input :end_date, label: "Return Date", as: :date, readonly: true, html5: true  %>
       <%= f.input :return_date, label: "Item Returned On", as: :date,
-                                input_html: {value: Time.now.strftime("%Y-%m-%d"),
-                                  min: DateTime.now, max: DateTime.now + 7},
+                                input_html: {value: Date.today, min: Date.today},
                                 html5: true  %>
       <%= f.submit "Check In", class: "btn btn-success" %>
   <% end %>
