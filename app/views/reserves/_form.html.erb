@@ -6,9 +6,11 @@
       <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
       <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
       <%= f.input :email, label: "Email"%>
-      <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
+      <%= f.input :start_date, label: "Start Date", as: "date", html5: true,
+                                input_html: {min: Date.today} %>
       <% if @item.rentable%>
-        <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+        <%= f.input :end_date, label: "End Date", required: true, as: "date",
+                                input_html: {min: Date.today}, html5: true  %>
       <% end %>
       <%= f.submit "Make Reservation", class: "btn btn-success" %>
   <% end %>

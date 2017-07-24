@@ -29,7 +29,7 @@ class ReservesController < ApplicationController
       flash[:alert] = "The item you are trying to checkout is already checked out.
                         Most likely not returned after a checkout."
     end
-    redirect_to reserves_path
+    redirect_back fallback_location: reserves_path
   end
 
   def show
