@@ -131,6 +131,7 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find(params[:id])
     @item.destroy
+    flash[:notice] = "Item Deleted successfully!"
     redirect_to items_path
   end
 

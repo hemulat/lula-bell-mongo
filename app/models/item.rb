@@ -93,7 +93,7 @@ class Clothing < Item
 
   def options
     {type: ['Winter', "Formal", "Professional", "Shoes","Other"],
-     fit: %w"M W Jr Uni BT Plus"}
+     fit: ["Men", "Women", "Junior", "UniSex", "Big and Tall", "Plus"]}
   end
 
   def self.shorthand

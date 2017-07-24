@@ -6,14 +6,19 @@
     <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
 
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
-        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true %>
         <% if @item.rentable%>
           <%= f.input :email, label: "Student Email" %>
-          <%= f.input :start_date, label: "Start Date",as: "date", min: Date.today, html5: true, input_html: {min: Date.today} %>
-          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true, input_html: {min: Date.today}  %>
-        <% else %>
-          <%= f.input :start_date, label: "Start Date",as: "date", min: Date.today, html5: true, input_html: {min: Date.today}  %>
-          <%= f.hidden_field :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+        <% end %>
+        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
+        <%= f.input :start_date, label: "Start Date",as: "date",
+                          input_html: {value: Time.now.strftime("%Y-%m-%d"),
+                          min: DateTime.now, max: DateTime.now + 7},
+                          html5: true  %>
+        <% if @item.rentable%>
+          <%= f.input :end_date, label: "End Date", required: true, as: "date",
+                        input_html: {value: Time.now.strftime("%Y-%m-%d"),
+                        min: DateTime.now, max: DateTime.now + 7},
+                        html5: true  %>
         <% end %>
         <%= label :quantity,"Quantity" %><br>
         <%= number_field_tag :quantity, 1 ,min: 1, max: @item._quantity.size%>

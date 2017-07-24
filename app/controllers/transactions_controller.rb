@@ -58,7 +58,7 @@ class TransactionsController < ApplicationController
     else
       flash[:alert] = "Check in failed." # this should never happen
     end
-    redirect_to(:action => 'notice')
+    redirect_back fallback_location: {action: 'notice'}
   end
 
   def destroy
@@ -69,8 +69,22 @@ class TransactionsController < ApplicationController
     else
       flash[:alert] = "Transaction could not be deleted."
     end
-    redirect_to(:action => 'notice')
+    redirect_back fallback_location: {action: 'notice'}
   end
+
+  def student
+    #just form for Student id (just input for student id)
+  end
+
+  def student_items
+    std_id = params[:input]
+    redirect_to student_activity_path(std_id)
+  end
+
+  def student_transactions
+    @transactions  = Transaction.where(student_id: params[:id]).all
+  end
+
 
   def check_out
     @item = Item.find(params[:id])
@@ -120,37 +134,6 @@ class TransactionsController < ApplicationController
       end# end of !if params key
     end # end of if params key
   end #end of method
-
-  def student
-    #just form for Student id (just input for student id)
-  end
-
-  def student_items
-    @std_id = params[:input]
-    @transactions = Transaction.where(:student_id => @std_id)
-  end
-
-  def student_checkin
-    #Find a new object using form parameters
-    transaction = Transaction.find(params[:id])
-    if checkin_transaction(transaction)
-      flash.now[:notice] = "Checked in successfully."
-    else
-      flash.now[:alert] = "Check in failed." # this should never happen
-    end
-    @std_id = params[:student_id]
-    @transactions = Transaction.where(:student_id => @std_id)
-    render 'student_items'
-    return
-  end
-
-  def student_destroy
-    transaction = Transaction.find(params[:id])
-    @std_id = params[:student_id]
-    @transactions = Transaction.where(:student_id => @std_id)
-    delete_transaction(transaction)
-    redirect_to(:action => 'notice')
-  end
 
   private
     def transaction_params
@@ -233,12 +216,13 @@ class TransactionsController < ApplicationController
 
     def undo_transactions(transactions)
       transactions.each do |t|
-        delete_transaction(t)
+        t.destroy
       end
     end
 
     def check_out_n_items(qty_tosave)
       saved_transactions = []
+      saved_qtys = []
       (1..qty_tosave).each do
         @transaction = Transaction.new(transaction_params)
         @item = @transaction.item
@@ -250,8 +234,14 @@ class TransactionsController < ApplicationController
 
         if result
           saved_transactions.push(@transaction)
+          saved_qtys.push(@transaction.qty_id)
         else
           undo_transactions(saved_transactions)
+          @item._quantity += saved_qtys
+          if !@item.rentable
+            @item.quantity += saved_qtys.size
+          end
+          @item.save
           return false
         end
       end

@@ -5,16 +5,9 @@
   <% process_types(@item_details, @item).each do |feature,details| %>
       <% if details[0]!=nil%>
         <% if details[2] == "check_boxes"%>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= capitalize(feature) %>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <%= form.input feature, label: false,
-                      collection: details[0],required: details[1],
-                      as: :check_boxes, class: "dropdown-item"%>
-            </div>
-          </div>
+          <%= form.input feature, label: capitalize(feature),
+                  collection: details[0],required: details[1],
+                  as: :check_boxes%>
           <br>
         <%else%>
           <%= form.input feature, label: capitalize(feature),
