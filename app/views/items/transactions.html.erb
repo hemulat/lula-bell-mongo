@@ -1,2 +1,18 @@
-<h2>Transaction Log for <%= @item.name %></h2>
-<%= render 'shared/transactions' %>
+<div class="recent-activity">
+  <div class="recent-transactions">
+    <h2>Transaction Log for <%= @item.name %></h2>
+    <% if !@transactions.empty? %>
+      <%= render 'shared/transactions' %>
+    <% else %>
+      <h4>There are currently no transactions for this item.</h4>
+    <% end %>
+  </div>
+  <div class="recent-reserves">
+    <h2>Reserve Log for <%= @item.name %></h2>
+    <% if !@reserves.empty? %>
+      <%= render 'shared/reserves' %>
+    <% else %>
+      <h4>There are currently no reservations for this item.</h4>
+    <% end %>
+  </div>
+</div>
