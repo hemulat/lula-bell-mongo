@@ -2,7 +2,10 @@ module ItemsHelper
 
   def capitalize(str)
     str = str.to_s
-    str[0].capitalize + str[1..-1]
+    str_list = str.split("_")
+    final = ""
+    str_list.each {|s| final += s[0].capitalize + s[1..-1]+" "}
+    return final
   end
 
   def not_empty(str)
