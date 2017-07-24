@@ -6,11 +6,14 @@ class Item
   field :name, type: String
   field :rentable, type: Mongoid::Boolean
   field :reservable, type: Mongoid::Boolean
+  field :maximum_reservation_days, type: Integer,
+                                  default: lambda {max_reservation}
   field :description, type: String
   field :_SKU, type: String
   field :_status, type: String, default: "Available"
   field :_quantity, type: Array, default: [1]
   field :quantity, type: Integer, default: 1
+
 
   has_many :transactions, dependent: :destroy
   has_many :reservations, class_name: "Reserve", inverse_of: :item,
@@ -49,6 +52,10 @@ class Item
   end
 
   protected
+    def max_reservation
+      3
+    end
+
     def self.shorthand
       self.name[0]
     end
@@ -72,6 +79,9 @@ class Item
 end
 
 class Kitchen < Item
+  def max_reservation
+    2
+  end
 end
 
 class Hygiene < Item
