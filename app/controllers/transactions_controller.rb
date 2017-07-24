@@ -141,7 +141,7 @@ class TransactionsController < ApplicationController
     @std_id = params[:student_id]
     @transactions = Transaction.where(:student_id => @std_id)
     delete_transaction(transaction)
-    redirect_to(:action => 'notice')
+    render 'student_items'
   end
 
   private
@@ -203,12 +203,13 @@ class TransactionsController < ApplicationController
 
     def undo_transactions(transactions)
       transactions.each do |t|
-        delete_transaction(t)
+        t.destroy
       end
     end
 
     def check_out_n_items(qty_tosave)
       saved_transactions = []
+      saved_qtys = []
       (1..qty_tosave).each do
         @transaction = Transaction.new(transaction_params)
         @item = @transaction.item
@@ -220,8 +221,11 @@ class TransactionsController < ApplicationController
 
         if result
           saved_transactions.push(@transaction)
+          saved_qtys.push(@transaction.qty_id)
         else
           undo_transactions(saved_transactions)
+          @item._quantity += saved_qtys
+          @item.save
           return false
         end
       end

@@ -5,6 +5,14 @@ module ItemsHelper
     str[0].capitalize + str[1..-1]
   end
 
+  def not_empty(str)
+    if (Item.descendants.map { |i| i.name }).include? str
+      item_count = (str.constantize).all.count
+      return item_count == 0? false : true
+    end
+    return false
+  end
+
   def process_types(feature_type,item)
     # final will be key-value. key is field name and value is
     # [options(Array),required(boolean),Type]
