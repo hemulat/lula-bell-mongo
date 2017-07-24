@@ -1,31 +1,46 @@
 <div class="multiple-check-out">
   <div id="form">
     <h2>Multiple Check Out</h2>
-    <%= form_tag(multiple_check_out_path, method: 'get', enforce_utf8: false) do %>
+    <%= simple_form_for @transaction, url: multiple_check_out_path, method: :get do |f| %>
       <div class="multi-checkout-static">
-        Enter student ID: <p><%= number_field_tag :student_id, params[:student_id], class: "number", :required => true %></p>
-        Enter item SKU: <p><%= text_field_tag :sku, params[:sku], placeholder: "Enter SKU of an item...", :required => true %>
-        <%= submit_tag "Check SKU", name: :submit, class: "btn btn-link" %></p>
+        <%= f.input :student_id, label: "Student ID", required: true, as: :integer %>
+        <%= f.input :email, label: "Email (required for rentable items)", required: false %>
+        <%= label :sku, "Enter item SKU" %><br>
+        <%= text_field_tag :sku, params[:sku], placeholder: "Enter SKU of an item",
+                                required: true %>
+        <%= submit_tag "Check SKU", name: :submit, class: "btn btn-link" %>
       </div>
       <% if @item != nil %>
+        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
         <div class="valid-SKU">
           <p><%= @item.name %></p>
         </div>
-        <div class="dates">
-          Start date: <%= date_field :start_date, nil, value: Date.today %>
-          <% if @item.rentable %>
-            End date: <%= date_field :end_date, nil %>
-          <% end %>
+        <div class="quantity">
+          <p>Quantity: <%= select_tag :qty,
+                            options_for_select(1..@item._quantity.size, params[:qty]),
+                            :required => true  %></p>
         </div>
-        <div class="buttons">
-          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
-          <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
+        <div class="start-date">
+          <%= f.input :start_date, as: :date, label: "Start Date", value: Date.today,
+                                  input_html: {min: Date.today}, html5: true %>
         </div>
+        <% if @item.rentable %>
+          <div class="end-date">
+            <%= f.input :end_date, as: :date, label: "End Date",
+                                    input_html: {min: Date.today}, html5: true %>
+          </div>
+        <% end %>
       <% elsif params.has_key?(:sku) %>
         <div class="invalid-SKU">
           <p>Invalid SKU</p>
         </div>
       <% end %>
+      <div class="buttons">
+        <% if @item != nil %>
+          <%= submit_tag "Checkout", name: :checkout, class: "btn btn-success" %>
+        <% end %>
+        <%= link_to "Done", static_admin_home_path, class: "btn btn-warning" %>
+      </div>
     <% end %>
   </div>
 </div>
