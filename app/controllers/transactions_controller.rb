@@ -11,6 +11,8 @@ class TransactionsController < ApplicationController
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
     returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
     nonreturn = non_returns_only(unreturned)
+
+    @transactions = returned + nonreturn
   end
 
   def create
