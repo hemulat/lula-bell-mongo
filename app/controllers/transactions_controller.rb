@@ -3,8 +3,16 @@ class TransactionsController < ApplicationController
 
   def notice
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
+    #returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
+    @transactions = returns_only(unreturned)
+  end
+
+  def display
+    unreturned = Transaction.where(return_date: nil).desc(:updated_at)
     returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
-    @transactions = unreturned+returned
+    nonreturn = non_returns_only(unreturned)
+
+    @transactions = returned + nonreturn
   end
 
   def create
@@ -50,7 +58,7 @@ class TransactionsController < ApplicationController
     else
       flash[:alert] = "Check in failed." # this should never happen
     end
-    redirect_to(:action => 'notice')
+    redirect_back fallback_location: {action: 'notice'}
   end
 
   def destroy
@@ -61,8 +69,22 @@ class TransactionsController < ApplicationController
     else
       flash[:alert] = "Transaction could not be deleted."
     end
-    redirect_to(:action => 'notice')
+    redirect_back fallback_location: {action: 'notice'}
   end
+
+  def student
+    #just form for Student id (just input for student id)
+  end
+
+  def student_items
+    std_id = params[:input]
+    redirect_to student_activity_path(std_id)
+  end
+
+  def student_transactions
+    @transactions  = Transaction.where(student_id: params[:id]).all
+  end
+
 
   def check_out
     @item = Item.find(params[:id])
@@ -109,45 +131,36 @@ class TransactionsController < ApplicationController
                                               sku: params[:sku], qty: params[:qty]),
                                               alert: "Items not available for the given dates!"
         end
-      end
-    end
-  end
-
-  def student
-    #just form for Student id (just input for student id)
-  end
-
-  def student_items
-    @std_id = params[:input]
-    @transactions = Transaction.where(:student_id => @std_id)
-  end
-
-  def student_checkin
-    #Find a new object using form parameters
-    transaction = Transaction.find(params[:id])
-    if checkin_transaction(transaction)
-      flash.now[:notice] = "Checked in successfully."
-    else
-      flash.now[:alert] = "Check in failed." # this should never happen
-    end
-    @std_id = params[:student_id]
-    @transactions = Transaction.where(:student_id => @std_id)
-    render 'student_items'
-    return
-  end
-
-  def student_destroy
-    transaction = Transaction.find(params[:id])
-    @std_id = params[:student_id]
-    @transactions = Transaction.where(:student_id => @std_id)
-    delete_transaction(transaction)
-    render 'student_items'
-  end
+      end# end of !if params key
+    end # end of if params key
+  end #end of method
 
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date,
                                               :end_date, :return_date, :email)
+    end
+
+    def returns_only(transactions)
+      returnables = []
+      transactions.each do |t|
+        if t.item.rentable
+          returnables << t
+        end
+      end
+
+      return returnables
+    end
+
+    def non_returns_only(transactions)
+      returnables = []
+      transactions.each do |t|
+        unless t.item.rentable
+          returnables << t
+        end
+      end
+
+      return returnables
     end
 
     def delete_transaction(transaction)
@@ -225,6 +238,9 @@ class TransactionsController < ApplicationController
         else
           undo_transactions(saved_transactions)
           @item._quantity += saved_qtys
+          if !@item.rentable
+            @item.quantity += saved_qtys.size
+          end
           @item.save
           return false
         end

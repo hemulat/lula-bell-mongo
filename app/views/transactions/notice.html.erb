@@ -1,4 +1,3 @@
-<%= link_to("<<Back to AdminHome", {:controller => 'static', :action => 'admin_home'}, :class => 'back-link')%>
-  <h2>Transaction Log</h2>
-<% provide(:destination, 'notice')%>
+<%= link_to(">> See Returned and Non-returnable transactions", display_transactions_path, :class => 'back-link')%>
+<h2>Transaction Log</h2>
 <%= render 'shared/transactions' %>
