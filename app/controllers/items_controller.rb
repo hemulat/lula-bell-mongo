@@ -38,6 +38,7 @@ class ItemsController < ApplicationController
   def transactions
     @item = Item.find(params[:id])
     @transactions = @item.transactions.desc(:updated_at)
+    @reserves = @item.reservations
   end
 
   def show

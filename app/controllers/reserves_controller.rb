@@ -29,7 +29,7 @@ class ReservesController < ApplicationController
       flash[:alert] = "The item you are trying to checkout is already checked out.
                         Most likely not returned after a checkout."
     end
-    redirect_to reserves_path
+    redirect_back fallback_location: reserves_path
   end
 
   def show
@@ -62,7 +62,7 @@ class ReservesController < ApplicationController
     if @reserve.save
       #If save succeeds, show confirmation
       flash[:notice] = "Reservation created successfully."
-      redirect_to(:action => 'confirm')
+      redirect_to item_path(@reserve.item_id)
     else
       #If save fails, redisplay the form so user can fix problems
       render 'new'
@@ -89,16 +89,12 @@ class ReservesController < ApplicationController
     end
   end
 
-  def delete
-    @reserve = Reserve.find(params[:id])
-  end
-
   def destroy
     @reserve = Reserve.find(params[:id])
     @reserve.destroy
 
     flash[:notice] = "Reservation destroyed successfully."
-    redirect_to(:action => 'index')
+    redirect_back fallback_location: reserves_path
   end
 
   private
