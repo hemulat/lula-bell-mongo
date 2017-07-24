@@ -16,6 +16,11 @@
           <% if feature == "quantity" %>
             <p> <%= "#{capitalize(feature)} - " %>
               <%= @item._quantity.size || "Undefined" %></p>
+          <% elsif feature == "expiration" %>
+            <% if admin_signed_in? %>
+              <p> <%= "#{capitalize(feature)} - " %>
+              <%= @item.expiration || "Undefined" %></p>
+            <% end %>
           <% else %>
             <p> <%= "#{capitalize(feature)} - " %>
               <% if @item.attributes[feature].is_a?(Array) && !@item.attributes[feature].empty? %>
