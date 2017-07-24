@@ -37,6 +37,7 @@ class ReservesController < ApplicationController
   end
 
   def confirm
+    # page to show user has completed reservation.
   end
 
   def new
