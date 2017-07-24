@@ -1,5 +1,8 @@
 .multiple-check-out {
 
+  max-width: 60%;
+  margin: auto;
+
   .valid-SKU {
     color: green;
   }
@@ -8,7 +11,14 @@
     color: red;
   }
 
+  .start-date {
+    display: inline;
+    float: left;
+    margin-right: 10%
+  }
+
   .buttons {
+    clear: both;
     margin: 10px;
   }
 }

@@ -15,6 +15,9 @@
           <%= f.input :start_date, label: "Start Date",as: "date", min: Date.today, html5: true, input_html: {min: Date.today}  %>
           <%= f.hidden_field :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
         <% end %>
+        <%= label :quantity,"Quantity" %><br>
+        <%= number_field_tag :quantity, 1 ,min: 1, max: @item._quantity.size%>
+        <br><br>
         <%= f.submit "Check Out", class: "btn btn-success" %>
     <% end %>
   </div>
