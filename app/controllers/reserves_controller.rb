@@ -8,20 +8,16 @@ class ReservesController < ApplicationController
   def check_out
     reservation = Reserve.find(params[:reserve_id])
     @item = reservation.item
-    next_id = pick_different_from(@item,reservation.start_date,reservation.end_date,reservation.qty_id.to_i)
+    next_id = pick_different_from(@item,reservation.start_date,
+                                  reservation.end_date,reservation.qty_id.to_i)
     final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : next_id
     if final_id && reservation.item._quantity.include?(final_id)
       @item._quantity.delete(final_id)
       @item.save
 
-      @transaction = Transaction.new
-      @transaction.student_id = reservation.student_id
-      @transaction.email = reservation.email
-      @transaction.end_date = reservation.end_date
-      @transaction.start_date = reservation.start_date
-      @transaction.item = @item
+      @transaction = Transaction.new(reservation.attributes.slice(:student_id,
+                                :email,:end_date,:start_date,:item_id))
       @transaction.qty_id = final_id
-
       @transaction.save
       reservation.destroy
       flash[:notice] = "Item checked out successfully."
