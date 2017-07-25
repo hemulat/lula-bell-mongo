@@ -26,7 +26,14 @@ class Item
     styles: { :thumb => "150x150#", :medium => "400>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
+  validate :check_reservables
 
+  def check_reservables
+    if self.reservable && !self.rentable
+      errors.add(:reservable, "items must also be rentable")
+      return false
+    end
+  end
 
   def options
     {_status: ["Checked Out", "In Laundry", "Available"]}
