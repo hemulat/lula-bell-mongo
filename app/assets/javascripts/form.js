@@ -13,10 +13,19 @@ function toggle_element(class_name,cb_1,cb_2){
   }
 }
 
+function uncheck_box(cb_1,cb_2){
+  var b1 = document.getElementById(cb_1);
+  var b2 = document.getElementById(cb_2);
+  if (!b1.checked){
+    b2.checked = false;
+  }
+}
+
 function toggle_rentable(){
   var rent_id = 'item_rentable';
   var reserv_id = 'item_reservable';
 
+  uncheck_box(rent_id,reserv_id);
   toggle_element('item_reservable',rent_id);
   toggle_element('item_buffer_period',rent_id);
   toggle_element('item_maximum_reservation_days',rent_id,reserv_id);
