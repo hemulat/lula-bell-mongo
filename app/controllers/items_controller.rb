@@ -54,13 +54,14 @@ class ItemsController < ApplicationController
   end
 
   def category
-    if admin_signed_in?
-      @items = get_class_name(params[:class]).paginate(page: params[:page])
-      gon.items = get_links(@items)
+    if (params[:class].split("+")[-1] == "other")
+      class_name = params[:class].split("+")[0]
+      @items = get_class_name(class_name).others.paginate(page: params[:page])
     else
-      @items = get_class_name(params[:class]).available.paginate(page: params[:page])
-      gon.items = get_links(@items)
+      @items = get_class_name(params[:class]).paginate(page: params[:page])
     end
+
+    gon.items = get_links(@items)
     @categories = get_sub(Item)
   end
 

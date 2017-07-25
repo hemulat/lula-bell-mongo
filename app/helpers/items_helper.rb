@@ -20,7 +20,15 @@ module ItemsHelper
   def not_empty(str)
     if (Item.descendants.map { |i| i.name }).include? str
       item_count = (str.constantize).all.count
-      return item_count == 0? false : true
+      return item_count != 0
+    end
+    return false
+  end
+
+  def others_not_empty(str)
+    if (Item.descendants.map { |i| i.name }).include? str
+      item_count = (str.constantize).others.count
+      return item_count != 0
     end
     return false
   end

@@ -10,6 +10,10 @@
           <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
         <% end %>
       <%end%>
+      <% if others_not_empty(category) && !dict.empty?%>
+        <%= link_to "Others", category_path(category+"+other"), id:"subcategory"%>
+      <% end %>
+
     </span>
     <%end%>
   <% end %>

@@ -19,7 +19,7 @@ class Item
   has_many :reservations, class_name: "Reserve", inverse_of: :item,
                           dependent: :destroy
 
-  scope :available, -> {where(:_quantity.ne =>[])}
+  scope :others, -> {where(_type: self.name)}
 
   validates_presence_of :name
   has_mongoid_attached_file :image,

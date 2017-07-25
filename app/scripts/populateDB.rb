@@ -17,7 +17,7 @@ def  g_items(n=5)
   (1..n).each do |i|
     na = "Item #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "This is a general item with only bare minimum item requirement"
     Item.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: Item.next_sku})
@@ -28,7 +28,7 @@ def g_kitchen_items(n=5)
   (1..n).each do |i|
     na = "Kitchen Item #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "Not just any Item - This item belongs in the Kitchen section"
     Kitchen.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: Kitchen.next_sku})
@@ -39,7 +39,7 @@ def g_hygiene_items(n=5)
   (1..n).each do |i|
     na = "Hygiene Item #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "A Hygine item - use it to keep yourself clean"
     Hygiene.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: Hygiene.next_sku})
@@ -50,7 +50,7 @@ def g_cleaning_items(n=5)
   (1..n).each do |i|
     na = "Cleaning Item #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "A Cleaning item - use it to keep your stuff clean"
     Cleaning.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: Cleaning.next_sku})
@@ -62,7 +62,7 @@ def g_cooking_equipments(n=5)
     typ = ["Pot", "Pan", "Utensil", "Cooking Equipment"].sample
     na = "#{typ} #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "A Kitchen item, specifically useful for cooking"
     CookingEquipment.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, type: typ, _SKU: CookingEquipment.next_sku})
@@ -75,7 +75,7 @@ def g_food(n=5)
     typ = ["Fruit", "Vegetables", "Meat", "Dairy", "Food"].sample
     na = "#{typ} #{rand(3*n)}"
     rent = false
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     exp = Time.now + rand(n).day
     descr = "#{typ} that is #{restri.join(",")}"
     Food.create({name: na, rentable: rent, reservable: reserve,
@@ -92,7 +92,7 @@ def g_clothing(n=5)
     na = "#{typ} #{rand(3*n)}"
     rent = flip_a_coin
     fit = "M/W/Jr/Uni/BT/Plus".split('/').sample
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "#{colo} #{typ} - put it on if it fits you"
     Clothing.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, color: colo, type:typ,
@@ -104,7 +104,7 @@ def g_school_supplies(n=5)
   (1..n).each do |i|
     na = "School Supply #{rand(n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     descr = "This is a general school supply."
     SchoolSupply.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: SchoolSupply.next_sku})
@@ -116,7 +116,7 @@ def g_books(n=5)
     typ = "Text,General reading,Test prep,".split(',').sample
     na = "#{typ} Book #{rand(3*n)}"
     rent = flip_a_coin
-    reserve = rent ? flip_a_coin : false
+    reserve = rent && flip_a_coin
     auth = "Superman,Batman,Wonder woman,Ironman,Black Widow".split(',').sample
     descr = "A #{typ} Book - use it to improve yourself"
     isb = "123456789015973".split("").shuffle.join("")
