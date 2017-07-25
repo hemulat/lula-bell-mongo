@@ -10,12 +10,14 @@
                   as: :check_boxes%>
           <br>
         <%else%>
-          <%= form.input feature, label: capitalize(feature),
+          <%= form.input feature,
+                  label: capitalize(feature) + explanation(@item,feature),
                   collection: details[0],required: details[1], html5: true,
                   input_html: { :class => 'dropdown' }%>
         <% end %>
       <% else %>
-      <%= form.input feature, label: capitalize(feature),
+      <%= form.input feature,
+                label: capitalize(feature) + explanation(@item,feature),
                 required: details[1], as: details[2], html5: true %>
       <% end%>
   <% end %>

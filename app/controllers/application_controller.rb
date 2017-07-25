@@ -10,20 +10,25 @@ class ApplicationController < ActionController::Base
     Given an item, qty_id, start date, and end date, this function returns
     whether the item is available on those days.
     '''
-    date_range = start_date..end_date
+    buffer = (item.buffer_period.to_i)
+    date_range = start_date..(add_buffer(end_date, buffer))
     transactions = item.transactions.where(qty_id: qty_id)
     reservations = item.reservations.where(qty_id: qty_id)
 
     transactions.each do |transaction|
       if (transaction.return_date == nil)
-        if (transaction.start_date..transaction.end_date).overlaps?(date_range)
+        start_d = transaction.start_date
+        end_d = add_buffer(next_business(transaction.end_date), buffer)
+        if (start_d..end_d).overlaps?(date_range)
           return false
         end
       end
     end
 
     reservations.each do |reservation|
-      if (reservation.start_date..reservation.end_date).overlaps?(date_range)
+      start_d = reservation.start_date
+      end_d = add_buffer(next_business(reservation.end_date), buffer)
+      if (start_d..end_d).overlaps?(date_range)
         return false
       end
     end
@@ -42,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pick_available_checkout(item,start_date,end_date)
-    available_qty = item._quantity
+    available_qty = item._quantity.clone
     available_qty.each do |q|
       if is_available?(item,q,start_date,end_date)
         return q
@@ -59,6 +64,23 @@ class ApplicationController < ActionController::Base
       end
     end
     return nil
+  end
+
+  def next_business(date)
+    while (date.wday==6 || date.wday % 7 == 0)
+      date = date + 1.day
+    end
+    return date
+  end
+
+  def add_buffer(date,buffer)
+    while buffer > 0
+      date = date + 1.day
+      if (date.wday==6 || date.wday % 7 == 0)
+        buffer -=1
+      end
+    end
+    return date
   end
 
 end

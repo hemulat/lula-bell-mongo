@@ -8,9 +8,9 @@ class Item
   field :reservable, type: Mongoid::Boolean
   field :maximum_reservation_days, type: Integer,
                                   default: lambda {max_reservation}
+  field :buffer_period, type: Integer, default: lambda {buffer_days}
   field :description, type: String
   field :_SKU, type: String
-  field :_status, type: String, default: "Available"
   field :_quantity, type: Array, default: [1]
   field :quantity, type: Integer, default: 1
 
@@ -30,6 +30,13 @@ class Item
 
   def options
     {_status: ["Checked Out", "In Laundry", "Available"]}
+  end
+
+  def explanations
+    {rentable: "rentable items have to be returned after checkout",
+     reservable: "reservable items are rentables that can be reserved online",
+     buffer_period: "days it take to get the item ready after a return",
+     }
   end
 
   def qty_ids()
@@ -52,6 +59,10 @@ class Item
   end
 
   protected
+    def buffer_days
+      0
+    end
+
     def max_reservation
       3
     end
@@ -85,11 +96,17 @@ class Kitchen < Item
 end
 
 class Hygiene < Item
+  def buffer_days
+    0
+  end
 end
 
 class Cleaning < Item
   def self.shorthand
     "Cln"
+  end
+  def buffer_days
+    0
   end
 end
 
@@ -108,6 +125,10 @@ class Clothing < Item
 
   def self.shorthand
     "Clo"
+  end
+
+  def buffer_days
+    3
   end
 
 end
@@ -131,17 +152,21 @@ class CookingEquipment < Kitchen
     return 'Co'
   end
 
+  def buffer_days
+    1
+  end
+
 end
 
 class Food < Kitchen
   field :type, type: String
   field :expiration, type: Time
-  field :restriction, type: Array
+  field :dietary_restrictions, type: Array
   validates_presence_of :type
 
   def options
     {type: ["Fruit", "Vegetables", "Meat", "Dairy", "Other"],
-     restriction: ['Vegan','Vegetarian','Gluten Free','Kosher']}
+     dietary_restrictions: ['Vegan','Vegetarian','Gluten Free','Kosher']}
   end
 end
 
