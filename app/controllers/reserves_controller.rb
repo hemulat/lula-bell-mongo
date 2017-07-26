@@ -28,13 +28,6 @@ class ReservesController < ApplicationController
     redirect_back fallback_location: reserves_path
   end
 
-  def show
-    @reserve = Reserve.find(params[:id])
-  end
-
-  def confirm
-  end
-
   def new
     @item = Item.find(params[:item_id])
     @reserve = Reserve.new()
