@@ -8,20 +8,16 @@ class ReservesController < ApplicationController
   def check_out
     reservation = Reserve.find(params[:reserve_id])
     @item = reservation.item
-    next_id = pick_different_from(@item,reservation.start_date,reservation.end_date,reservation.qty_id.to_i)
+    next_id = pick_different_from(@item,reservation.start_date,
+                                  reservation.end_date,reservation.qty_id.to_i)
     final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : next_id
     if final_id && reservation.item._quantity.include?(final_id)
       @item._quantity.delete(final_id)
       @item.save
 
-      @transaction = Transaction.new
-      @transaction.student_id = reservation.student_id
-      @transaction.email = reservation.email
-      @transaction.end_date = reservation.end_date
-      @transaction.start_date = reservation.start_date
-      @transaction.item = @item
+      @transaction = Transaction.new(reservation.attributes.slice(:student_id,
+                                :email,:end_date,:start_date,:item_id))
       @transaction.qty_id = final_id
-
       @transaction.save
       reservation.destroy
       flash[:notice] = "Item checked out successfully."
@@ -29,7 +25,7 @@ class ReservesController < ApplicationController
       flash[:alert] = "The item you are trying to checkout is already checked out.
                         Most likely not returned after a checkout."
     end
-    redirect_to reserves_path
+    redirect_back fallback_location: reserves_path
   end
 
   def show
@@ -62,7 +58,7 @@ class ReservesController < ApplicationController
     if @reserve.save
       #If save succeeds, show confirmation
       flash[:notice] = "Reservation created successfully."
-      redirect_to(:action => 'confirm')
+      redirect_to item_path(@reserve.item_id)
     else
       #If save fails, redisplay the form so user can fix problems
       render 'new'
@@ -89,16 +85,12 @@ class ReservesController < ApplicationController
     end
   end
 
-  def delete
-    @reserve = Reserve.find(params[:id])
-  end
-
   def destroy
     @reserve = Reserve.find(params[:id])
     @reserve.destroy
 
     flash[:notice] = "Reservation destroyed successfully."
-    redirect_to(:action => 'index')
+    redirect_back fallback_location: reserves_path
   end
 
   private

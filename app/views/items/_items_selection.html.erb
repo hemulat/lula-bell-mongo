@@ -6,20 +6,24 @@
   <% else %>
     <div class="row" id="container">
       <%@items.each do |item| %>
-      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-        <div class="thumbnail">
-          <a href= <%= item_path(item)%> >
-            <%= image_tag(item.image.url(:thumb), alt: item.name)%>
-            <div class="caption">
-              <%= item.name %>
+        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
+          <div class="img-thumbnail">
+            <a href="<%=item_path(item)%>">
+              <img src="<%= item.image.url %>" alt="<%= item.name %>" width="150" height="150">
+            </a>
+            <div class="img-caption">
+              <% if item.name.size > 22 %>
+                <%= item.name[0..19]+"..." %>
+              <% else %>
+                <%= item.name %>
+              <% end %>
             </div>
-          </a>
+          </div>
         </div>
-      </div>
       <% end %>
     </div>
   <% end %>
   <div id="paginate-width">
     <%= will_paginate @items %>
   </div>
-  </div>
+</div>
