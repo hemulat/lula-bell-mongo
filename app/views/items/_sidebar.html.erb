@@ -3,6 +3,7 @@
   <%= link_to "View All", items_path, id:"category"%>
   <% @categories.each do |category, dict|%>
     <%if not_empty(category)%>
+    <hr/>
       <%=link_to category.titleize, category_path(category),id: "category"%>
     <span>
       <% dict.each do |subcategory,subdict|%>
@@ -14,3 +15,40 @@
     <%end%>
   <% end %>
 </div>
+<div class= "phone-sidebar-block" on= "tap:sidebar.open">
+  <%=image_tag("sidebar.png" ,id: "phone-refine")%>
+</div>
+<amp-sidebar id="sidebar"
+  layout="nodisplay"
+  side="left">
+  <%=image_tag('cross.png', class:"amp-close-image",width:"20",
+    height: "20",
+    alt: "close sidebar",
+    on: "tap:sidebar.close",
+    role: "button",
+    tabindex: "0" )%>
+  <div class="phone-sidebar-content">
+  <ul>
+    <li>
+      <%= link_to "View All", items_path, id:"category"%>
+    </li>
+    <% @categories.each do |category, dict|%>
+      <%if not_empty(category)%>
+      <li>
+        <%=link_to category.titleize, category_path(category),id: "category"%>
+      </li>
+    <ul>
+    <% dict.each do |subcategory,subdict|%>
+        <% if not_empty(subcategory)%>
+      <li>
+          <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
+      </li>
+        <% end %>
+        <%end%>
+    </ul>
+    <li>
+      <%end%>
+    <% end %>
+  </ul>
+  </div>
+</amp-sidebar>
