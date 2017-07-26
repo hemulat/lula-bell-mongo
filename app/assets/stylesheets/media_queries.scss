@@ -9,13 +9,11 @@
   }
   #phone-refine{
     z-index: 3;
+    vertical-align: middle;
+    float: left;
     position: fixed;
-    bottom: 150px;
+    overflow: hidden;
     margin-right: 3px;
-    height: 20%;
-    &:hover, .offcanvas &:focus{
-      color: #2C3E50;
-    }
 
   }
 
