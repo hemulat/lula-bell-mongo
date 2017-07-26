@@ -25,14 +25,6 @@ module ItemsHelper
     return false
   end
 
-  def others_not_empty(str)
-    if (Item.descendants.map { |i| i.name }).include? str
-      item_count = (str.constantize).others.count
-      return item_count != 0
-    end
-    return false
-  end
-
   def process_types(feature_type,item)
     # final will be key-value. key is field name and value is
     # [options(Array),required(boolean),Type]

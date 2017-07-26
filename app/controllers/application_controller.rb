@@ -11,22 +11,20 @@ class ApplicationController < ActionController::Base
     whether the item is available on those days.
     '''
     buffer = (item.buffer_period.to_i)
-    date_range = start_date..(add_buffer(end_date, buffer))
-    transactions = item.transactions.where(qty_id: qty_id)
+    date_range = ((start_date.to_date)..(add_buffer(end_date, buffer)))
+    transactions = item.transactions.where(qty_id: qty_id,return_date: nil)
     reservations = item.reservations.where(qty_id: qty_id)
 
     transactions.each do |transaction|
-      if (transaction.return_date == nil)
-        start_d = transaction.start_date
-        end_d = add_buffer(next_business(transaction.end_date), buffer)
-        if (start_d..end_d).overlaps?(date_range)
-          return false
-        end
+      start_d = transaction.start_date.to_date
+      end_d = add_buffer(next_business(transaction.end_date), buffer)
+      if (start_d..end_d).overlaps?(date_range)
+        return false
       end
     end
 
     reservations.each do |reservation|
-      start_d = reservation.start_date
+      start_d = reservation.start_date.to_date
       end_d = add_buffer(next_business(reservation.end_date), buffer)
       if (start_d..end_d).overlaps?(date_range)
         return false
@@ -66,6 +64,37 @@ class ApplicationController < ActionController::Base
     return nil
   end
 
+  def can_extend_reserve(reserve,start_date,end_date)
+    item = reserve.item
+    buffer = (item.buffer_period.to_i)
+    date_range = ((start_date.to_date)..(add_buffer(end_date, buffer)))
+    transactions = item.transactions.where(return_date: nil)
+    reservations = item.reservations.where(:_id.ne => reserve._id)
+
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    logger.tagged("Need the Range") {logger.info "#{date_range}"}
+
+    transactions.each do |transaction|
+      start_d = transaction.start_date.to_date
+      end_d = add_buffer(next_business(transaction.end_date), buffer)
+      logger.tagged("Transaction Dates") {logger.info "#{(start_d..end_d)} -- #{(start_d..end_d).overlaps?(date_range)}"}
+      if (start_d..end_d).overlaps?(date_range)
+        return false
+      end
+    end
+
+    reservations.each do |reservation|
+      start_d = reservation.start_date.to_date
+      end_d = add_buffer(next_business(reservation.end_date), buffer)
+      logger.tagged("Reserve dates") {logger.info "#{(start_d..end_d)} -- #{(start_d..end_d).overlaps?(date_range)}"}
+      if (start_d..end_d).overlaps?(date_range)
+        return false
+      end
+    end
+
+    return true
+  end
+
   def next_business(date)
     while (date.wday==6 || date.wday % 7 == 0)
       date = date + 1.day
@@ -80,7 +109,7 @@ class ApplicationController < ActionController::Base
         buffer -=1
       end
     end
-    return date
+    return date.to_date
   end
 
 end

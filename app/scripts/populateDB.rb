@@ -7,8 +7,10 @@ def attach_images()
   file = File.open("app/assets/images/apple.jpg")
   @items = Item.all
   @items.each do |item|
-    item.image = file
-    item.save
+    if item.image_file_name.nil?
+      item.image = file
+      item.save
+    end
   end
   file.close
 end
@@ -22,6 +24,7 @@ def  g_items(n=5)
     Item.create({name: na, rentable: rent, reservable: reserve,
                 description: descr, _SKU: Item.next_sku})
   end
+
 end
 
 def g_kitchen_items(n=5)

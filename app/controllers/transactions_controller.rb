@@ -202,7 +202,7 @@ class TransactionsController < ApplicationController
 
       picked_id = pick_available_checkout(item,start_date,end_date)
 
-      if !(picked_id) || picked_id==0
+      if !(picked_id)
         return false
       else
         item._quantity.delete(picked_id)

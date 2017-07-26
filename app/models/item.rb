@@ -19,8 +19,6 @@ class Item
   has_many :reservations, class_name: "Reserve", inverse_of: :item,
                           dependent: :destroy
 
-  scope :others, -> {where(_type: self.name)}
-
   validates_presence_of :name
   has_mongoid_attached_file :image,
     styles: { :thumb => "150x150#", :medium => "400>" }
@@ -177,6 +175,12 @@ class Food < Kitchen
   end
 end
 
+class OtherKitchen < Kitchen
+  def self.shorthand
+    "Oth"
+  end
+end
+
 
 
 class Book < SchoolSupply
@@ -192,6 +196,12 @@ end
 
 
 class Technology < SchoolSupply
+end
+
+class OtherSchoolSupply < SchoolSupply
+  def self.shorthand
+    "Oth"
+  end
 end
 
 class Furniture < FreeStore
