@@ -1,4 +1,5 @@
 <%= link_to("<<Back to Reservation List", reserves_path, :class => 'back-link')%>
+</br>
 
 <div class="reserves show ">
 
@@ -13,23 +14,23 @@
     </tr>
     <tr>
       <th>Student ID</th>
-      <td><%= @reserve.student_id %><td>
+      <td><%= @reserve.student_id %></td>
     </tr>
     <tr>
       <th>Student Email</th>
-      <td><%= @reserve.email %><td>
+      <td><%= @reserve.email %></td>
     </tr>
     <tr>
       <th>Pick-up Date</th>
-      <td><%= @reserve.start_date %><td>
+      <td><%= @reserve.start_date %></td>
     </tr>
     <tr>
       <th>Due Date</th>
-      <td><%= @reserve.end_date %><td>
+      <td><%= @reserve.end_date %></td>
     </tr>
     <tr>
       <th>Reserved on:</th>
-      <td><%= @reserve.created_at.strftime("%a, %B %d, %Y") %><td>
+      <td><%= @reserve.created_at.strftime("%a, %B %d, %Y") %></td>
     </tr>
   </table>
 
