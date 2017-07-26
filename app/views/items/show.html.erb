@@ -2,7 +2,8 @@
 <div class="single-item-view">
   <div class="container">
     <div class="item-image">
-      <%= image_tag @item.image.url(:medium) %>
+      <!--<%= image_tag @item.image.url(:medium) %>-->
+      <img src="<%= @item.image.url %>" alt="<%= @item.name %>" width="400" height="auto">
     </div>
     <div class="main-column">
       <div class="item-name">
@@ -34,10 +35,12 @@
           <p> <%= "SKU - " %><%= @item._SKU%></p>
         <%end%>
       </div>
-        <% if @item.reservable %>
-          <%=link_to "Reserve",reserve_path(@item), class: "btn btn-success"%>
-        <% end %>
-        <% if admin_signed_in? %>
+    </div>
+    <div class="buttons">
+      <% if @item.reservable %>
+        <%=link_to "Reserve",reserve_path(@item), class: "btn btn-success"%>
+      <% end %>
+      <% if admin_signed_in? %>
           <% if @item._quantity.empty?%>
             <%= link_to "Check Out", check_out_transaction_path(@item.id),
                                               class: 'btn disabled btn-info'%>
@@ -51,8 +54,7 @@
                                  method: :delete,
                                  data: { confirm: "Are you sure?" },
                                   class: "btn btn-danger" %>
-        <% end %>
-
+      <% end %>
     </div>
   </div>
 </div>
