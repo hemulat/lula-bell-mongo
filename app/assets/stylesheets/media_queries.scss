@@ -1,0 +1,37 @@
+@media screen and (max-width: 750px) {
+  .sidenav{
+    display: none;
+    width: 0%;
+  }
+
+  .category-content{
+    margin-left: 10%;
+  }
+  #phone-refine{
+    z-index: 3;
+    position: fixed;
+    bottom: 150px;
+    margin-right: 3px;
+    height: 20%;
+    &:hover, .offcanvas &:focus{
+      color: #2C3E50;
+    }
+
+  }
+  #right-arrow{
+    z-index:4;
+    position: fixed;
+    bottom: 208px;
+    margin-right: 3px;
+  }
+
+}
+
+
+@media screen and (min-width: 750px) {
+    #sidebar, #phone-refine,#phone-sidebar-block, #right-arrow {
+      display: none;
+    }
+
+
+}
