@@ -18,8 +18,8 @@
                 <img src="<%= item.image.url %>" alt="<%= item.name %>" width="150" height="150">
               </a>-->
               <div class="img-caption">
-                <% if item.name.size > 12 %>
-                  <%= item.name[0..9]+"..." %>
+                <% if item.name.size > 14 %>
+                  <%= item.name[0..11]+"..." %>
                 <% else %>
                   <%= item.name %>
                 <% end %>
