@@ -1,7 +1,7 @@
 <div id="form">
   <h2>Reserve!</h2>
-  <%= render 'shared/error_msg', item: @reserve %>
-  <%= simple_form_for @reserve, :url => reserves_path, :method => 'post' do |f| %>
+  <%= simple_form_for @reserve, method: yield(:form_method),
+                                url: {action: yield(:form_action)} do |f| %>
 
       <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
       <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>

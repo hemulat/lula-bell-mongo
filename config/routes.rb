@@ -1,21 +1,16 @@
 Rails.application.routes.draw do
   root 'static#home'
   get 'reserve/:item_id', to: 'reserves#new', as: :reserve
-  get 'reserves/confirm', to: 'reserves#confirm'
   get 'reserves/check_out/:reserve_id', to: 'reserves#check_out',
                                         as: :checkout_reserve
-  resources :reserves, except: [:new] do
-    member do
-      get :delete
-    end
-  end
+  resources :reserves, except: [:new, :show]
 
   get 'check_in/:id', to: 'transactions#direct_checkin', as: :direct_checkin
   get '/transactions/student/:id', to: 'transactions#student_transactions',
                                   as: :student_activity
   get '/transactions/multiple_check_out', to: 'transactions#multiple_check_out',
                                           as: :multiple_check_out
-                                          
+
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'

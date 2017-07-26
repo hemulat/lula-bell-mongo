@@ -7,12 +7,7 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    if admin_signed_in?
-      @items = Item.all.paginate(page: params[:page])
-    else
-      @items = Item.available.paginate(page: params[:page])
-    end
-    gon.items = get_links(@items)
+    @items = Item.all.paginate(page: params[:page])
     @categories = get_sub(Item)
   end
 
@@ -54,13 +49,7 @@ class ItemsController < ApplicationController
   end
 
   def category
-    if admin_signed_in?
-      @items = get_class_name(params[:class]).paginate(page: params[:page])
-      gon.items = get_links(@items)
-    else
-      @items = get_class_name(params[:class]).available.paginate(page: params[:page])
-      gon.items = get_links(@items)
-    end
+    @items = get_class_name(params[:class]).paginate(page: params[:page])
     @categories = get_sub(Item)
   end
 
