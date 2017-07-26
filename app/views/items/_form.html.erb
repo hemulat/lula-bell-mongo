@@ -10,17 +10,34 @@
                   as: :check_boxes%>
           <br>
         <%else%>
-          <%= form.input feature, label: capitalize(feature),
+          <%= form.input feature,
+                  label: capitalize(feature) + explanation(@item,feature),
                   collection: details[0],required: details[1], html5: true,
                   input_html: { :class => 'dropdown' }%>
         <% end %>
       <% else %>
-      <%= form.input feature, label: capitalize(feature),
-                required: details[1], as: details[2], html5: true %>
+          <% if feature == 'rentable'%>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true,
+                      input_html: {onclick: 'toggle_rentable()'} %>
+          <% elsif %>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true,
+                      input_html: {onclick: 'toggle_reservable()'} %>
+          <% else %>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true %>
+          <% end %>
       <% end%>
   <% end %>
   <%= form.input :image, as: :file, required: false%>
   <%= hidden_field_tag :class, "#{@item.class.name}"%>
   <%= form.submit "Save #{@item.class.name.titleize}", class: "btn btn-success" %>
+  <script>
+  initial_setup();
+  </script>
 <% end %>
 </div>

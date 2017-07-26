@@ -8,10 +8,19 @@ module ItemsHelper
     return final
   end
 
+  def explanation(item,field)
+    exp = item.explanations[field.to_sym]
+    if exp.nil?
+      return ""
+    else
+      return " (#{exp})"
+    end
+  end
+
   def not_empty(str)
     if (Item.descendants.map { |i| i.name }).include? str
       item_count = (str.constantize).all.count
-      return item_count == 0? false : true
+      return item_count != 0
     end
     return false
   end
