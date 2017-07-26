@@ -19,11 +19,11 @@
         <td><%= reserve.start_date.strftime("%B %d, %Y") %></td>
         <td><%= reserve.end_date.strftime("%a, %B %d, %Y") %></td>
         <td class="actions">
-          <%= link_to("Details", reserf_path(reserve.id), :class => 'action show')%>
-          <%= link_to("Edit", edit_reserf_path(reserve), :class => 'action edit')%>
-          <%= link_to("Check Out", checkout_reserve_path(reserve.id))%>
+          <%= link_to("Details", reserf_path(reserve.id), :class => "btn btn-primary")%>
+          <%= link_to("Edit", edit_reserf_path(reserve), :class => 'btn btn-info')%>
+          <%= link_to("Check Out", checkout_reserve_path(reserve.id), class: "btn btn-info")%>
           <%= link_to("Delete", reserf_path(reserve), method: :delete,
-              data: { confirm: 'Are you sure you want to delete this reservation?'}) %>
+              data: { confirm: 'Are you sure you want to delete this reservation?'}, class: "btn btn-danger") %>
         </td>
       </tr>
       <% end %>

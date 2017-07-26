@@ -82,7 +82,7 @@ class TransactionsController < ApplicationController
   end
 
   def student_transactions
-    @transactions  = Transaction.where(student_id: params[:id]).all
+    @transactions = Transaction.where(student_id: params[:id]).all
   end
 
 
