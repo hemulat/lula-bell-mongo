@@ -6,10 +6,6 @@
   height: 180px;
 }
 
-.required{
-  color: #AA1111;
-}
-
 .sidenav{
   float: left;
   z-index: 0;
@@ -129,4 +125,9 @@ amp-sidebar {
   #subcategory{
     font-size: 12px;
   }
+}
+
+abbr, accronym{
+  border-bottom: 0px !important;
+  color: #AA1111; //#808080;
 }

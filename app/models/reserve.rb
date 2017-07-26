@@ -19,5 +19,21 @@ class Reserve
   validates_format_of :email, with: EMAIL_REGEX
   validates_presence_of :start_date
   validates_presence_of :end_date
+  validate :check_end_date
+
+  def check_end_date
+    max_r = self.item.maximum_reservation_days
+    if self.end_date > self.start_date + max_r.days
+      errors.add(:end_date,
+                  "can't be more than #{max_r} days from the given Start Date")
+      return false
+    elsif self.end_date < self.start_date
+      errors.add(:end_date,
+                  "can't be before the given start date")
+      return false
+    else
+      return true
+    end
+  end
 
 end
