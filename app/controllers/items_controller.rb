@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
     if query == nil
       redirect_to root_path
     else
-      @items = get_search_results(query).paginate(page: params[:page])
+      @items = get_search_results(query).all.paginate(page: params[:page])
       @categories = get_sub(Item)
     end
   end
@@ -49,7 +49,7 @@ class ItemsController < ApplicationController
   end
 
   def category
-    @items = get_class_name(params[:class]).paginate(page: params[:page])
+    @items = get_class_name(params[:class]).all.paginate(page: params[:page])
     @categories = get_sub(Item)
   end
 
@@ -134,7 +134,6 @@ class ItemsController < ApplicationController
       if sub_classes == []
         return {}
       end
-
       sub_class_hierarchy = {}
       sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
       return sub_class_hierarchy
