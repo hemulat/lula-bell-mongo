@@ -3,7 +3,7 @@ class StaticController < ApplicationController
   before_action :authorize_admin, only: [:admin_home]
 
   def home
-    @blog=Blog.last
+    @blogs = Blog.order_by(:created_at => 'desc')
     @psa_posts = PsaPost.order_by(:created_at => 'desc')
   end
 

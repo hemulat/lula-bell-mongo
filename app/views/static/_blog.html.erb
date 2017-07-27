@@ -1,0 +1,22 @@
+<div class="blog-main-page">
+  <div class="blogs-wrapper">
+    <% @blogs.each do |blog| %>
+      <div class="blog">
+        <div class="blog-image">
+          <%= image_tag blog.image.url(:thumb), class: 'img-responsive' %>
+        </div>
+        <div class="blog-info">
+          <div class="blog-title">
+            <p><%= blog.title %></p>
+          </div>
+          <div class="blog-content">
+            <p><%= blog.content %></p>
+          </div>
+          <div class="blog-link">
+            <%= link_to "Continue reading", blog.url, target: :blank %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
