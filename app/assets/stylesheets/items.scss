@@ -10,6 +10,10 @@
   display: none;
 }
 
+.arrow-icon{
+  display: none;
+}
+
 .overlay{
   position:fixed;
   display:none;
@@ -32,19 +36,29 @@
 }
 
 
+.animate-left{
+  position:relative;
+  animation:animateleft 0.4s
+}
+@keyframes animateleft{
+            from{left:-100%;opacity:0}
+            to{left:0;opacity:1}
+}
+
 
 .sidenav{
+  display: block;
+  position: absolute;
   float: left;
   z-index: 2;
   height: 100%;
   width: 15%;
-  position: absolute;
   top: 0;
   left: 0;
   background-color: #ECF0F1;
   color: #2C3E50;
   overflow-x: hidden;
-  padding-top: 100px;
+  padding-top: 50px;
 
     hr{
       margin: 0px;
@@ -82,7 +96,6 @@
 
 .category-content{
   margin-left: 15%;
-
   h3 {
     margin: 0 2%;
   }

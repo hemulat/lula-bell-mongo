@@ -1,90 +1,24 @@
-$size : 20px;
-
 @media screen and (max-width: 750px) {
-
-  #closenav{
-    display: block;
-    float: right;
-  }
-
-  .animate-left{
-    position:relative;
-    animation:animateleft 0.4s
-  }
-  @keyframes animateleft{
-              from{left:-100%;opacity:0}
-              to{left:0;opacity:1}
-  }
-
   .arrow-icon{
     position: fixed;
+    display: block;
     top:50%;
   }
-  
+
   .sidenav{
     display: none;
-    float: left;
-    height: 100%;
+    position: fixed;
     width: 60%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #ECF0F1;
-    color: #2C3E50;
-    overflow-x: hidden;
-    padding-top: 50px;
-
-      hr{
-        margin: 0px;
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 0px;
-        padding-bottom: 4px;
-      }
-      #category{
-        font-size: 14px;
-        font-weight: bold;
-        padding-top: 6px;
-      }
-
-      #subcategory{
-        padding-left:50px;
-        font-size: 12px;
-      }
-      #title{
-        margin-left: 14px;
-        color: #2C3E50;
-      }
-      a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 18px;
-        color: #2C3E50;
-        display: block;
-        transition: 0.5s;
-        &:hover, .offcanvas &:focus{
-          color: #E74C3C;
-        }
-    }
   }
 
   .category-content{
     margin-left: 10%;
   }
-  #phone-refine{
-    z-index: 3;
-    vertical-align: middle;
-    float: left;
-    position: fixed;
-    overflow: hidden;
-    margin-right: 3px;
-  }
-
 }
 
 
 @media screen and (min-width: 750px) {
-    #sidebar, #phone-refine,#phone-sidebar-block, #right-arrow {
-      display: none;
+    .sidenav{
+      display: block;
     }
 }
