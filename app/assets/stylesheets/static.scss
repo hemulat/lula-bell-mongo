@@ -21,7 +21,11 @@ body{
   overflow-x: hidden;
 }
 
-body::after{ content:''; display:block; height:80px; }
+body::after{
+  content:'';
+  display:block;
+  height:80px;
+ }
 
 footer{
   padding: 15px;
@@ -29,18 +33,12 @@ footer{
   position:absolute;
   bottom:0;
   width:100%;
-  height:80px;
   z-index: 1;
 }
 
 #mainNav{
     margin: 0;
-
 }
 .navbar {
   z-index: 1;
-
-}
-.navbar-brand{
-  color: #3498DB;
 }
