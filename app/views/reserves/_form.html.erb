@@ -1,5 +1,5 @@
 <div id="form">
-  <h2>Edit Reserve</h2>
+  <h2>Reserve!</h2>
   <%= simple_form_for @reserve, method: yield(:form_method),
                                 url: {action: yield(:form_action)} do |f| %>
 
@@ -12,6 +12,6 @@
         <%= f.input :end_date, label: "End Date", required: true, as: "date",
                                 input_html: {min: Date.today}, html5: true  %>
       <% end %>
-      <%= f.submit "Update Reservation", class: "btn btn-success" %>
+      <%= f.submit "Make Reservation", class: "btn btn-success" %>
   <% end %>
 </div>
