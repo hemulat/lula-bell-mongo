@@ -28,14 +28,6 @@ class ReservesController < ApplicationController
     redirect_back fallback_location: reserves_path
   end
 
-  def show
-    @reserve = Reserve.find(params[:id])
-  end
-
-  def confirm
-    # page to show user has completed reservation.
-  end
-
   def new
     @item = Item.find(params[:item_id])
     @reserve = Reserve.new()
@@ -68,20 +60,26 @@ class ReservesController < ApplicationController
 
   def edit
     @reserve = Reserve.find(params[:id])
+    @item  = @reserve.item
   end
 
   def update
     #Find a new object using form parameters
     @reserve = Reserve.find(params[:id])
+    @item  = @reserve.item
+    new_start_date = reserve_params[:start_date]
+    new_end_date = reserve_params[:end_date]
     #Update the object
-    if @reserve.update_attributes(reserve_params)
+    if (can_extend_reserve(@reserve, new_start_date, new_end_date) &&
+        @reserve.update_attributes(reserve_params))
       #If save succeeds, redirect to the show action
-      flash[:notice] = "Reserve updated successfully."
-      redirect_to(:action => 'index')
+      flash[:notice] = "Reservation updated successfully."
+      redirect_to item_transactions_path(@item)
     else
       #If save fails, redisplay the form so user can fix problems
-      flash.now[:notice] = "You need to have:
-      Dates, 9-digit Student ID, Student's email"
+      if !@reserve.errors.any?
+        flash.now[:alert] = "The time you choose is not be viable"
+      end
       render('edit') # this renews the form template
     end
   end

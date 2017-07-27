@@ -2,26 +2,36 @@
   <% if @items.empty? %>
     <h4>Hmm, looks like there's nothing here...</h4>
   <% else %>
+    <% if request.url.split("/")[-1].include?("search") %>
+      <h3>Search results for "<%= params[:query] %>"</h3>
+    <% else %>
+      <h3><%= request.url.split("/")[-1].split("?")[0].titleize %></h3>
+    <% end %>
+    <h2></h2>
     <div class="row" id="container">
       <%@items.each do |item| %>
-        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
-          <div class="img-thumbnail">
-            <a href="<%=item_path(item)%>">
-              <img src="<%= item.image.url %>" alt="<%= item.name %>" width="150" height="150">
-            </a>
-            <div class="img-caption">
-              <% if item.name.size > 22 %>
-                <%= item.name[0..19]+"..." %>
-              <% else %>
-                <%= item.name %>
-              <% end %>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <a href="<%= item_path(item) %>">
+            <div class="img-thumbnail">
+              <%= image_tag item.image.url(:thumb), class:'img-responsive' %>
+              <!--<a href="<%=item_path(item)%>">
+                <img src="<%= item.image.url %>" alt="<%= item.name %>" width="150" height="150">
+              </a>-->
+              <div class="img-caption">
+                <% if item.name.size > 14 %>
+                  <%= item.name[0..11]+"..." %>
+                <% else %>
+                  <%= item.name %>
+                <% end %>
+              </div>
             </div>
-          </div>
+          </a>
+          <div class="clearfix visible-xs"></div>
         </div>
       <% end %>
     </div>
   <% end %>
-  <div id="paginate">
+  <div id="paginate-width">
     <%= will_paginate @items %>
   </div>
 </div>

@@ -4,13 +4,13 @@
   <% @categories.each do |category, dict|%>
     <%if not_empty(category)%>
       <%=link_to category.titleize, category_path(category),id: "category"%>
-    <span>
-      <% dict.each do |subcategory,subdict|%>
-        <% if not_empty(subcategory)%>
-          <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
-        <% end %>
-      <%end%>
-    </span>
+      <span>
+        <% dict.each do |subcategory,subdict|%>
+          <% if not_empty(subcategory)%>
+            <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
+          <% end %>
+        <%end%>
+      </span>
     <%end%>
   <% end %>
 </div>

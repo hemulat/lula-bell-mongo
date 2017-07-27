@@ -17,6 +17,7 @@ class TransactionsController < ApplicationController
 
   def create
     qty_tosave = params[:quantity].to_i
+    @transaction = Transaction.new(transaction_params)
 
     if check_out_n_items(qty_tosave)
       flash[:notice] = "Check out successful."
@@ -26,6 +27,7 @@ class TransactionsController < ApplicationController
         flash.now[:alert] = "Couldn't find #{qty_tosave} " +
                             "#{'item'.pluralize(qty_tosave)} for " +
                             "the given dates!"
+        @item = Item.find(params.require(:transaction)[:item_id])
         render 'check_out'
         return
     end
@@ -89,14 +91,9 @@ class TransactionsController < ApplicationController
   def check_out
     @item = Item.find(params[:id])
     @transaction = Transaction.new()
-    unless @item.rentable
-      @transaction.end_date = Date.today
-    end
   end
 
   def multiple_check_out
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    logger.tagged("A Tag") {logger.info "#{params.inspect}"}
     if params.has_key?(:transaction)
       @transaction = Transaction.new(transaction_params)
     else
@@ -166,7 +163,7 @@ class TransactionsController < ApplicationController
     def delete_transaction(transaction)
       item = transaction.item
       # if the transaction is not checked in
-      if !transaction.return_date
+      if transaction.return_date.nil?
         item._quantity.push(transaction.qty_id)
         if !item.rentable
           item.quantity += 1
@@ -205,7 +202,7 @@ class TransactionsController < ApplicationController
 
       picked_id = pick_available_checkout(item,start_date,end_date)
 
-      if !(picked_id) || picked_id==0
+      if !(picked_id)
         return false
       else
         item._quantity.delete(picked_id)
@@ -224,24 +221,24 @@ class TransactionsController < ApplicationController
       saved_transactions = []
       saved_qtys = []
       (1..qty_tosave).each do
-        @transaction = Transaction.new(transaction_params)
-        @item = @transaction.item
-        if @item.rentable
-          result = check_out_rentable(@transaction,@item)
+        transaction = Transaction.new(transaction_params)
+        item = @transaction.item
+        if item.rentable
+          result = check_out_rentable(transaction,item)
         else
-          result = check_out_unrentable(@transaction,@item)
+          result = check_out_unrentable(transaction,item)
         end
 
         if result
-          saved_transactions.push(@transaction)
-          saved_qtys.push(@transaction.qty_id)
+          saved_transactions.push(transaction)
+          saved_qtys.push(transaction.qty_id)
         else
           undo_transactions(saved_transactions)
-          @item._quantity += saved_qtys
-          if !@item.rentable
-            @item.quantity += saved_qtys.size
+          item._quantity += saved_qtys
+          if !item.rentable
+            item.quantity += saved_qtys.size
           end
-          @item.save
+          item.save
           return false
         end
       end
