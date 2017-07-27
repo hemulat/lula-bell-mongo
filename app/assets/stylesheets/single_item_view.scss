@@ -5,20 +5,24 @@
     margin-left: 15%;
   }
 
+  .item-image {
+    float: left;
+  }
+
   .item-image img {
     border: 2px solid black;
     max-width: 400px;
     overflow: hidden;
-    margin: 60px 40px 40px;
-    float: left;
+    margin: 60px 40px;
   }
 
   @media only screen and (max-width: 1130px) {
 
     .item-image {
-      width: 75%;
+      width: 100%;
       margin: auto;
       clear: both;
+      text-align: center;
     }
 
     .item-image img {
@@ -28,8 +32,9 @@
     }
 
     .main-column {
-      width: 75%;
-      margin: auto;
+      width: 80%;
+      margin-left: 20%;
+      margin-top: 0px !important;
       clear: both;
     }
 
@@ -59,6 +64,7 @@
     margin-top: 40px;
     padding: 10px;
     text-align: left;
+    float: left;
   }
 
   .item-name, .item-description {
@@ -78,5 +84,6 @@
     width: 90%;
     margin: 5% auto;
     text-align: center;
+    clear: both;
   }
 }
