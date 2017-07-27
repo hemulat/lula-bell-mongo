@@ -16,8 +16,6 @@
           <%= f.input :end_date, label: "End Date", required: true, as: "date",
                         input_html: {min: Date.today},
                         html5: true  %>
-        <% else%>
-          <%= f.hidden_field :end_date, :value => Date.today %>
         <% end %>
         <%= label :quantity,"Quantity" %><br>
         <%= number_field_tag :quantity, 1 ,min: 1, max: @item._quantity.size%>

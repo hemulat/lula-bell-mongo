@@ -18,17 +18,20 @@ class Transaction
 
   def check_end_date
     max_r = self.item.maximum_reservation_days
-    if self.end_date > self.start_date + max_r.days
-      errors.add(:end_date,
-                  "can't be more than #{max_r} days from the given Start Date")
-      return false
-    elsif self.end_date < self.start_date
-      errors.add(:end_date,
-                  "can't be before the given start date")
-      return false
-    else
-      return true
-    end
-  end
+    if self.item.rentable
+      if self.end_date > self.start_date + max_r.days
+        errors.add(:end_date,
+                    "can't be more than #{max_r} days from the given Start Date")
+        return false
+      elsif self.end_date < self.start_date
+        errors.add(:end_date,
+                    "can't be before the given start date")
+        return false
+      else
+        return true
+      end  
+    end #end of check end_date for nil
+
+  end #end of check_end_date
 
 end
