@@ -1,27 +1,24 @@
 @media screen and (max-width: 750px) {
+  .arrow-icon{
+    position: fixed;
+    display: block;
+    top:50%;
+  }
+
   .sidenav{
     display: none;
-    width: 0%;
+    position: fixed;
+    width: 60%;
   }
 
   .category-content{
     margin-left: 10%;
   }
-  #phone-refine{
-    z-index: 3;
-    float: left;
-    position: fixed;
-    overflow: hidden;
-    margin-right: 3px;
-  }
-
 }
 
 
 @media screen and (min-width: 750px) {
-    #sidebar, #phone-refine,#phone-sidebar-block, #right-arrow {
-      display: none;
+    .sidenav{
+      display: block;
     }
-
-
 }
