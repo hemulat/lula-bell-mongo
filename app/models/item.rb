@@ -31,6 +31,7 @@ class Item
       errors.add(:reservable, "items must also be rentable")
       return false
     end
+    return true
   end
 
   def options
