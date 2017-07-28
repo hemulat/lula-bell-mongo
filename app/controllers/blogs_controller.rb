@@ -6,6 +6,10 @@ class BlogsController < ApplicationController
       @blogs=Blog.all
     end
 
+    def admin_blogs
+      @blogs = Blog.order_by(:created_at => 'desc')
+    end
+
     def new
       @blog=Blog.new
     end
