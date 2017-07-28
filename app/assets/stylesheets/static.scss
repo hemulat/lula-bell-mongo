@@ -48,7 +48,6 @@ footer{
 }
 
 .Blogs-PSA {
-  max-height: 400px;
   overflow: scroll;
 }
 
@@ -64,4 +63,19 @@ footer{
   width: 50%;
   float: left;
   padding: 0 2%;
+}
+
+@media only screen and (max-width: 830px) {
+  .blogsDisplay {
+    width: 100%;
+    clear: both;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding-bottom: 3%;
+  }
+
+  .psasDisplay {
+    width: 100%;
+    clear: both;
+  }
 }

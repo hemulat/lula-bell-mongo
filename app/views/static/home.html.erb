@@ -47,7 +47,6 @@
     </div>
 </div>
 
-
 <div class="my-fluid-container">
   <%= image_tag("cart.png", id: 'cart')%>
 
@@ -103,7 +102,10 @@
       <% if @blogs.empty? %>
         <h3> There are currently no blogs </h3>
       <% else %>
-        <%= render 'blog', locals: { blogs: @blogs } %>
+        <div class="blog-main-page">
+          <%= render 'blog', locals: { blogs: @blogs } %>
+        </div>
+        <%= link_to "View All", blogs_path, class: "btn btn-primary" %>
       <% end %>
     </div>
     <div class="psasDisplay">

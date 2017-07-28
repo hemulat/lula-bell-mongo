@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :blogs
+  get '/admin_blogs', to: 'blogs#admin_blogs', as: :admin_blogs
 
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'
