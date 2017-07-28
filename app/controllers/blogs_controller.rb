@@ -1,6 +1,7 @@
 class BlogsController < ApplicationController
 
   before_action :authorize_admin, except: :index
+
     def index
       @blogs=Blog.all
     end
@@ -11,7 +12,8 @@ class BlogsController < ApplicationController
 
     def create
       @blog = Blog.new(blog_params)
-
+      @blog.update_attribute(:created_at, DateTime.now)
+      @blog.save
      if @blog.save
        redirect_to blogs_path, notice: "The blog has been created!" and return
      end

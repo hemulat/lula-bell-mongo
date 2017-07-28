@@ -103,6 +103,11 @@ class TransactionsController < ApplicationController
     if params.has_key?(:sku)
       @item = Item.find_by(_SKU: params[:sku])
 
+      if params[:transaction][:student_id].to_s.size != 9
+        redirect_to multiple_check_out_path, alert: "Student ID has to be 9 digits long!"
+        return
+      end
+
       if params.has_key?(:checkout)
         if @item.rentable
           if params[:transaction][:end_date] == ""

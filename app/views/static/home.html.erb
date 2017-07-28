@@ -98,30 +98,21 @@
 
 <div class="my-fluid-container">
   <div class="row" id="Blogs-PSA">
-    <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
-    <h4><a href="/blogs" data-toggle="collapse">Latest Blog</a></h4>
-      <div id="col1Content" class="collapse in">
-        <% if @blog != nil %>
-        <div>
-          <%= image_tag @blog.image.url(:medium) %>
-        </div>
-        <div>
-          <h4><%= @blog.title %></h2>
-        </div>
-        <div>
-          <%= @blog.content%>
-        </div>
-        <div>
-          <%=link_to  "Continue Reading",@blog.url %>
-        </div>
-        <%else%>
-            <h3> There are currently no blogs </h3>
-        <%end%>
-      </div>
+    <div class="blogsDisplay">
+      <h4>Blogs</h4>
+      <% if @blogs.empty? %>
+        <h3> There are currently no blogs </h3>
+      <% else %>
+        <%= render 'blog', locals: { blogs: @blogs } %>
+      <% end %>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12", id="psaDisplay">
-      <h4><a href="#col4Content" data-toggle="collapse">Public Service Announcements</a></h4>
-      <%= render 'psa', locals: { psas: @psa_posts } %>
+    <div class="psasDisplay">
+      <h4>Public Service Announcements</h4>
+      <% if @psa_posts.empty? %>
+        <h3> There are currently no PSAs </h3>
+      <% else %>
+        <%= render 'psa', locals: { psas: @psa_posts } %>
+      <% end %>
     </div>
   </div>
 </div>
