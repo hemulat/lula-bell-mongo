@@ -5,11 +5,22 @@ div {
     padding-bottom: 15px;
 }
 
+footer {
+  padding: 15px;
+  background-color: #F8F8F8;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:80px;
+  z-index: 3;
+}
 
-@media (max-width:768px) {
+
+@media screen and (max-width:768px) {
   div {
     width: 75%;
     float: left;
     padding-bottom: 15%
   }
+
 }
