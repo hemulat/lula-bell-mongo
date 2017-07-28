@@ -29,7 +29,7 @@ class Transaction
         return false
       else
         return true
-      end  
+      end
     end #end of check end_date for nil
 
   end #end of check_end_date
