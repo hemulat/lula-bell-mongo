@@ -12,6 +12,7 @@
 
 .arrow-icon{
   display: none;
+  opacity: 0.75;
 }
 
 .overlay{
@@ -36,15 +37,14 @@
 }
 
 
-.animate-left{
+.open-to-right{
   position:relative;
-  animation:animateleft 0.4s
+  animation:open_right 0.4s
 }
-@keyframes animateleft{
+@keyframes open_right{
             from{left:-100%;opacity:0}
             to{left:0;opacity:1}
 }
-
 
 .sidenav{
   display: block;
