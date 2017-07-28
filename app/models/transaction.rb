@@ -27,7 +27,7 @@ class Transaction
       end
     end
 
-    return self.or({return_date: nil},{:return_date.gt => date},{status: true})
+    return self.or({return_date: nil},{:return_date.gt => date, status: false})
 
   end
 
@@ -47,7 +47,16 @@ class Transaction
   end
 
   def not_ready?
-    return self.status == 'Processing'
+    buffer = self.item.buffer_period.to_i
+    date = DateTime.now.to_date
+    while buffer > 0
+      date = date - 1.day
+      if (date.wday != 6 && date.wday % 7 != 0)
+        buffer -=1
+      end
+    end
+    
+    return(!self.status) && (self.return_date != nil || self.return_date > date)
   end
 
   def sub_buffer(date,buffer)

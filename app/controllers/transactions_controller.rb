@@ -140,7 +140,7 @@ class TransactionsController < ApplicationController
   private
     def transaction_params
       params.require(:transaction).permit(:student_id, :item_id, :start_date,
-                                              :end_date, :return_date, :email)
+                                      :end_date, :return_date, :email,:status)
     end
 
     def returns_only(transactions)

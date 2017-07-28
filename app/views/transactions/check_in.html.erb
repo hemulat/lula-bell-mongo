@@ -11,6 +11,13 @@
       <%= f.input :return_date, label: "Item Returned On", as: :date,
                                 input_html: {min: Date.today},
                                 html5: true  %>
+
+      <% if @transaction.not_ready?%>
+
+        <%= f.input :status, as: :boolean,label: "Is item ready since its return?(Check if yes)"%>
+        <%= "If you don't check this, the item will be ready on " +
+            "#{@transaction.return_date.to_date + @transaction.item.buffer_period }"%><br>
+      <% end %>
       <%= f.submit "Check In", class: "btn btn-success" %>
   <% end %>
 </div>
