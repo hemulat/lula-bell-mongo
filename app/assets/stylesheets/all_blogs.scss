@@ -1,0 +1,43 @@
+.blogs-container {
+
+  max-width: 90%;
+  margin: auto;
+
+  .blogs-wrapper {
+    margin-top: 0;
+    height: auto;
+  }
+
+  .blog {
+    border-top: 1px solid #f0f0f0;
+    clear: both;
+    position: relative;
+    overflow: auto;
+  }
+
+  .blog-image {
+    float: left;
+  }
+
+  .blog-info {
+    float: left;
+    padding: 5px;
+    margin-top: 0;
+  }
+
+  .blog-title p {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .blog-content p {
+    text-align: left;
+    text-overflow: ellipsis;
+  }
+
+  .blog-link {
+    position: absolute;
+    right: 5%;
+    bottom: 2%;
+  }
+}
