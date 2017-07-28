@@ -21,11 +21,6 @@ body{
   overflow-x: hidden;
 }
 
-body::after{
-  content:'';
-  display:block;
-  height:80px;
- }
 
 footer{
   padding: 15px;
