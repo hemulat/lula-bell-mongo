@@ -44,6 +44,8 @@ class ItemsController < ApplicationController
     if !admin_signed_in?
       @features.delete("rentable")
       @features.delete("reservable")
+      @features.delete("maximum_reservation_days")
+      @features.delete("buffer_period")
     end
     @categories = get_sub(Item)
   end
