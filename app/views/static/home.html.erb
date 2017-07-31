@@ -13,6 +13,7 @@
         <ol class="carousel-indicators">
           <li data-target="#carouselSlides" data-slide-to="0" class="active"></li>
           <li data-target="#carouselSlides" data-slide-to="1"></li>
+          <li data-target="#carouselSlides" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
           <div class="item active">
@@ -26,9 +27,7 @@
           </div>
           <div class="item">
             <div class="slide2" ></div>
-
               <%= image_tag("desk.jpg", class: 'picSlide2') %>
-
               <div class="carousel-caption">
                 <h1>Community</h1>
                 <p> Cooking Lessons, Financial Literacy classes</p>
@@ -37,9 +36,7 @@
             </div>
             <div class="item">
               <div class="slide3" ></div>
-
-                <%= image_tag("desk.jpg", class: 'picSlide2') %>
-
+                <%= image_tag("food.jpg", class: 'picSlide3') %>
                 <div class="carousel-caption">
                   <h1>Food Resources</h1>
                   <p> Peruse the current food selections we have available at Lula Bell’s!</p>
@@ -63,12 +60,12 @@
   <div  id="cart-container">
   <div class="row" id="mission-community">
       <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
-      <h4><a href="#col1Content" data-toggle="collapse">Mission Statement</a></h4>
-        <div id="col1Content" class="collapse in"> Lula Bell’s is a resource center for students and serves as a tangible example of the college’s commitment to provide the full Davidson experience for all students. The center offers a variety of resources including food, professional clothing, winter clothing, textbooks and personal hygiene items. Programming in the space focuses on life skills for all students with topics ranging from financial literacy to systemic social issues. Lula Bell’s is designed to feel like a home where everyone is welcome.</div>
+      <h4>Mission Statement</h4>
+        <div id="col1Content"> Lula Bell’s is a resource center for students and serves as a tangible example of the college’s commitment to provide the full Davidson experience for all students. The center offers a variety of resources including food, professional clothing, winter clothing, textbooks and personal hygiene items. Programming in the space focuses on life skills for all students with topics ranging from financial literacy to systemic social issues. Lula Bell’s is designed to feel like a home where everyone is welcome.</div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <h4><a href="#col2Content" data-toggle="collapse">Community Building</a></h4>
-        <div id="col2Content" class="collapse in">
+          <h4>Community Building</h4>
+        <div id="col2Content">
             <%= image_tag("community.png", class: 'community')%>
             <p>
               Duis autem vel eum iriure dolor in hendrerit in vulputate velit

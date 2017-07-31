@@ -61,11 +61,9 @@
   position: absolute;
   cursor: pointer;
   z-index: 1;
-  overflow: hidden;
+  left: -500px;
+  padding-top: 10%;
 
-}
-#cart-container{
-  overflow: hidden;
 }
 
 #psaDisplay {
