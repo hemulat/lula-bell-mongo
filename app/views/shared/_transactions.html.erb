@@ -7,7 +7,7 @@
       <th>Item Name</th>
       <th>Pick-up Date</th>
       <th>Due Date</th>
-      <th>Rental Returned On:</th>
+      <th>Returned Date</th>
       <th>Actions</th>
     </tr>
     <% unless @transactions.nil? || @transactions.size == 0 %>
@@ -32,7 +32,7 @@
           <% else %>
             <td><%= transaction.return_date.strftime("%a, %B %d, %Y") %></td>
           <% end %>
-          <td class="actions", style="text-align: center">
+          <td class="actions">
             <% if transaction.return_date.nil? %>
             <%= link_to "Check in", direct_checkin_path(transaction),
                 class: "btn btn-info" %>
@@ -48,7 +48,7 @@
         <% else %>
           <td>UNAVAILABLE</td>
           <td>NON-RETURNABLE</td>
-          <td class="actions", style="text-align: center">
+          <td class="actions">
             <%= link_to "Check In", "#", class: "btn btn-link disabled" %>
             <%= link_to "Delete", transaction_path(transaction),
                                   method: :delete,
