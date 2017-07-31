@@ -19,12 +19,14 @@
 
   .blog-image {
     float: left;
+    max-width: 30%;
   }
 
   .blog-info {
     float: left;
     padding: 5px;
     margin-top: 0;
+    max-width: 70%;
   }
 
   .blog-title p {

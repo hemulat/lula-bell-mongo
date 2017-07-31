@@ -3,7 +3,7 @@ class BlogsController < ApplicationController
   before_action :authorize_admin, except: :index
 
     def index
-      @blogs=Blog.all
+      @blogs = Blog.order_by(:created_at => 'desc')
     end
 
     def admin_blogs
@@ -32,14 +32,14 @@ class BlogsController < ApplicationController
         @blog = Blog.find(params[:id])
 
         if @blog.update(blog_params)
-          redirect_to blogs_path
+          redirect_to admin_blogs_path
         end
     end
 
     def destroy
       @blog = Blog.find(params[:id])
       @blog.destroy
-      redirect_to blogs_path, notice: "#{@blog.title} has been deleted!" and return
+      redirect_to admin_blogs_path, notice: "#{@blog.title} has been deleted!" and return
     end
 
     private
