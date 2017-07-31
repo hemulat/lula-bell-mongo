@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     '''
     buffer = (item.buffer_period.to_i)
     date_range = ((start_date.to_date)..(add_buffer(end_date, buffer)))
-    transactions = item.transactions.where(qty_id: qty_id,return_date: nil)
+    transactions = item.transactions.not_ready(buffer).where(qty_id: qty_id)
     reservations = item.reservations.where(qty_id: qty_id)
 
     transactions.each do |transaction|
@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
     item = reserve.item
     buffer = (item.buffer_period.to_i)
     date_range = ((start_date.to_date)..(add_buffer(end_date, buffer)))
-    transactions = item.transactions.where(return_date: nil)
+    transactions = item.transactions.not_ready(buffer)
     reservations = item.reservations.where(:_id.ne => reserve._id)
 
     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
   def add_buffer(date,buffer)
     while buffer > 0
       date = date + 1.day
-      if (date.wday==6 || date.wday % 7 == 0)
+      if (date.wday != 6 && date.wday % 7 != 0)
         buffer -=1
       end
     end

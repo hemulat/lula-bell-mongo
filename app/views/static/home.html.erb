@@ -16,8 +16,8 @@
         </ol>
         <div class="carousel-inner">
           <div class="item active">
-            <%= image_tag("suit.jpg", class: 'picSlide1')%>
             <div class="slide1"></div>
+              <%= image_tag("suit.jpg", class: 'picSlide1')%>
               <div class="carousel-caption">
                 <h1>Welcome to Lula Bell's</h1>
                 <p> Rent Suits, Checkout Textbooks, and more</p>
@@ -35,6 +35,17 @@
                 <a href="#" class = "btn btn-default btn-lg" role="button">See Recent Activity</a>
               </div>
             </div>
+            <div class="item">
+              <div class="slide3" ></div>
+
+                <%= image_tag("desk.jpg", class: 'picSlide2') %>
+
+                <div class="carousel-caption">
+                  <h1>Food Resources</h1>
+                  <p> Peruse the current food selections we have available at Lula Bell’s!</p>
+                  <a href="/items/see/Food" class = "btn btn-default btn-lg" role="button">See Available Food</a>
+                </div>
+              </div>
           </div>
           <a class="carousel-control left" href="#carouselSlides" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left"> </span>
@@ -49,15 +60,11 @@
 
 <div class="my-fluid-container">
   <%= image_tag("cart.png", id: 'cart')%>
-
   <div  id="cart-container">
   <div class="row" id="mission-community">
       <div class = "col-lg-6 col-md-6  col-sm-6 col-xs-12">
       <h4><a href="#col1Content" data-toggle="collapse">Mission Statement</a></h4>
-        <div id="col1Content" class="collapse in"> Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Aenean fringilla at libero at finibus a
-          pretium justo nulla sit amet nunc. Vestibulum finibus, lacus at gravida
-          condimentum, tellus mauris imperdiet orci.</div>
+        <div id="col1Content" class="collapse in"> Lula Bell’s is a resource center for students and serves as a tangible example of the college’s commitment to provide the full Davidson experience for all students. The center offers a variety of resources including food, professional clothing, winter clothing, textbooks and personal hygiene items. Programming in the space focuses on life skills for all students with topics ranging from financial literacy to systemic social issues. Lula Bell’s is designed to feel like a home where everyone is welcome.</div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           <h4><a href="#col2Content" data-toggle="collapse">Community Building</a></h4>

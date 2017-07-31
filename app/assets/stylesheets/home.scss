@@ -58,12 +58,10 @@
 }
 
 #cart {
-  padding-top: 160px;
-  padding-bottom: 120px;
   position: absolute;
   cursor: pointer;
   z-index: 1;
-  left: -300px;
+  overflow: hidden;
 }
 
 #psaDisplay {

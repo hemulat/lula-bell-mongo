@@ -19,6 +19,9 @@
 
 @media screen and (min-width: 750px) {
     .sidenav{
-      display: block;
+      display: block !important;
+    }
+    #side-bar-cover{
+      display: none !important;
     }
 }
