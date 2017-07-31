@@ -75,11 +75,11 @@ class TransactionsController < ApplicationController
   end
 
   def student
-    #just form for Student id (just input for student id)
+    @transaction = Transaction.new
   end
 
   def student_items
-    std_id = params[:input]
+    std_id = params[:transaction][:student_id]
     redirect_to student_activity_path(std_id)
   end
 
