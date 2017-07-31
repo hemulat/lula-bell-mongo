@@ -16,24 +16,66 @@ body{
   min-height:100%;
   padding:0;
   margin:0;
-  position:relative;
+  display: flex;
+  flex-direction: column;
   background-color: #f0f0f0;
   overflow-x: hidden;
 }
 
+.main-body-content{
+  flex: 1 0 auto;
+}
 
 footer{
   padding: 15px;
   background-color: #F8F8F8;
-  position:absolute;
   bottom:0;
   width:100%;
-  z-index: 1;
+  z-index: 3;
 }
 
 #mainNav{
-    margin: 0;
+    margin-right: 0;
+    margin-top: 0px;
 }
+
 .navbar {
-  z-index: 1;
+  z-index: 3;
+}
+
+.navbar-brand{
+  color: #3498DB;
+}
+
+.Blogs-PSA {
+  overflow: scroll;
+}
+
+.blogsDisplay {
+  width: 50%;
+  border-right: 1px solid black;
+  display: inline;
+  float: left;
+  padding: 0 2%;
+}
+
+.psasDisplay {
+  width: 50%;
+  float: left;
+  padding: 0 2%;
+}
+
+@media only screen and (max-width: 830px) {
+  .blogsDisplay {
+    width: 100%;
+    clear: both;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding-bottom: 3%;
+  }
+
+  .psasDisplay {
+    width: 100%;
+    clear: both;
+  }
 }

@@ -16,8 +16,8 @@
           <p><%= @item.name %></p>
         </div>
         <div class="quantity">
-          <p>Quantity: <%= select_tag :qty,
-                            options_for_select(1..@item._quantity.size, params[:qty]),
+          <p>Quantity: <%= number_field_tag :qty, params[:qty] || 1, min: 1,
+                            max: @item._quantity.size,
                             :required => true  %></p>
         </div>
         <div class="start-date">

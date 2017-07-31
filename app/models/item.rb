@@ -31,6 +31,7 @@ class Item
       errors.add(:reservable, "items must also be rentable")
       return false
     end
+    return true
   end
 
   def options
@@ -125,7 +126,7 @@ class Clothing < Item
 
   def options
     {type: ['Winter', "Formal", "Professional", "Shoes","Other"],
-     fit: ["Men", "Women", "Junior", "UniSex", "Big and Tall", "Plus"]}
+     fit: ["Men", "Women", "Junior", "UniSex", "Big and Tall", "Plus", "N/A"]}
   end
 
   def self.shorthand
