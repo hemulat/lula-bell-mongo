@@ -80,7 +80,7 @@ class TransactionsController < ApplicationController
   end
 
   def student_items
-    std_id = params.require(:transaction)[:student_id]
+    std_id = params[:transaction][:student_id]
     redirect_to student_activity_path(std_id)
   end
 
