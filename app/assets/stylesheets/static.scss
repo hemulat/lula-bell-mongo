@@ -67,7 +67,8 @@ footer{
 
 @media only screen and (max-width: 830px) {
   .blogsDisplay {
-    width: 100%;
+    width: 90%;
+    margin: 0 5%;
     clear: both;
     border-right: none;
     border-bottom: 1px solid black;
@@ -75,7 +76,8 @@ footer{
   }
 
   .psasDisplay {
-    width: 100%;
+    width: 90%;
+    margin: 0 5%;
     clear: both;
   }
 }
