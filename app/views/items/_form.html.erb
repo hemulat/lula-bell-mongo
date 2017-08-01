@@ -21,11 +21,16 @@
                       label: capitalize(feature) + explanation(@item,feature),
                       required: details[1], as: details[2], html5: true,
                       input_html: {onclick: 'toggle_rentable()'} %>
-          <% elsif %>
+          <% elsif feature == 'reservable'%>
             <%= form.input feature,
                       label: capitalize(feature) + explanation(@item,feature),
                       required: details[1], as: details[2], html5: true,
                       input_html: {onclick: 'toggle_reservable()'} %>
+          <% elsif details[2] == 'integer' %>
+          <%= form.input feature,
+                    label: capitalize(feature) + explanation(@item,feature),
+                    required: details[1], as: details[2], html5: true,
+                    input_html: {min:0} %>
           <% else %>
             <%= form.input feature,
                       label: capitalize(feature) + explanation(@item,feature),
