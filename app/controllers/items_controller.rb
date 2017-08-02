@@ -7,12 +7,7 @@ class ItemsController < ApplicationController
   #     logger.tagged("A Tag") {logger.info "the info to output"}
 
   def index
-    if admin_signed_in?
-      @items = Item.all.paginate(page: params[:page])
-    else
-      @items = Item.available.paginate(page: params[:page])
-    end
-    gon.items = get_links(@items)
+    @items = Item.all.paginate(page: params[:page])
     @categories = get_sub(Item)
   end
 
@@ -30,7 +25,7 @@ class ItemsController < ApplicationController
     if query == nil
       redirect_to root_path
     else
-      @items = get_search_results(query).paginate(page: params[:page])
+      @items = get_search_results(query).all.paginate(page: params[:page])
       @categories = get_sub(Item)
     end
   end
@@ -38,6 +33,7 @@ class ItemsController < ApplicationController
   def transactions
     @item = Item.find(params[:id])
     @transactions = @item.transactions.desc(:updated_at)
+    @reserves = @item.reservations
   end
 
   def show
@@ -48,18 +44,14 @@ class ItemsController < ApplicationController
     if !admin_signed_in?
       @features.delete("rentable")
       @features.delete("reservable")
+      @features.delete("maximum_reservation_days")
+      @features.delete("buffer_period")
     end
     @categories = get_sub(Item)
   end
 
   def category
-    if admin_signed_in?
-      @items = get_class_name(params[:class]).paginate(page: params[:page])
-      gon.items = get_links(@items)
-    else
-      @items = get_class_name(params[:class]).available.paginate(page: params[:page])
-      gon.items = get_links(@items)
-    end
+    @items = get_class_name(params[:class]).all.paginate(page: params[:page])
     @categories = get_sub(Item)
   end
 
@@ -131,6 +123,7 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find(params[:id])
     @item.destroy
+    flash[:notice] = "Item Deleted successfully!"
     redirect_to items_path
   end
 
@@ -143,7 +136,6 @@ class ItemsController < ApplicationController
       if sub_classes == []
         return {}
       end
-
       sub_class_hierarchy = {}
       sub_classes.each {|i| sub_class_hierarchy[i.name] = get_sub(i)}
       return sub_class_hierarchy

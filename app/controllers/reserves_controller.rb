@@ -8,20 +8,16 @@ class ReservesController < ApplicationController
   def check_out
     reservation = Reserve.find(params[:reserve_id])
     @item = reservation.item
-    next_id = pick_different_from(@item,reservation.start_date,reservation.end_date,reservation.qty_id.to_i)
+    next_id = pick_different_from(@item,reservation.start_date,
+                                  reservation.end_date,reservation.qty_id.to_i)
     final_id = reservation.item._quantity.include?(reservation.qty_id.to_i)? reservation.qty_id.to_i : next_id
     if final_id && reservation.item._quantity.include?(final_id)
       @item._quantity.delete(final_id)
       @item.save
 
-      @transaction = Transaction.new
-      @transaction.student_id = reservation.student_id
-      @transaction.email = reservation.email
-      @transaction.end_date = reservation.end_date
-      @transaction.start_date = reservation.start_date
-      @transaction.item = @item
+      @transaction = Transaction.new(reservation.attributes.slice(:student_id,
+                                :email,:end_date,:start_date,:item_id))
       @transaction.qty_id = final_id
-
       @transaction.save
       reservation.destroy
       flash[:notice] = "Item checked out successfully."
@@ -29,14 +25,7 @@ class ReservesController < ApplicationController
       flash[:alert] = "The item you are trying to checkout is already checked out.
                         Most likely not returned after a checkout."
     end
-    redirect_to reserves_path
-  end
-
-  def show
-    @reserve = Reserve.find(params[:id])
-  end
-
-  def confirm
+    redirect_back fallback_location: reserves_path
   end
 
   def new
@@ -62,7 +51,7 @@ class ReservesController < ApplicationController
     if @reserve.save
       #If save succeeds, show confirmation
       flash[:notice] = "Reservation created successfully."
-      redirect_to(:action => 'confirm')
+      redirect_to item_path(@reserve.item_id)
     else
       #If save fails, redisplay the form so user can fix problems
       render 'new'
@@ -71,26 +60,28 @@ class ReservesController < ApplicationController
 
   def edit
     @reserve = Reserve.find(params[:id])
+    @item  = @reserve.item
   end
 
   def update
     #Find a new object using form parameters
     @reserve = Reserve.find(params[:id])
+    @item  = @reserve.item
+    new_start_date = reserve_params[:start_date]
+    new_end_date = reserve_params[:end_date]
     #Update the object
-    if @reserve.update_attributes(reserve_params)
+    if (can_extend_reserve(@reserve, new_start_date, new_end_date) &&
+        @reserve.update_attributes(reserve_params))
       #If save succeeds, redirect to the show action
-      flash[:notice] = "Reserve updated successfully."
-      redirect_to(:action => 'index')
+      flash[:notice] = "Reservation updated successfully."
+      redirect_to item_transactions_path(@item)
     else
       #If save fails, redisplay the form so user can fix problems
-      flash.now[:notice] = "You need to have:
-      Dates, 9-digit Student ID, Student's email"
+      if !@reserve.errors.any?
+        flash.now[:alert] = "The time you choose is not be viable"
+      end
       render('edit') # this renews the form template
     end
-  end
-
-  def delete
-    @reserve = Reserve.find(params[:id])
   end
 
   def destroy
@@ -98,7 +89,7 @@ class ReservesController < ApplicationController
     @reserve.destroy
 
     flash[:notice] = "Reservation destroyed successfully."
-    redirect_to(:action => 'index')
+    redirect_back fallback_location: reserves_path
   end
 
   private

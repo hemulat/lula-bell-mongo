@@ -1,6 +1,6 @@
 .psa-main-page {
 
-  max-width: 800px;
+  max-width: 100%;
   margin: auto;
 
   .psas-wrapper {
@@ -11,11 +11,7 @@
 
   .psa {
     border-top: 1px solid #f0f0f0;
-    padding: 10px, 0px;
-  }
-
-  .psa div, .psa div p {
-    margin: 0px;
+    padding-top: 10px;
   }
 
   .psa-title p {
@@ -26,6 +22,7 @@
 
   .psa-time {
     float: right;
+    padding-right: 3%;
 
     p {
       font-size: 13px;

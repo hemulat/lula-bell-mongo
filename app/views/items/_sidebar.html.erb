@@ -1,12 +1,22 @@
-<div class= "sidenav">
+<div class="overlay animate-opacity" onclick="toggle_menu(false)" id="side-bar-cover"></div>
+<div class= "sidenav open-to-right">
   <h3 id="title">Items</h3>
   <%= link_to "View All", items_path, id:"category"%>
   <% @categories.each do |category, dict|%>
-    <%=link_to category.titleize, category_path(category),id: "category"%>
-    <span>
-      <% dict.each do |subcategory,subdict|%>
-        <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
-      <%end%>
-    </span>
+    <%if not_empty(category)%>
+      <%=link_to category.titleize, category_path(category),id: "category"%>
+      <span>
+        <% dict.each do |subcategory,subdict|%>
+          <% if not_empty(subcategory)%>
+            <%= link_to subcategory.titleize, category_path(subcategory), id:"subcategory"%>
+          <% end %>
+        <%end%>
+      </span>
+    <%end%>
   <% end %>
+</div>
+<div class="arrow-icon">
+  <span class="glyphicon glyphicon-menu-right" aria-hidden="true"
+        id="side-bar-menu" style="font-size: 25px;" onclick="toggle_menu(true)">
+  </span>
 </div>

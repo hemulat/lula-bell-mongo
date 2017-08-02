@@ -1,23 +1,33 @@
-
-<div class = 'category-content'id="category-content"> <!-- need this class to add left margin -->
+<div class ='category-content'id="category-content"> <!-- need this class to add left margin -->
   <% if @items.empty? %>
     <h4>Hmm, looks like there's nothing here...</h4>
   <% else %>
-    <div class="row">
+    <% if request.url.split("/")[-1].include?("search") %>
+      <h3>Search results for "<%= params[:query] %>"</h3>
+    <% else %>
+      <h3><%= request.url.split("/")[-1].split("?")[0].titleize %></h3>
+    <% end %>
+    <h2></h2>
+    <div class="row" id="container">
       <%@items.each do |item| %>
-      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-        <div class="thumbnail">
-          <a href= <%= item_path(item)%> >
-            <%= image_tag(item.image.url(:thumb), alt: item.name)%>
-            <div class="caption">
-              <%= item.name %>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <a href="<%= item_path(item) %>">
+            <div class="img-thumbnail">
+              <%= image_tag item.image.url(:thumb), class:'img-responsive' %>
+              <div class="img-caption">
+                <% if item.name.size > 14 %>
+                  <%= item.name[0..11]+"..." %>
+                <% else %>
+                  <%= item.name %>
+                <% end %>
+              </div>
             </div>
           </a>
         </div>
-      </div>
       <% end %>
     </div>
   <% end %>
+  <div id="paginate-width">
     <%= will_paginate @items %>
-
   </div>
+</div>

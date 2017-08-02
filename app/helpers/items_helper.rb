@@ -2,7 +2,27 @@ module ItemsHelper
 
   def capitalize(str)
     str = str.to_s
-    str[0].capitalize + str[1..-1]
+    str_list = str.split("_")
+    final = ""
+    str_list.each {|s| final += s[0].capitalize + s[1..-1]+" "}
+    return final
+  end
+
+  def explanation(item,field)
+    exp = item.explanations[field.to_sym]
+    if exp.nil?
+      return ""
+    else
+      return " (#{exp})"
+    end
+  end
+
+  def not_empty(str)
+    if (Item.descendants.map { |i| i.name }).include? str
+      item_count = (str.constantize).all.count
+      return item_count != 0
+    end
+    return false
   end
 
   def process_types(feature_type,item)

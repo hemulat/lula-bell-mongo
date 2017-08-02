@@ -2,7 +2,7 @@
 <h1>Administrative Side of Web</h1>
   <div id="administration">
     <div tag: checking>
-    <p><%= link_to("Check In", {:controller => 'transactions', :action => 'notice'}) %></p>
+    <p><%= link_to("Check In", transactions_path) %></p>
     <p><%= link_to("Check Out", items_path )%> </p>
     <p><%= link_to 'Multiple Checkout', multiple_check_out_path %>
     <p><%= link_to 'Student Checkin', student_transactions_path %>
@@ -38,7 +38,7 @@
       <%= link_to 'New Blog', new_blog_path %>
     </p>
     <p>
-      <%= link_to "View Blogs", blogs_path%>
+      <%= link_to "View Blogs", admin_blogs_path%>
     </p>
   </div>
 

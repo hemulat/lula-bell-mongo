@@ -1,33 +1,8 @@
-
-<h1>Blog Posts</h1>
-
-
-<table class="table table-bordered table-striped" id="form">
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Image</th>
-      <th>URL</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-    </tr>
-
-    <% @blogs.reverse.each do |blog| %>
-        <tr>
-          <td><%= blog.title %></td>
-          <td><%= blog.content %></td>
-          <td><%= image_tag blog.image.url(:thumb)%></td>
-          <td><%= blog.url%></td>
-          <td>
-            <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-default" %>
-          </td>
-          <td>
-            <%= link_to "Delete", blog, method: :delete,
-            data: { confirm: "Are you sure you wish to delete #{blog.title}?" },
-             class: "btn btn-danger" %>
-          </td>
-        </tr>
-
-    <% end %>
-
-</table>
+<h3 style="padding: 1%; margin-left: 5%">All Blogs</h3>
+<% if @blogs.empty? %>
+  <h3> There are currently no blogs </h3>
+<% else %>
+  <div class="blogs-container">
+    <%= render 'blog', locals: { blogs: @blogs } %>
+  </div>
+<% end %>

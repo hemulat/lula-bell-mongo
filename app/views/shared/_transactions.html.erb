@@ -3,22 +3,30 @@
   <table class="listing"  >
     <tr class="header">
       <th>Student ID</th>
+      <th>Student Email</th>
       <th>Item Name</th>
-      <th>Qty ID</th>
       <th>Pick-up Date</th>
       <th>Due Date</th>
       <th>Rental Returned On:</th>
       <th>Actions</th>
     </tr>
-    <% unless @transactions.size == 0 %>
+    <% unless @transactions.nil? || @transactions.size == 0 %>
       <% @transactions.each do |transaction| %>
       <tr>
         <td><%= transaction.student_id %></td>
+        <% if transaction.item.rentable%>
+          <% if transaction.email.blank? %>
+            <td>UNAVAILABLE</td>
+          <% else %>
+            <td><%= transaction.email %></td>
+          <% end %>
+        <% else %>
+          <td>NON-RETURNABLE</td>
+        <% end %>
         <td><%= link_to transaction.item.name, item_path(transaction.item) %></td>
-        <td><%= transaction.qty_id %></td>
         <td><%= transaction.start_date.strftime("%a, %B %d, %Y") %></td>
         <% if transaction.item.rentable %>
-            <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
+          <td><%= transaction.end_date.strftime("%a, %B %d, %Y") %></td>
           <% if transaction.return_date == nil %>
             <td style='color:red;'>Item not returned</td>
           <% else %>
@@ -26,29 +34,16 @@
           <% end %>
           <td class="actions", style="text-align: center">
             <% if transaction.return_date.nil? %>
-              <% if (yield(:destination) == 'notice')%>
-                <%= link_to "Check in", direct_checkin_path(transaction),
-                    class: "btn btn-info" %>
-              <% elsif (yield(:destination) == 'student_checkin') %>
-                <%= link_to "Check in", student_checkin_path(student_id: @std_id,id: transaction),
-                    class: "btn btn-info" %>
-              <% end %>
+            <%= link_to "Check in", direct_checkin_path(transaction),
+                class: "btn btn-info" %>
             <% else %>
               <%= link_to "Edit", check_in_transaction_path(transaction),
                   class: "btn btn-info" %>
             <% end %>
-
-            <% if (yield(:destination) == 'notice')%>
-              <%= link_to "Delete", transaction_path(transaction),
-                                  method: :delete,
-                                  data: { confirm: "Are you sure you want to delete this transaction?" },
-                                  class: "btn btn-danger" %>
-            <% elsif (yield(:destination) == 'student_checkin') %>
-              <%= link_to "Delete", student_destroy_path(student_id: @std_id,id: transaction),
-                                  method: :delete,
-                                  data: { confirm: "Are you sure you want to delete this transaction?" },
-                                  class: "btn btn-danger" %>
-            <% end %>
+            <%= link_to "Delete", transaction_path(transaction),
+                                method: :delete,
+                                data: { confirm: "Are you sure you want to delete this transaction?" },
+                                class: "btn btn-danger" %>
           </td>
         <% else %>
           <td>UNAVAILABLE</td>

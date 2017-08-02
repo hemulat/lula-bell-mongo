@@ -1,25 +1,21 @@
 Rails.application.routes.draw do
   root 'static#home'
   get 'reserve/:item_id', to: 'reserves#new', as: :reserve
-  get 'reserves/confirm', to: 'reserves#confirm'
   get 'reserves/check_out/:reserve_id', to: 'reserves#check_out',
                                         as: :checkout_reserve
-  resources :reserves, except: [:new] do
-    member do
-      get :delete
-    end
-  end
+  resources :reserves, except: [:new, :show]
 
   get 'check_in/:id', to: 'transactions#direct_checkin', as: :direct_checkin
-  get 'check_in/:student_id/:id', to: 'transactions#student_checkin',
-                                  as: :student_checkin
+  get '/transactions/student/:id', to: 'transactions#student_transactions',
+                                  as: :student_activity
+  get '/transactions/multiple_check_out', to: 'transactions#multiple_check_out',
+                                          as: :multiple_check_out
 
-  delete 'destroy/:student_id/:id', to: 'transactions#student_destroy',
-                                  as: :student_destroy
   resources :transactions, except:[:show, :index, :new, :edit] do
     collection do
       get '/', to: 'transactions#notice'
       get :student
+      get :display
       post :student_items
       post :edit_multiple
       put :update_multiple
@@ -29,8 +25,6 @@ Rails.application.routes.draw do
       get :check_out
     end
   end
-  get '/transactions/multiple_check_out', to: 'transactions#multiple_check_out',
-                                          as: :multiple_check_out
 
   devise_for :admins, skip: [:sessions],
                       :path_prefix => 'd',
@@ -42,6 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :blogs
+  get '/admin_blogs', to: 'blogs#admin_blogs', as: :admin_blogs
 
   get '/items/new', to: 'items#select', as: :new_item
   post '/items/new', to: 'items#select'

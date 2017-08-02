@@ -2,15 +2,24 @@
 
   <div id="form">
     <h2>Check Out</h2>
-    <%= render 'shared/error_msg', item: @transaction %>
     <%= simple_form_for @transaction, :url => transactions_path, :method => 'post' do |f| %>
 
         <%= f.input :student_id, label: "Student ID", required: true, as: :integer%>
-        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
-        <%= f.input :start_date, label: "Start Date",as: "date", html5: true  %>
         <% if @item.rentable%>
-          <%= f.input :end_date, label: "End Date", required: true, as: "date",  html5: true  %>
+          <%= f.input :email, label: "Student Email" %>
         <% end %>
+        <%= f.hidden_field :item_id, :value => "#{@item.id}", :readonly => true%>
+        <%= f.input :start_date, label: "Start Date",as: "date",
+                          input_html: {min: Date.today},
+                          html5: true  %>
+        <% if @item.rentable%>
+          <%= f.input :end_date, label: "End Date", required: true, as: "date",
+                        input_html: {min: Date.today},
+                        html5: true  %>
+        <% end %>
+        <%= label :quantity,"Quantity" %><br>
+        <%= number_field_tag :quantity, 1 ,min: 1, max: @item._quantity.size%>
+        <br><br>
         <%= f.submit "Check Out", class: "btn btn-success" %>
     <% end %>
   </div>

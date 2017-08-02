@@ -5,29 +5,44 @@
   <% process_types(@item_details, @item).each do |feature,details| %>
       <% if details[0]!=nil%>
         <% if details[2] == "check_boxes"%>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= capitalize(feature) %>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <%= form.input feature, label: false,
-                      collection: details[0],required: details[1],
-                      as: :check_boxes, class: "dropdown-item"%>
-            </div>
-          </div>
+          <%= form.input feature, label: capitalize(feature),
+                  collection: details[0],required: details[1],
+                  as: :check_boxes%>
           <br>
         <%else%>
-          <%= form.input feature, label: capitalize(feature),
+          <%= form.input feature,
+                  label: capitalize(feature) + explanation(@item,feature),
                   collection: details[0],required: details[1], html5: true,
                   input_html: { :class => 'dropdown' }%>
         <% end %>
       <% else %>
-      <%= form.input feature, label: capitalize(feature),
-                required: details[1], as: details[2], html5: true %>
+          <% if feature == 'rentable'%>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true,
+                      input_html: {onclick: 'toggle_rentable()'} %>
+          <% elsif feature == 'reservable'%>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true,
+                      input_html: {onclick: 'toggle_reservable()'} %>
+          <% elsif details[2] == 'integer' %>
+          <%= form.input feature,
+                    label: capitalize(feature) + explanation(@item,feature),
+                    required: details[1], as: details[2], html5: true,
+                    input_html: {min:0} %>
+          <% else %>
+            <%= form.input feature,
+                      label: capitalize(feature) + explanation(@item,feature),
+                      required: details[1], as: details[2], html5: true %>
+          <% end %>
       <% end%>
   <% end %>
   <%= form.input :image, as: :file, required: false%>
   <%= hidden_field_tag :class, "#{@item.class.name}"%>
   <%= form.submit "Save #{@item.class.name.titleize}", class: "btn btn-success" %>
+  <script>
+  initial_setup();
+  </script>
 <% end %>
 </div>

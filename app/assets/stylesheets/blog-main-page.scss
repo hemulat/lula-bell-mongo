@@ -1,0 +1,47 @@
+.blog-main-page {
+
+  max-width: 100%;
+  margin: auto;
+
+  .blogs-wrapper {
+    max-height: 300px;
+    margin-top: 0;
+    height: auto;
+    overflow-y: scroll;
+  }
+
+  .blog {
+    border-top: 1px solid #f0f0f0;
+    clear: both;
+    position: relative;
+    overflow: auto;
+  }
+
+  .blog-image {
+    float: left;
+    max-width: 30%;
+  }
+
+  .blog-info {
+    overflow: hidden;
+    padding: 5px;
+    margin-top: 0;
+    max-width: 70%;
+  }
+
+  .blog-title p {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .blog-content p {
+    text-align: left;
+    text-overflow: ellipsis;
+  }
+
+  .blog-link {
+    position: absolute;
+    right: 5%;
+    bottom: 2%;
+  }
+}
