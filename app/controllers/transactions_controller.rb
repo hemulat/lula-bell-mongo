@@ -45,7 +45,7 @@ class TransactionsController < ApplicationController
     if @transaction.update_attributes(transaction_params)
       #If save succeeds, redirect to the show action
       flash[:notice] = "Transaction updated successfully."
-      redirect_to(:action => 'notice')
+      redirect_to static_admin_home_path
     else
       #If save fails, redisplay the form so user can fix problems
       render 'check_in'
@@ -187,7 +187,9 @@ class TransactionsController < ApplicationController
       end
 
       transaction.return_date = DateTime.now
-
+      if item.buffer_period == 0
+        transaction.status = true
+      end
       return transaction.save && item.save
     end
 
