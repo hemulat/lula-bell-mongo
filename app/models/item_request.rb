@@ -9,6 +9,6 @@ class ItemRequest
   validates_presence_of :description
   validates_presence_of :title
 
-  validates_length_of :description, minimum: 50
+  validates_length_of :description, minimum: 25
   validates_length_of :studentID, minimum:9, maximum:9, message: "must be exactly 9 digits"
 end
