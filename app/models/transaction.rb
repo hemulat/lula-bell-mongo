@@ -33,11 +33,11 @@ class Transaction
 
   def check_end_date
     max_r = self.item.maximum_reservation_days
-    if self.end_date > self.start_date + max_r.days
+    if self.end_date!=nil && self.end_date > self.start_date + max_r.days
       errors.add(:end_date,
                   "can't be more than #{max_r} days from the given Start Date")
       return false
-    elsif self.end_date < self.start_date
+    elsif self.end_date!=nil && self.end_date < self.start_date
       errors.add(:end_date,
                   "can't be before the given start date")
       return false
@@ -55,7 +55,7 @@ class Transaction
         buffer -=1
       end
     end
-    
+
     return(!self.status) && (self.return_date != nil || self.return_date > date)
   end
 

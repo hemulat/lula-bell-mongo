@@ -1,5 +1,7 @@
-<h1>Items#edit</h1>
+<div id="form">
+<h1>Editing <%=@item.name%></h1>
 
 <% provide :form_action, :update %>
 <% provide :form_method, :patch%>
 <%= render 'form' %>
+</div>
