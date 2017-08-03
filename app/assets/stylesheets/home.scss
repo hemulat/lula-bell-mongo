@@ -4,18 +4,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-#carousel{
-  text-align: center;
-  padding: 0px;
-  margin: 0px;
-  background-size: cover;
-}
 
 .carousel,.item,.active{height:100%;}
 .carousel-inner{height:100%;}
 
 #slideJumbotron{
-  width: 100%;
+  min-width: 100%;
   padding: 0px;
   margin: 0px;
 
@@ -33,6 +27,9 @@
   margin: 0px;
 }
 
+#textbook-caption{
+  align-items: center;
+}
 .full-width-div {
     position: absolute;
     width: 100%;

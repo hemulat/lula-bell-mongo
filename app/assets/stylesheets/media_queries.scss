@@ -22,9 +22,26 @@
     display: none;
   }
 
+
+}
+//phone
+@media screen and (max-width: 570px) {
+    .carousel-inner{
+
+    #Slide-title{
+      font-size: 150%;
+    }
+
+    #Slide-caption{
+        font-size: 100%;
+    }
+    #textbook-caption{
+      padding: 0;
+    }
+  }
 }
 
-
+//computer
 @media screen and (min-width: 750px) {
     .sidenav{
       display: block !important;
@@ -32,4 +49,20 @@
     #side-bar-cover{
       display: none !important;
     }
+    .carousel-inner{
+
+    #Slide-title{
+      font-size: 500%;
+    }
+
+    #Slide-caption{
+        font-size: 200%;
+    }
+
+    #Books-title{
+      font-size: 200%;
+    }
+
+
+}
 }
