@@ -15,13 +15,13 @@
         <% @features.each do |feature| %>
           <% if feature == "quantity" %>
             <p> <%= "#{capitalize(feature)} - " %>
-              <%= @item._quantity.size || "Undefined" %></p>
+              <%= @item._quantity.size %></p>
           <% else %>
             <p> <%= "#{capitalize(feature)} - " %>
               <% if @item.attributes[feature].is_a?(Array) && !@item.attributes[feature].empty? %>
                 <%= @item.attributes[feature].join(", ") %>
               <% else %>
-                <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
+                <%= @item.attributes[feature] || "Undefined"%></p>
               <% end %>
           <% end %>
         <% end %>
