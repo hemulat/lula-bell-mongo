@@ -75,7 +75,8 @@ class TransactionsController < ApplicationController
   end
 
   def student
-    @transaction = Transaction.new
+    @transaction=Transaction.new()
+    #just form for Student id (just input for student id)
   end
 
   def student_items
