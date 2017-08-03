@@ -38,14 +38,10 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    @features = get_features(@item.class)
-    @features.delete("name")
-    @features.delete("description")
     if !admin_signed_in?
-      @features.delete("rentable")
-      @features.delete("reservable")
-      @features.delete("maximum_reservation_days")
-      @features.delete("buffer_period")
+      @features = @item.features_students
+    else
+      @features = @item.features_admin
     end
     @categories = get_sub(Item)
   end
