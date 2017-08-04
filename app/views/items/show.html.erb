@@ -15,13 +15,13 @@
         <% @features.each do |feature| %>
           <% if feature == "quantity" %>
             <p> <%= "#{capitalize(feature)} - " %>
-              <%= @item._quantity.size || "Undefined" %></p>
+              <%= @item._quantity.size %></p>
           <% else %>
             <p> <%= "#{capitalize(feature)} - " %>
               <% if @item.attributes[feature].is_a?(Array) && !@item.attributes[feature].empty? %>
                 <%= @item.attributes[feature].join(", ") %>
               <% else %>
-                <%= @item.attributes[feature]==nil ? "Undefined" : @item.attributes[feature] %></p>
+                <%= @item.attributes[feature] || "Undefined"%></p>
               <% end %>
           <% end %>
         <% end %>
@@ -37,10 +37,10 @@
       <% if admin_signed_in? %>
           <% if @item._quantity.empty?%>
             <%= link_to "Check Out", check_out_transaction_path(@item.id),
-                                              class: 'btn disabled btn-info'%>
+                                              class: 'btn disabled btn-primary'%>
           <% else %>
             <%= link_to "Check Out", check_out_transaction_path(@item.id),
-                                              class: 'btn btn-info'%>
+                                              class: 'btn btn-primary'%>
           <% end%>
           <%=link_to "Edit Item", edit_item_path(@item), class: "btn btn-info"%>
           <%= link_to "Recent Activity", item_transactions_path(@item), class: "btn btn-warning" %>

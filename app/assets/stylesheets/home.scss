@@ -4,23 +4,25 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-#carousel{
-  text-align: center;
-  padding: 0px;
-  margin: 0px;
-  background-size: cover;
-}
 
 .carousel,.item,.active{height:100%;}
 .carousel-inner{height:100%;}
 
 #slideJumbotron{
-  width: 100%;
+  min-width: 100%;
   padding: 0px;
   margin: 0px;
 
 }
+#col1Content{
+  text-align: center;
+  padding: 5px;
+}
 
+#wildcat_sync{
+  display: inline-block;
+  vertical-align: bottom;
+}
 //This affects items view and homepage display
 .row{
   text-align: center;
@@ -33,6 +35,16 @@
   margin: 0px;
 }
 
+#textbook-caption{
+  padding: 0px;
+}
+
+#Books-title{
+  font-size: 400%;
+}
+#col1content{
+  padding: 5px;
+}
 .full-width-div {
     position: absolute;
     width: 100%;
@@ -61,7 +73,9 @@
   position: absolute;
   cursor: pointer;
   z-index: 1;
-  overflow: hidden;
+  left: -500px;
+  padding-top: 10%;
+
 }
 
 #psaDisplay {
