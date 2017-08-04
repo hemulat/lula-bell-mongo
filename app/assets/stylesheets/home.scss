@@ -14,6 +14,10 @@
   margin: 0px;
 
 }
+#col1Content{
+  text-align: center;
+  padding: 5px;
+}
 
 #wildcat_sync{
   display: inline-block;
@@ -32,10 +36,14 @@
 }
 
 #textbook-caption{
-  align-items: center;
+  padding: 0px;
+}
+
+#Books-title{
+  font-size: 400%;
 }
 #col1content{
-  padding: 5px; 
+  padding: 5px;
 }
 .full-width-div {
     position: absolute;
