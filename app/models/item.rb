@@ -64,6 +64,23 @@ class Item
     current.select {|i| !reserved.include?(i.to_i)}
   end
 
+  def features_students
+    features = self.fields.keys
+    forbidden = ['name','description','expiration','rentable','reservable',
+      'maximum_reservation_days','buffer_period']
+    features.select do |field|
+      field[0] != "_" && field.split("_")[0] != "image" && !forbidden.include?(field)
+    end
+  end
+
+  def features_admin
+    features = self.fields.keys
+    forbidden = ['name','description']
+    features.select do |field|
+      field[0] != "_" && field.split("_")[0] != "image" && !forbidden.include?(field)
+    end
+  end
+
   protected
     def buffer_days
       0

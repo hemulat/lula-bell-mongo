@@ -43,7 +43,6 @@
               <%= form_tag(search_path, method: 'get', class: "navbar-form navbar-right", role: "search", enforce_utf8: false) do %>
                 <div class="input-group">
                   <%= text_field_tag :query, params[:query], class: "search-query form-control", placeholder: "Search"%>
-                  <!--<%= submit_tag "Submit", name: nil, class: "btn btn-default" %>-->
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="submit">
                       <i class="glyphicon glyphicon-search"></i>
@@ -86,26 +85,24 @@
           <p>&copy; 2017 Lula Bell's Resource Center. All Rights Reserved.</p>
           <ul class="list-inline">
             <li>
-                <a href="#">About Us</a>
-            </li>
-            <li>
                 <a href="#">Contact Us</a>
-            </li>
-            <li>
-                <a href="#">Items</a>
             </li>
           </ul>
         </div>
-        <div class="list-inline footer-right" style="display:inline; float:right">
-          <li>
-            <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
-          </li>
+        <div class="footer-right" style="float:right">
+          <div class="list-inline footer-right" style="display:inline">
+            <li>
+              <a href="https://www.instagram.com/lula_bells_/" target="_blank"><i class="fa fa-instagram fa-3x"></i></a>
+            </li>
+            <li>
+              <a href="https://orgsync.com/162523/chapter" target="_blank" id='wildcat_sync'><%= image_tag("wildcat_logo.png", size:"36x42") %></a>
+            </li>
+          </div>
+          <p></p>
+          <a href="www.davidson.edu" target="_blank"><%= image_tag("logo.png", size:"100x23") %></a>
+        </div>
+        <div class="footer" style="clear:both">
+          <p>Created by Project PRONTO - Jose Balcazar, Andre Hidalgo, Hermon Mulat, Anubhav Roy Bhattacharya, Laurie Heyer</p>
         </div>
       </div>
     </footer>
