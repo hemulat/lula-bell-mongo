@@ -20,7 +20,7 @@ module LulaBellMongo
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
-
+    config.serve_static_assets = true
     config.logger = Logger.new(STDOUT)
     config.log_level = :warn
 
