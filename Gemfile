@@ -32,6 +32,7 @@ gem 'mongoid'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'mongoid-paperclip'
+gem 'aws-sdk', '>= 2.3'
 
 # Add bootstrap
 gem 'jquery-rails'
