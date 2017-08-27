@@ -15,9 +15,3 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
-//= stub 'home'
-//= stub 'item_filter'
-//= stub 'form'
-//= stub 'pagination'
-//= stub 'side_bar'
-//= stub 'cable'
