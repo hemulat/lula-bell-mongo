@@ -104,7 +104,7 @@
         <h3> There are currently no blogs </h3>
       <% else %>
         <div class="blog-main-page">
-          <%= render 'blog', locals: { blogs: @blogs } %>
+         <%= render 'blog', locals: { blogs: @blogs } %>
         </div>
         <%= link_to "View All", blogs_path, class: "btn btn-primary" %>
       <% end %>
