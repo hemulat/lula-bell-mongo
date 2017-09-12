@@ -19,7 +19,10 @@
 .byebug_history
 
 # Ignore public files - (usually added during file uploads)
-/public/system
+/public/system/*
 
 # Ignore gemlock file - automatically updated by bundle update
 /Gemfile.lock
+
+# Ignore server specific configs
+/config/*
