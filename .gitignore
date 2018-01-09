@@ -26,3 +26,6 @@
 
 # Ignore server specific configs
 /config/*
+
+#ignore file dumps
+/dump/*.*
