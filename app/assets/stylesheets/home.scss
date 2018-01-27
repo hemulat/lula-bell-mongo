@@ -5,8 +5,12 @@
 @import "bootstrap";
 
 
-.carousel,.item,.active{height:100%;}
-.carousel-inner{height:100%;}
+.carousel,.item,.active{
+    height:100%;
+}
+.carousel-inner{
+    height:100%;
+}
 
 #slideJumbotron{
   min-width: 100%;
@@ -37,6 +41,15 @@
 
 #textbook-caption{
   padding: 0px;
+}
+
+.overlay-coat::after {
+    content:'';
+    position:absolute;
+    width:100%; height:100%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.5);
+    opacity:1;
 }
 
 #Books-title{

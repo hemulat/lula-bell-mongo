@@ -18,16 +18,20 @@
         <div class="carousel-inner">
           <div class="item active">
             <div class="slide1"></div>
-              <%= image_tag("collaborate.jpg", class: 'picSlide1')%>
+                <div class="overlay-coat">
+                    <%= image_tag("collaborate.jpg", class: 'picSlide1')%>
+                </div>
               <div class="carousel-caption">
                 <h1 id="Slide-title">Welcome to Lula Bell's</h1>
-                <p id="Slide-caption"> Rent Suits, Checkout Textbooks, and more</p>
+                <p id="Slide-caption"> Borrow Suits, Checkout Textbooks, and more</p>
                 <a href="\items" class = "btn btn-default " role="button">View Items</a>
               </div>
           </div>
           <div class="item">
             <div class="slide2" ></div>
-              <%= image_tag("suit.jpg", class: 'picSlide2') %>
+                <div class="overlay-coat">
+                    <%= image_tag("suit.jpg", class: 'picSlide2') %>
+                </div>
               <div class="carousel-caption">
                 <h1 id="Slide-title">Professional Clothing</h1>
                 <p id="Slide-caption"> View our selection of professional attire and reserve yours today!</p>
@@ -36,9 +40,11 @@
             </div>
             <div class="item">
               <div class="slide3" ></div>
-                <%= image_tag("food.jpg", class: 'picSlide3') %>
+                <div class="overlay-coat">
+                    <%= image_tag("food.jpg", class: 'picSlide3') %>
+                </div>
                 <div class="carousel-caption">
-                  <h1 id="Slide-title">Explore our Pantry</h1>
+                  <h1 id="Slide-title">Explore our Kitchen</h1>
                   <p id="Slide-caption"> See our available food selection</p>
                   <a href="/items/see/Food" class = "btn btn-default" role="button">See Available Food</a>
                 </div>
@@ -81,10 +87,12 @@
     <div class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
         <div class="item active">
+        <div class="overlay-coat">
           <%= image_tag("books2.jpg", class: 'books')%>
+        </div>
           <div class="carousel-caption" id="textbook-caption">
             <h1 id="Books-title">
-              Textbooks available to be rented at no cost.
+              Textbooks available at no cost.
             </h1>
             <div class="input-group-btn">
               <a href="/search?query=textbook" class="btn btn-primary">See Textbook Inventory</a>
