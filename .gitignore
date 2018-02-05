@@ -27,5 +27,9 @@
 # Ignore server specific configs
 /config/*
 
+# Don't ignore routes and application configs
+!/config/application.rb
+!/config/routes.rb
+
 #ignore file dumps
 /dump/*.*
