@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get '/items/see/:class', to: 'items#category', as: :category
   get '/search', to: 'items#search', as: :search
   get '/items/:id/transactions', to: 'items#transactions', as: :item_transactions
+  get '/items/download', to: 'items#download', as: :download_items #items export
 
   get '/admins', to: 'admins#index', as: :admins
   delete '/admins/:id', to: 'admins#destroy', as: :admin
@@ -56,5 +57,10 @@ Rails.application.routes.draw do
   resources :item_requests
 
   resources :psa_posts
+
+  # export links
+  get '/reserves/download', to: 'reserves#download', as: :download_reserves
+  get '/transactions/download', to: 'transactions#download', as: :download_transactions
+  get '/augmented/download', to: 'admins#download', as: :download_augmented
 
 end

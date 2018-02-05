@@ -7,6 +7,10 @@ class TransactionsController < ApplicationController
     @transactions = returns_only(unreturned)
   end
 
+  def download
+      send_data dumpTransactions, filename: 'transactions.csv'
+  end
+
   def display
     unreturned = Transaction.where(return_date: nil).desc(:updated_at)
     returned = Transaction.where(:return_date.ne =>  nil).desc(:updated_at)
@@ -251,6 +255,27 @@ class TransactionsController < ApplicationController
         end
       end
       return true
+    end
+
+    def dumpTransactions()
+        header_names = ["Student ID","Email","Pick-up date", "Due date","Returned on","Item name", "Item SKU"]
+        field_list = ["student_id","email","start_date","end_date"]
+        all_trasactions = Transaction.all
+        CSV.generate(headers: true) do |csv|
+            csv << header_names # CSV Header
+            all_trasactions.each do |transaction|
+                csv_arr = []
+                field_list.each do |f_name|
+                    csv_arr.push(transaction[f_name])
+                end
+                rt_date = (transaction.status) ? transaction.return_date : "Not returned Yet!"
+                csv_arr.push(rt_date)
+                item = transaction.item
+                csv_arr.push(item.name)
+                csv_arr.push(item._SKU)
+                csv << csv_arr
+            end
+        end
     end
 
 end

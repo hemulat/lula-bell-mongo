@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
 
-  before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy]
+  before_action :authorize_admin, only: [:select, :new, :create, :edit, :update, :destroy, :download]
 
   # To log to the console/log file use
   #     logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
@@ -114,6 +114,10 @@ class ItemsController < ApplicationController
       render 'edit'
     end
 
+  end
+
+  def download
+      send_data dumpItems, filename: 'items.csv'
   end
 
   def destroy
@@ -274,6 +278,27 @@ class ItemsController < ApplicationController
           images.push([item.image.url(:thumb),item_path(item),item.name])
         end
       return images
+    end
+
+    def dumpItems()
+        field_list = []
+        Item.fields.keys.each do |field_name|
+            if field_name[0]!='_' && !(field_name.include? "image")
+                field_list.push(field_name)
+            end
+        end
+        field_list.push("_SKU")
+        all_items = Item.all
+        CSV.generate(headers: true) do |csv|
+            csv << field_list # CSV Header
+            all_items.each do |item|
+                csv_arr = []
+                field_list.each do |f_name|
+                    csv_arr.push(item[f_name])
+                end
+                csv << csv_arr
+            end
+        end
     end
 
 end

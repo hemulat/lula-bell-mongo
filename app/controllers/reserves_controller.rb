@@ -92,9 +92,33 @@ class ReservesController < ApplicationController
     redirect_back fallback_location: reserves_path
   end
 
+
+  def download
+      send_data dumpReserves, filename: 'reserves.csv'
+  end
+
   private
   def reserve_params
     params.require(:reserve).permit(:student_id, :item_id, :start_date, :end_date, :qty_id, :email)
+  end
+
+  def dumpReserves()
+      header_names = ["Student ID","Email","Pick-up date", "Due date","Item name", "Item SKU"]
+      field_list = ["student_id","email","start_date","end_date"]
+      all_reserves = Reserve.all
+      CSV.generate(headers: true) do |csv|
+          csv << header_names # CSV Header
+          all_reserves.each do |reserve|
+              csv_arr = []
+              field_list.each do |f_name|
+                  csv_arr.push(reserve[f_name])
+              end
+              item = reserve.item
+              csv_arr.push(item.name)
+              csv_arr.push(item._SKU)
+              csv << csv_arr
+          end
+      end
   end
 
 end
