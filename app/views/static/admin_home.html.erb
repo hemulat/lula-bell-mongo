@@ -27,6 +27,20 @@
       <p><%= link_to 'Add Admin', new_admin_registration_path %></p>
     </div>
     <hr />
+    <div tag: CSV Exports>
+    <p>
+      <%= link_to 'Export Items', download_items_path %>
+    </p>
+    <p>
+      <%= link_to 'Export Reservations', download_reserves_path %>
+    </p>
+    <p>
+      <%= link_to 'Export Transactions', download_transactions_path %>
+    </p>
+    <p>
+      <%= link_to "Export augmented data", download_augmented_path %>
+    </p>
+    <hr />
     <div tag: PSA-Blog>
     <p>
       <%= link_to 'New PSA', new_psa_post_path %>

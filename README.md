@@ -57,24 +57,6 @@ Finally start app in the local server
 ```
 $ rails s
 ```
-### CSV Dumps
-You can get a CSV dump of Items, Transactions and Reserves collections.
-* Open rails console
-```
-$ rails c
-```
-* Load script
-```
-load 'app/script/dumpCSV.rb'
-```
-* Run the script (for fine  tuned options look at the script)
-```
-dumpAll
-```
-This will output 4 CSV files, one for each of the major collections in the
-database (Items, Transactions and Reserves) and an Augmented CSV.
-The Augmented CSV will have an Item Details, followed by any transactions and
-reserves on the item. 
 ### Notes
 * If you have an already existing database, you might want to repopulate your
 database. If you want to keep your existing items, the following will save
