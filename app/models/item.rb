@@ -21,7 +21,9 @@ class Item
 
   validates_presence_of :name
   has_mongoid_attached_file :image,
-    styles: { :thumb => "175x200#", :medium => "400>" }, default_url: "LulaBells_Wordmark2.jpg"
+  styles: {thumb: {geometry: "175x200#", convert_options: "-auto-orient"},
+           medium: {geometry: "400>",convert_options: "-auto-orient"}},
+           default_url: "LulaBells_Wordmark2.jpg"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   validate :check_reservables
