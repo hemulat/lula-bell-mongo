@@ -250,6 +250,9 @@ class ItemsController < ApplicationController
       Queries database with single word.
       '''
       features = get_all_features
+      if !admin_signed_in?
+          features.push("_SKU")
+      end
       features.delete("rentable")
       features.delete("reservable")
       results = Item.where({features[0] => /#{word}/i})
