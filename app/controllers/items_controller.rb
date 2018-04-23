@@ -250,7 +250,7 @@ class ItemsController < ApplicationController
       Queries database with single word.
       '''
       features = get_all_features
-      if !admin_signed_in?
+      if admin_signed_in?
           features.push("_SKU")
       end
       features.delete("rentable")

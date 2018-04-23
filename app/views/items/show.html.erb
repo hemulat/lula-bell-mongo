@@ -3,7 +3,7 @@
   <div class="container">
     <div class="item-image">
       <!-- <img src="<%= @item.image.url %>" alt="<%= @item.name %>" width="400" height="auto"> -->
-      <%= image_tag @item.image.url(:medium), alt: @item.name, width: '400', height: 'auto'%>
+      <%= image_tag @item.image.url, alt: @item.name, width: '400', height: 'auto'%>
     </div>
     <div class="main-column">
       <div class="item-name">
